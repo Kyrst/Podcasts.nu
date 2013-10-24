@@ -1,0 +1,6 @@
+#!/bin/sh
+PHPRC=/storage/content/50/152950/myrberginnovation.se/settings/php.ini
+export PHPRC
+export PHP_FCGI_MAX_REQUESTS=5000
+export PHP_FCGI_CHILDREN=0
+exec /usr/local/php53/bin/php-cgi

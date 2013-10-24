@@ -1,0 +1,37 @@
+#podcasts {
+    margin-top:20px;
+}
+.artist
+{
+	margin-right: 0px;
+	margin-bottom: 5px;
+    padding:0px !important;
+}
+.caption {
+    height:80px;
+}
+.artist h3
+{
+	font-size: 1.2em;
+	margin: 0;
+}
+
+#list_view
+{
+	display: none;
+}
+@media (max-width: 480px)
+{
+    h3 {
+        font-size:0.8em !important;
+    }
+
+}
+
+@media (max-width: 768px)
+{
+    h3 {
+        font-size:1em;
+    }
+
+}

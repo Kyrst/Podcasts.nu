@@ -1,0 +1,8 @@
+spider-37-140-141-6.yandex.com - - [23/Sep/2013:04:12:16 +0200] "GET /poddar/alex-och-sigges-podcast HTTP/1.1" 200 4816 "-" "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)"
+spider-37-140-141-6.yandex.com - - [23/Sep/2013:04:12:16 +0200] "GET /poddar/alex-och-sigges-podcast HTTP/1.1" 200 4816 "-" "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)"
+crawl-66-249-78-155.googlebot.com - - [23/Sep/2013:04:30:19 +0200] "GET /artister/filmmixern/ HTTP/1.1" 200 795 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+crawl-66-249-78-155.googlebot.com - - [23/Sep/2013:04:30:41 +0200] "GET /artister/filmmixern HTTP/1.1" 200 36844 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+spider-37-140-141-6.yandex.com - - [23/Sep/2013:04:30:45 +0200] "GET /poddar/filip-och-fredriks-podcast HTTP/1.1" 200 4825 "-" "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)"
+crawl-66-249-78-155.googlebot.com - - [23/Sep/2013:04:31:17 +0200] "GET /avsnitt/kjell-och-klortanten/avsnitt-1-martin-soneby-pratar-motvallsbeteende.htm HTTP/1.1" 200 37171 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+crawl-66-249-78-155.googlebot.com - - [23/Sep/2013:04:45:05 +0200] "GET /artister/ewer HTTP/1.1" 200 36832 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+ec2-54-228-7-93.eu-west-1.compute.amazonaws.com - - [23/Sep/2013:04:51:27 +0200] "HEAD / HTTP/1.1" 200 407 "http://www.google.com/search?q=myrberginnovation.se" "-"

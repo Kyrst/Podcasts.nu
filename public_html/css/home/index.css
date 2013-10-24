@@ -1,0 +1,23 @@
+.page-header h3.icon
+{
+	padding-left: 60px;
+	height: 52px;
+	line-height: 52px;
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+
+.page-header h3.icon.news-items
+{
+	background-image: url('../../images/icons/news_items.png');
+}
+
+.page-header h3.icon.comment
+{
+	background-image: url('../../images/icons/comment.png');
+}
+
+.page-header h3.icon.played
+{
+	background-image: url('../../images/icons/played.png');
+}
