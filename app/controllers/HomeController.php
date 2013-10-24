@@ -5,6 +5,9 @@ class HomeController extends BaseController
 {
 	public function index()
 	{
+		// Test
+		// ...
+
 		$latest_news_items = News_Item::orderBy('created_at', 'DESC');
 
 		$this->assign('latest_news_items', $latest_news_items->get());
