@@ -4,7 +4,7 @@
 	"keywords": ["framework", "laravel"],
 	"require": {
 		"laravel/framework": "4.0.*",
-		"toddish/verify": "2.0.*",
+		"toddish/verify": "2.1.*",
 		"intervention/image": "dev-master"
 	},
 	"autoload": {
