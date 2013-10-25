@@ -37,6 +37,18 @@
 									<h2><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->podcast->name, ' - ', $episode->title; ?></a></h2>
 
 									<p class="created"><?= $episode->created_at; ?></p>
+
+									<?php if ( $user->isAdmin() ): ?>
+										<div class="btn-group" style="margin-top:8px">
+											<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+												Admin <span class="caret"></span>
+											</button>
+											<ul class="dropdown-menu" role="menu">
+												<li><a href="<?= URL::to('admin/avsnitt/' . $episode->id) ?>">Ändra</a></li>
+												<li><a href="<?= URL::to('admin/avsnitt/ta-bort/' . $episode->id) ?>">Ta bort</a></li>
+											</ul>
+										</div>
+									<?php endif ?>
 								</div>
 							</div>
 						<?php endforeach; ?>

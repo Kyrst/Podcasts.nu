@@ -6,3 +6,11 @@
 </ul>
 
 <h1><?= $episode->title; ?></h1>
+
+<p class="created"><?= $episode->created_at; ?></p>
+
+<?php if ( $episode->haveMedia() ): ?>
+	<?= $episode->printPlayButton(); ?>
+<?php endif; ?>
+
+<h2>Kommentarer</h2>

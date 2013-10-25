@@ -10,11 +10,21 @@
 	<div id="episodes">
 		<?php foreach ( $episodes as $episode ): ?>
 			<div class="episode">
-				<h2><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->podcast->name, ' - ', $episode->title; ?></a></h2>
+				<h2><a href="<?= $episode->podcast->getLink('avsnitt') ?>"><?= $episode->podcast->name ?></a> - <a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a></h2>
 
 				<img src="<?= $episode->podcast->getImage('standard', false, true); ?>" width="250" height="" alt="...">
 
 				<p><?= $episode->created_at; ?></p>
+
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+						Admin <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="<?= URL::to('admin/avsnitt/' . $episode->id) ?>">Ändra</a></li>
+						<li><a href="<?= URL::to('admin/avsnitt/ta-bort/' . $episode->id) ?>">Ta bort</a></li>
+					</ul>
+				</div>
 			</div>
 		<?php endforeach; ?>
 	</div>
