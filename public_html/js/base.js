@@ -10,6 +10,8 @@ var current_id, current_title, current_episode_id, current_episode_link;
 
 var used_ids = [];
 
+var loaded_from_cookie = false;
+
 $(function()
 {
 	$.cookie.json = true;
@@ -34,8 +36,7 @@ $(function()
 		debugMode: false,
 		onready: function()
 		{
-			var playing_cookie_object = $.cookie('playing'),
-				loaded_from_cookie = false;
+			var playing_cookie_object = $.cookie('playing');
 
 			// Load from cookie?
 			if ( playing_cookie_object )
@@ -240,12 +241,6 @@ function createSound(player_id, url, volume, progress, play)
 
 	$player_progress_bar_container.show();
 
-	if ( !play )
-	{
-		$player_time.html('Loading...');
-		$player.show();
-	}
-
 	return sound_manager.createSound(
 	{
 		id: player_id,
@@ -254,14 +249,28 @@ function createSound(player_id, url, volume, progress, play)
 		autoLoad: true,
 		autoPlay: play,
 		position: progress,
+		onconnect: function()
+		{
+			if ( !play )
+			{
+				if ( loaded_from_cookie )
+				{
+					console.log(this.duration);
+					update_player_position(progress, this.duration);
+				}
+
+				$player_time.html('Laddar...');
+				$player.show();
+			}
+		},
 		onload: function()
 		{
 			update_player_position(progress, this.duration);
 
-			if ( play )
+			/*if ( play )
 			{
 				$player_time.html('Loading...');
-			}
+			}*/
 		},
 		onfinish: function()
 		{
