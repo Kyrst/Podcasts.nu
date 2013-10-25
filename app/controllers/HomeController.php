@@ -159,9 +159,14 @@ class HomeController extends BaseController
 		$this->assign('episode', $episode);
 
 		// Comments
-		$num_comments = $episode->comments->count();
+		$comments_html = View::make('ajax/get_episode_comments')
+			->with('num_comments', $episode->comments->count())
+			->with('comments', $episode->comments)
+			->render();
 
-		$this->assign('num_comments', $num_comments);
+		$this->assign('comments_html', $comments_html);
+
+		$this->assign('episode_id', $episode->id, array('js'));
 
 		$this->display('home.view_episode', $episode->title . ' - ' . $episode->podcast->title);
 	}
@@ -180,6 +185,7 @@ class HomeController extends BaseController
 	{
 		$this->display('home.my_page');
 	}
+
     public function view_blogs()
     {
         $this->display('home.view_blogs', 'Bloggar');

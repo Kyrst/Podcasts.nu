@@ -18,11 +18,9 @@
 		<h3 class="panel-title">Kommentarer</h3>
 	</div>
 	<div class="panel-body">
-		<?php if ( $num_comments > 0 ): ?>
-
-		<?php else: ?>
-			<p>Inga kommentarer.</p>
-		<?php endif ?>
+		<div id="comments_container">
+			<?= $comments_html ?>
+		</div>
 
 		<h3>Kommentera</h3>
 
@@ -34,11 +32,11 @@
 				</div>
 
 				<div class="form-group">
-					<textarea id="comment" class="form-control"></textarea>
+					<textarea name="comment" id="comment" class="form-control"></textarea>
 				</div>
 
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary">Kommentera</button>
+					<button type="submit" id="comment_button" class="btn btn-primary">Kommentera</button>
 				</div>
 			</form>
 		<?php else: ?>

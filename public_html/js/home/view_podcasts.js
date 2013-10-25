@@ -44,7 +44,7 @@ $(function()
 
 function getPodcasts(category_id)
 {
-	$.getJSON(BASE_URL + 'ajax/get_podcasts', { category_id: category_id, view_type: selected_view_type }, function(result)
+	$.getJSON(BASE_URL + 'ajax/get-podcasts', { category_id: category_id, view_type: selected_view_type }, function(result)
 	{
 		$podcasts.html(result.html);
 

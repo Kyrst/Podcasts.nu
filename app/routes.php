@@ -41,10 +41,10 @@ Route::get('/poddar/{podcast}', array
 ))->where('podcast', '[a-z0-9\-]+');
 
 // Get podcasts (AJAX)
-Route::get('/ajax/get_podcasts', array
+Route::get('/ajax/get-podcasts', array
 (
 	'uses' => 'HomeController@ajax_get_podcasts',
-	'as' => '/ajax/get_podcasts'
+	'as' => '/ajax/get-podcasts'
 ));
 
 // Avsnitt
@@ -208,4 +208,16 @@ Route::get('/admin/anvandare', array
 Route::post('/save-listen', array
 (
 	'uses' => 'AjaxController@save_listen'
+));
+
+// AJAX: Get episode comments
+Route::get('/ajax/get-episode-comments/{id}', array
+(
+	'uses' => 'AjaxController@get_episode_comments'
+))->where('id', '[0-9]+');
+
+// AJAX: Comment episode
+Route::post('/ajax/comment-episode', array
+(
+	'uses' => 'AjaxController@comment_episode'
 ));
