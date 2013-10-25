@@ -19,7 +19,7 @@ $(function()
 		{
 			$comment.focus();
 
-			return false; //
+			return false; // --
 		}
 
 		$comment_button.html('Kommenterar...');
