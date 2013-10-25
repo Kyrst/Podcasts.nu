@@ -17,7 +17,7 @@ Route::get('/nyheter', array
 Route::get('/nyheter/{date}/{slug}', array
 (
 	'uses' => 'HomeController@view_news_item'
-//))->where(array('date' => '[0-9]{4}-[0-9]{2}-[0-9]{2}', 'slug' => '[a-z0-9\-]+'));
+ //))->where(array('date' => '[0-9]{4}-[0-9]{2}-[0-9]{2}', 'slug' => '[a-z0-9\-]+'));
 ))->where(array('date' => '[0-9\-]+', 'slug' => '[a-z0-9\-]+'));
 
 //Bloggar
