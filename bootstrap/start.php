@@ -17,6 +17,4 @@ require $framework.'/Illuminate/Foundation/start.php';
 
 include app_path() . '/constants.php';
 
-die($app->environment());
-
 return $app;
