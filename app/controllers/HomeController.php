@@ -190,4 +190,20 @@ class HomeController extends BaseController
     {
         $this->display('home.view_blogs', 'Bloggar');
     }
+    public function view_blog()
+    {
+        $this->display('home.view_blog', 'Blogg');
+    }
+    public function view_poddsnacks()
+    {
+        $this->display('home.view_poddsnacks', 'poddsnacks');
+    }
+    public function view_poddsnack()
+    {
+        $this->display('home.view_poddsnack', 'poddsnack');
+    }
+    public function view_toplist()
+    {
+        $this->display('home.view_toplist', 'topplista');
+    }
 }

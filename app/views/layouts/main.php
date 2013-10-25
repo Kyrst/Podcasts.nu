@@ -47,9 +47,9 @@
 					<ul class="nav navbar-nav">
 						<li<?php if ($current_route === '/poddar'): ?> class="selected"<?php endif; ?>><a href="<?= URL::route('poddar', array(), false); ?>">Poddar</a></li>
 						<li<?php if ($current_route === '/avsnitt'): ?> class="selected"<?php endif; ?>><a href="<?= URL::route('avsnitt', array(), false); ?>">Avsnitt</a></li>
-						<li><a href="#">Topplista</a></li>
+						<li<?php if ($current_route === '/topplista'): ?> class="selected"<?php endif; ?>><a href="<?= URL::route('topplista', array(), false); ?>">Topplista</a></li>
 						<li<?php if ($current_route === '/bloggar'): ?> class="selected"<?php endif; ?>><a href="<?= URL::route('bloggar', array(), false); ?>">Blogg</a></li>
-						<li><a href="#">Poddsnack</a></li>
+						<li<?php if ($current_route === '/poddsnacks'): ?> class="selected"<?php endif; ?>><a href="<?= URL::route('poddsnacks', array(), false); ?>">Poddsnack</a></li>
 
                         <li class="dropdown">
                             <?php if ( $user !== NULL ): ?>

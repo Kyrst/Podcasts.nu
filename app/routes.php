@@ -13,6 +13,7 @@ Route::get('/nyheter', array
 	'as' => 'nyheter'
 ));
 
+
 // Nyhet
 Route::get('/nyheter/{date}/{slug}', array
 (
@@ -20,11 +21,17 @@ Route::get('/nyheter/{date}/{slug}', array
  //))->where(array('date' => '[0-9]{4}-[0-9]{2}-[0-9]{2}', 'slug' => '[a-z0-9\-]+'));
 ))->where(array('date' => '[0-9\-]+', 'slug' => '[a-z0-9\-]+'));
 
-//Bloggar
+//Bloggar blir sen /blogg & /blogg/bloggnamn
 Route::get('/bloggar', array
 (
     'uses' => 'HomeController@view_blogs',
     'as' => 'bloggar'
+));
+//För varje blogg, kanske Route::get('/blogg/{namn}')
+Route::get('/blogg', array
+(
+    'uses' => 'HomeController@view_blog',
+    'as' => 'blogg'
 ));
 
 // Podcasts
@@ -65,6 +72,26 @@ Route::get('/avsnitt/{podcast}/{episode}', array
 (
 	'uses' => 'HomeController@view_episode'
 ))->where(array('podcast' => '[a-z0-9\-]+', 'episode' => '[a-z0-9\-]+'));
+
+//Topplista
+Route::get('/topplista', array
+(
+   'uses' => 'HomeController@view_toplist.php',
+   'as' => 'topplista'
+));
+
+//Poddsnack, blir sen /poddsnack & /poddsnack/poddsnack-titel Samma som på Podcasts.nu
+Route::get('/poddsnacks', array
+(
+    'uses' => 'HomeController@view_poddsnacks',
+    'as' => 'poddsnacks'
+));
+Route::get('/poddsnack', array
+(
+    'uses' => 'HomeController@view_poddsnack',
+    'as' => 'poddsnack'
+));
+
 
 // Logga in
 Route::get('/logga-in', array
