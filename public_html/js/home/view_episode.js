@@ -13,13 +13,22 @@ $(function()
 
 	$('#comment_form').on('submit', function()
 	{
+		var comment = $comment.val();
+
+		if ( !comment )
+		{
+			$comment.focus();
+
+			return false; // --
+		}
+
 		$comment_button.html('Kommenterar...');
 
 		$.ajax(
 		{
 			url: BASE_URL + 'ajax/comment-episode',
 			type: 'POST',
-			data: { id: episode_id, comment: $comment.val() },
+			data: { id: episode_id, comment: comment },
 			dataType: 'json'
 		}).done(function(result)
 		{
