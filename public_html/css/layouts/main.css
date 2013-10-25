@@ -79,6 +79,9 @@ a
 {
     color: #FFF;
 }
+.navbar {
+    margin-bottom:0px;
+}
 .navbar-nav {
     margin-top:40px;
     float:right;
@@ -94,6 +97,7 @@ a
     border-color:#DE3A4A;
     border: 1px;
 }
+
 @font-face
 {
     font-family: 'harabararegular';
@@ -133,8 +137,8 @@ a
 
 #player_container
 {
-	float: left;
-	margin: 32px 0 0 15px;
+	margin:0 auto;
+    padding:15px;
 }
 
 #player
@@ -174,7 +178,8 @@ a
 {
 	display: none;
 	float: left;
-	width: 100px;
+	width:200px;
+    margin-left:15px;
 	border: 1px solid #555;
 	background-color: #222;
 	padding: 1px;

@@ -24,24 +24,27 @@
 					</button>
 
 					<a id="logo" class="navbar-brand" href="<?= URL::route('home', array(), false); ?>"></a>
-
-					<div id="player_container">
+                    <!-- Orginal utförande
+                    <div id="player_container">
 						<div class="player-row clearfix">
 							<a id="player" class="sm2_button"></a>
 
 							<!-- Player Status -->
-							<span id="player_details"></span>
-						</div>
+                            <!--<span id="player_details"></span>
+                        </div>
 
-						<div class="player-row clearfix last">
-							<!-- Player Progress Bar -->
-							<div id="player_progress_bar_container">
-								<span id="player_progress_bar"></span>
-							</div>
+                        <div class="player-row clearfix last">
+                            <!-- Player Progress Bar -->
+                            <!--
+                            <a id="player" class="sm2_button"></a>
+                        <div id="player_progress_bar_container">
+                            <span id="player_progress_bar"></span>
+                        </div>
 
-							<span id="player_time"></span>
-						</div>
-					</div>
+                        <span id="player_time"></span>
+                        </div>
+                    </div>
+                    -->
 				</div>
 				<div id="header_menu" class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
@@ -81,7 +84,31 @@
 				</div>
 			</div>
 		</nav>
+        <div class="container">
+            <div class="bi-header col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div id="player_container">
+                    <div class="player-row clearfix last">
+                        <a id="player" class="sm2_button"></a>
+                        <span id="player_details"></span>
+                            <!-- Player Progress Bar -->
+                        <a id="player" class="sm2_button"></a>
+                        <div id="player_progress_bar_container">
+                            <span id="player_progress_bar"></span>
+                        </div>
+                        <span id="player_time"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="bi-header col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
 
+            </div>
+        </div>
 		<div class="clear"></div>
 
 		<!-- Content -->
