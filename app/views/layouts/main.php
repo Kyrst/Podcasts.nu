@@ -6,6 +6,7 @@
 		<title><?= $page_title; ?></title>
 		<meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 		<?php foreach ( $assets['css'] as $css ): ?>
 			<link href="<?= URL::route('home', array(), false) . $css['file']; ?>" rel="stylesheet">
 		<?php endforeach; ?>
@@ -45,26 +46,26 @@
 				<div id="header_menu" class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
 						<li<?php if ($current_route === '/poddar'): ?> class="selected"<?php endif; ?>><a href="<?= URL::route('poddar', array(), false); ?>">Poddar</a></li>
-						<li><a href="<?= URL::route('avsnitt', array(), false); ?>">Avsnitt</a></li>
+						<li<?php if ($current_route === '/avsnitt'): ?> class="selected"<?php endif; ?>><a href="<?= URL::route('avsnitt', array(), false); ?>">Avsnitt</a></li>
 						<li><a href="#">Topplista</a></li>
 						<li<?php if ($current_route === '/bloggar'): ?> class="selected"<?php endif; ?>><a href="<?= URL::route('bloggar', array(), false); ?>">Blogg</a></li>
 						<li><a href="#">Poddsnack</a></li>
 
                         <li class="dropdown">
                             <?php if ( $user !== NULL ): ?>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $user->username; ?><b class="caret"></b></a>
-                        <ul class="dropdown-menu">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $user->username; ?><b class="caret"></b></a>
+								<ul class="dropdown-menu">
 
-                            <li><a href="<?= URL::route('min-sida', array(), false); ?>">Min sida</a></li>
-                            <li class="divider"></li>
-                            <li><a href="<?= URL::route('admin/nyheter', array(), false); ?>">Nyheter</a></li>
-                            <li><a href="<?= URL::route('admin/blogg', array(), false); ?>">Blogg</a></li>
-                            <li><a href="<?= URL::route('admin/poddar', array(), false); ?>">Poddar</a></li>
-							<li><a href="<?= URL::route('admin/episodes', array(), false); ?>">Avsnitt</a></li>
-                            <li><a href="<?= URL::route('admin/anvandare', array(), false); ?>">Användare</a></li>
-                            <li class="divider"></li>
-                            <li><a href="<?= URL::route('logga-ut', array(), false); ?>">Logga ut</a></li>
-                        </ul>
+									<li><a href="<?= URL::route('min-sida', array(), false); ?>">Min sida</a></li>
+									<li class="divider"></li>
+									<li><a href="<?= URL::route('admin/nyheter', array(), false); ?>">Nyheter</a></li>
+									<li><a href="<?= URL::route('admin/blogg', array(), false); ?>">Blogg</a></li>
+									<li><a href="<?= URL::route('admin/poddar', array(), false); ?>">Poddar</a></li>
+									<li><a href="<?= URL::route('admin/episodes', array(), false); ?>">Avsnitt</a></li>
+									<li><a href="<?= URL::route('admin/anvandare', array(), false); ?>">Användare</a></li>
+									<li class="divider"></li>
+									<li><a href="<?= URL::route('logga-ut', array(), false); ?>">Logga ut</a></li>
+								</ul>
                             <?php endif; ?>
                         </li>
 					</ul>
