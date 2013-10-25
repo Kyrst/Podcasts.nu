@@ -4,7 +4,7 @@
 
 		<div class="artist col-lg-3 col-md-3 col-sm-4 col-xs-6">
 			<div class="thumbnail">
-				<a href="<?= $podcast->getLink('poddar'); ?>"><img src="<?= $podcast->getImage('standard', false, true); ?>" width="270" height="" alt="..."></a>
+				<a href="<?= $podcast->getLink('poddar'); ?>"><img src="<?= $podcast->getImage('standard', false, true); ?>" width="100%" height="" alt="..."></a>
 
 				<div class="caption">
 					<h3><a href="<?= $podcast->getLink('poddar'); ?>"><?= $podcast->name; ?></a></h3>
