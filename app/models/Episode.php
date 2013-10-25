@@ -8,6 +8,11 @@ class Episode extends Eloquent
 		return $this->belongsTo('Podcast');
 	}
 
+	public function comments()
+	{
+		return $this->hasMany('Episode_Comment');
+	}
+
 	public function getTitle()
 	{
 		return $this->podcast->name . ' - ' . $this->title;

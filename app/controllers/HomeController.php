@@ -158,7 +158,12 @@ class HomeController extends BaseController
 
 		$this->assign('episode', $episode);
 
-		$this->display('home.view_episode', $episode->title . ' - Filip Kongo');
+		// Comments
+		$num_comments = $episode->comments->count();
+
+		$this->assign('num_comments', $num_comments);
+
+		$this->display('home.view_episode', $episode->title . ' - ' . $episode->podcast->title);
 	}
 
 	public function login()

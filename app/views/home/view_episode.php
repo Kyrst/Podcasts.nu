@@ -13,4 +13,36 @@
 	<?= $episode->printPlayButton(); ?>
 <?php endif; ?>
 
-<h2>Kommentarer</h2>
+<div class="panel panel-danger" style="margin-top:20px">
+	<div class="panel-heading">
+		<h3 class="panel-title">Kommentarer</h3>
+	</div>
+	<div class="panel-body">
+		<?php if ( $num_comments > 0 ): ?>
+
+		<?php else: ?>
+			<p>Inga kommentarer.</p>
+		<?php endif ?>
+
+		<h3>Kommentera</h3>
+
+		<?php if ( $user ): ?>
+			<form action="<?= Request::url() ?>" method="post" id="comment_form">
+				<div class="form-group">
+					<label>Namn</label>
+					<input type="text" id="name" class="form-control" value="<?= $user->getDisplayName() ?>" disabled>
+				</div>
+
+				<div class="form-group">
+					<textarea id="comment" class="form-control"></textarea>
+				</div>
+
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary">Kommentera</button>
+				</div>
+			</form>
+		<?php else: ?>
+			<p>Du måste logga in för att kommentera.</p>
+		<?php endif ?>
+	</div>
+</div>
