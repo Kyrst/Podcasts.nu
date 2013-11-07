@@ -12,6 +12,8 @@ var used_ids = [];
 
 var loaded_from_cookie = false;
 
+var forced_set_duration = false;
+
 $(function()
 {
 	$.cookie.json = true;
@@ -29,18 +31,20 @@ $(function()
 	// Audio player
 	sound_manager = soundManager.setup(
 	{
-		url: '/libs/soundmanager2/',
+		url: BASE_URL + 'libs/soundmanager2/',
 		flashVersion: 9, // optional: shiny features (default = 8)
 		// optional: ignore Flash where possible, use 100% HTML5 mode
-		//preferFlash: false,
+		preferFlash: false,
 		debugMode: false,
 		onready: function()
 		{
-			var playing_cookie_object = $.cookie('playing');
+			//var playing_cookie_object = $.cookie('playing');
 
 			// Load from cookie?
-			if ( playing_cookie_object )
+			if ( typeof playing_cookie_object !== 'undefined' )
 			{
+				playing_cookie_object = JSON.parse(playing_cookie_object);
+
 				current_id = playing_cookie_object.id;
 				current_title = playing_cookie_object.title;
 				current_episode_link = playing_cookie_object.episode_link;
@@ -51,6 +55,8 @@ $(function()
 				{
 					sound.position = playing_cookie_object.progress;
 				}
+
+				update_player_position(playing_cookie_object.progress, playing_cookie_object.duration, true);
 
 				loaded_from_cookie = true;
 			}
@@ -104,7 +110,7 @@ $(function()
 						used_ids.push(current_id);
 
 						// Save liten
-						$.post('/save-listen', { episode_id: current_episode_id }, function(result)
+						$.post(BASE_URL + 'save-listen', { episode_id: current_episode_id }, function(result)
 						{
 							console.log(result);
 						});
@@ -155,17 +161,26 @@ $(function()
 					clicked_x = e.pageX - parent_offset.left;
 					//clicked_y = e.pageY - parent_offset.top;
 
+				var duration = 0;
+
+				if ( sound.duration === 0 && loaded_from_cookie )
+				{
+					duration = playing_cookie_object.duration;
+				}
+				else
+				{
+					duration = sound.duration;
+				}
+
 				var ratio = player_width / sound.duration;
 				//var click_ratio = clicked_x / sound.duration;
 
 				var percent = clicked_x / ratio;
 				//var click_pos = percent / sound.duration;
 
-				console.log(percent);
-
 				sound.setPosition(percent);
 
-				update_player_position(percent, sound.duration);
+				update_player_position(percent, duration, true);
 			});
 		}
 	});
@@ -222,6 +237,7 @@ $(window).on('unload', function()
 			title: current_title,
 			episode_link: current_episode_link,
 			progress: sound.position,
+			duration: sound.duration,
 			is_playing: is_playing
 		};
 
@@ -241,6 +257,11 @@ function createSound(player_id, url, volume, progress, play)
 
 	$player_progress_bar_container.show();
 
+	if ( loaded_from_cookie )
+	{
+		$player.show();
+	}
+
 	return sound_manager.createSound(
 	{
 		id: player_id,
@@ -255,17 +276,13 @@ function createSound(player_id, url, volume, progress, play)
 			{
 				if ( loaded_from_cookie )
 				{
-					console.log(this.duration);
 					update_player_position(progress, this.duration);
 				}
-
-				$player_time.html('Laddar...');
-				$player.show();
 			}
 		},
-		onload: function()
+		onload: function() // Denna funkar, när den är helt färdigbuffrad
 		{
-			update_player_position(progress, this.duration);
+			update_player_position(progress, this.duration, true);
 
 			/*if ( play )
 			{
@@ -313,12 +330,21 @@ function createSound(player_id, url, volume, progress, play)
 		},
 		whileplaying: function()
 		{
-			update_player_position(this.position, this.duration);
+			//if ( this.loaded )
+			//{
+				update_player_position(this.position, this.duration, true);
+			//}
+
+			$player_progress_bar.css('background-color', '#AAA');
+		},
+		whileloading: function()
+		{
+			$player_progress_bar.css('background-color', 'yellow');
 		}
 	});
 }
 
-function update_player_position(position, duration)
+function update_player_position(position, duration, update_progress_bar)
 {
 	var _current = new Date(position),
 		_duration = new Date(duration),
@@ -331,7 +357,10 @@ function update_player_position(position, duration)
 
 	$player_time.html(current_str + ' / ' + duration_str);
 
-	$player_progress_bar.css('width', ((position / duration) * 100) + '%');
+	if ( update_progress_bar )
+	{
+		$player_progress_bar.css('width', ((position / duration) * 100) + '%');
+	}
 }
 
 function sound_id_exists(id)

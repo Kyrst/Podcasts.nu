@@ -107,6 +107,12 @@ class BaseController extends Controller
 				$this->assign('bootbox_alert', $bootbox_alert, array('layout'));
 			}
 
+			// Playing cookie
+			if ( isset($_COOKIE['playing']) )
+			{
+				$this->assign('playing_cookie_object', $_COOKIE['playing'], array('js'));
+			}
+
 			// Load jQuery
 			$this->assign('jquery_script', View::make('partials/layouts/jquery_script'), array('layout'));
 
