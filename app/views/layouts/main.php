@@ -85,20 +85,21 @@
 			</div>
 		</nav>
         <div class="container">
-            <div class="bi-header col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <!--<div class="bi-header col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div id="player_container">
                     <div class="player-row clearfix last">
                         <a id="player" class="sm2_button"></a>
                         <span id="player_details"></span>
-
+                    </div>
+                    <div class="player-row clearfix last">
                         <div id="player_progress_bar_container">
                             <span id="player_progress_bar"></span>
                         </div>
                         <span id="player_time"></span>
                     </div>
                 </div>
-            </div>
-            <div class="bi-header col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            </div>-->
+            <div class="bi-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
@@ -125,7 +126,20 @@
 			<?php endif; ?>
 
 			<?= $content; ?>
+            <div class="navbar navbar-fixed-bottom" style="background-color:#000;">
+                <div id="player_container">
+                    <div class="player-row clearfix last">
+                        <a id="player" class="sm2_button"></a>
+                        <span id="player_details"></span>
+                        <div id="player_progress_bar_container">
+                            <span id="player_progress_bar"></span>
+                        </div>
+                        <span id="player_time"></span>
+                    </div>
+                </div>
+            </div>
 		</div>
+
 
 		<?php if ( isset($bootbox_alert) || (count($js_vars) > 0) ): ?>
 			<script>

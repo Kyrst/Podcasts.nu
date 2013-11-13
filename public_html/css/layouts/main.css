@@ -137,7 +137,7 @@ a
 
 #player_container
 {
-	margin:0 auto;
+	margin-left:35%;
     padding:15px;
 }
 
@@ -178,10 +178,10 @@ a
 {
 	display: none;
 	float: left;
-	width:200px;
-    margin-left:15px;
+	width:300px;
+    margin-left:5px;
 	border: 1px solid #555;
-	background-color: #222;
+	background-color: #dedede;
 	padding: 1px;
 	border-radius: 2px;
 	-moz-border-radius: 2px;

@@ -2,7 +2,7 @@
 	<?php for ( $i = 0; $i < $num_podcasts; ++$i): ?>
 		<?php $podcast = $podcasts[$i]; ?>
 
-		<div class="artist col-lg-3 col-md-3 col-sm-4 col-xs-6">
+		<div class="artist col-lg-2 col-md-2 col-sm-3 col-xs-6">
 			<div class="thumbnail">
 				<a href="<?= $podcast->getLink('poddar'); ?>"><img src="<?= $podcast->getImage('standard', false, true); ?>" width="100%" height="" alt="..."></a>
 
