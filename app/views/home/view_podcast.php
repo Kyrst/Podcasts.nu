@@ -11,9 +11,9 @@
     <div class="row">
         <div class="container col-lg-4 col-md-4 col-sm-12 col-xs-12">
 
-            <div class="container col-lg-12 col-md-12 col-sm-12 col-xs-12"
+            <div class="container col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- Podcast-bild -->
-                <img class="media-object" src="<?= $podcast->getImage('standard', false, true); ?>" width="250" height="" alt="...">
+                <img class="media-object" src="<?= $podcast->getImage('standard', false, true); ?>" width="270" height="" alt="...">
             </div>
             <div class="content col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- Podcast-information -->
@@ -34,7 +34,7 @@
 								<?php endif; ?>
 
 								<div class="right">
-									<h2><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->podcast->name, ' - ', $episode->title; ?></a></h2>
+									<h3><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->podcast->name, ' - ', $episode->title; ?></a></h3>
 
 									<p class="created"><?= $episode->created_at; ?></p>
 

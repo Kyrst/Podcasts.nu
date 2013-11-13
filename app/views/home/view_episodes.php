@@ -28,10 +28,10 @@
 			</div>-->
             <div class="media">
                 <a class="pull-left" href="#">
-                    <img class="media-object" src="<?= $episode->podcast->getImage('standard', false, true); ?>" width="80" height="" alt="...">
+                    <img class="media-object" src="<?= $episode->podcast->getImage('standard', false, true); ?>" width="60" height="" alt="...">
                 </a>
                 <div class="media-body">
-                    <h4><a href="<?= $episode->podcast->getLink('avsnitt') ?>"><?= $episode->podcast->name ?></a> - <a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a> </h4>
+                    <h4 class="media-heading"><a href="<?= $episode->podcast->getLink('avsnitt') ?>"><?= $episode->podcast->name ?></a> - <a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a> </h4>
                     <p><?= $episode->created_at; ?></p>
                 </div>
             </div>
