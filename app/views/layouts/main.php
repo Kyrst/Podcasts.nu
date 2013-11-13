@@ -90,8 +90,7 @@
                     <div class="player-row clearfix last">
                         <a id="player" class="sm2_button"></a>
                         <span id="player_details"></span>
-                            <!-- Player Progress Bar -->
-                        <a id="player" class="sm2_button"></a>
+
                         <div id="player_progress_bar_container">
                             <span id="player_progress_bar"></span>
                         </div>
