@@ -4,7 +4,7 @@ $app = new Illuminate\Foundation\Application;
 $app->redirectIfTrailingSlash();
 
 $env = $app->detectEnvironment(array(
-	'local' => array('podcasts.loc'),
+	'local' => array('myrberginnovation.loc'),
 	'dev' => array('www.myrberginnovation.se'),
 	'live' => array('podcasts.nu')
 ));
