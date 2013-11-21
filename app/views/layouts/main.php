@@ -126,21 +126,54 @@
 			<?php endif; ?>
 
 			<?= $content; ?>
-
 		</div>
-        <div class="navbar navbar-fixed-bottom" style="background-color:#000;">
-            <div id="player_container">
-                <div class="player-row clearfix last">
-                    <a id="player" class="sm2_button"></a>
-                    <span id="player_details"></span>
-                    <div id="player_progress_bar_container">
-                        <span id="player_progress_bar"></span>
-                    </div>
-                    <span id="player_time"></span>
-                </div>
-            </div>
-        </div>
 
+		<div class="navbar navbar-fixed-bottom" style="background-color:#000">
+			<div class="container text-center">
+				<div id="player" class="jp-jplayer center"></div>
+
+				<div id="jp_container_1" class="jp-audio" style="display:none">
+					<div class="jp-type-single">
+						<div class="jp-gui jp-interface">
+							<ul id="player_controls" class="jp-controls">
+								<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+								<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+								<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
+								<?php /*<li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>*/ ?>
+								<?php /*<li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>*/ ?>
+								<?php /*<li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>*/ ?>
+							</ul>
+							<div class="jp-progress">
+								<div class="jp-seek-bar">
+									<div class="jp-play-bar"></div>
+
+								</div>
+							</div>
+							<div class="jp-volume-bar">
+								<div class="jp-volume-bar-value"></div>
+							</div>
+							<div class="jp-current-time"></div>
+							<div class="jp-duration"></div>
+							<?php /*
+							<ul class="jp-toggles">
+								<?php <li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li> ?>
+								<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
+							</ul>
+							*/ ?>/
+						</div>
+						<div class="jp-title">
+							<ul>
+								<li>Cro Magnon Man</li>
+							</ul>
+						</div>
+						<div class="jp-no-solution">
+							<span>Update Required</span>
+							To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<?php if ( isset($bootbox_alert) || (count($js_vars) > 0) ): ?>
 			<script>

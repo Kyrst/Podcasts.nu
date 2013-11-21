@@ -45,7 +45,12 @@ class BaseController extends Controller
 		'soundmanager2' => array
 		(
 			'js' => 'libs/soundmanager2/soundmanager2-jsmin.js'
-		)
+		),
+		'jplayer' => array
+		(
+			'css' => 'css/player.css',
+			'js' => 'libs/jplayer/jquery.jplayer.min.js'
+		),
 	);
 
 	private $loaded_libs = array
@@ -91,7 +96,10 @@ class BaseController extends Controller
 			$this->loadLib('bootbox', true);
 
 			// Soundmanager2
-			$this->loadLib('soundmanager2', true);
+			//$this->loadLib('soundmanager2', true);
+
+			// jPlayer
+			$this->loadLib('jplayer', true);
 
 			// Add current route to views
 			if ( $current_route !== NULL )
@@ -106,8 +114,6 @@ class BaseController extends Controller
 
 				$this->assign('bootbox_alert', $bootbox_alert, array('layout'));
 			}
-
-			error_log('isset($_COOKIE[\'playing\']): ' . (isset($_COOKIE['playing']) ? 'yes' : 'no'));
 
 			// Playing cookie
 			if ( isset($_COOKIE['playing']) )

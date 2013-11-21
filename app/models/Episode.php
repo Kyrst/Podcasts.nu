@@ -33,6 +33,6 @@ class Episode extends Eloquent
 
 	public function printPlayButton()
 	{
-		return '<a href="javascript:" id="player_' . $this->id . '" class="player sm2_button" data-episode_id="' . $this->id . '" data-url="' . $this->media_link . '" data-id="player_' . $this->id . '" data-title="' . $this->title . '" data-episode_link="' . $this->getLink('avsnitt') . '"></a>';
+		return '<a href="javascript:" id="player_' . $this->id . '" class="play sm2_button" data-episode_id="' . $this->id . '" data-url="' . $this->media_link . '" data-id="player_' . $this->id . '" data-title="' . $this->title . '" data-episode_link="' . $this->getLink('avsnitt') . '"></a>';
 	}
 }

@@ -173,53 +173,19 @@ function rangeDownload($file) {
 	public function play()
 	{
 		$url = Input::get('url');
-die(var_dump($url));
-		$ch = curl_init($url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_HEADER, true);
-		$data = curl_exec($ch);
-		curl_close($ch);
-		if ($data === false) {
-			echo 'CURL Failed';
-			exit;
-		}
 
-		$ch = curl_init($url);
+		die('-->'.strlen(file_get_contents($url)));
 
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_HEADER, true);
-		$data = curl_exec($ch);
-		curl_close($ch);
-		if ($data === false) {
-			echo 'CURL Failed';
-			exit;
-		}
+		header('Content-type: audio/mpeg');
 
-//Get file size
-		if (preg_match('/Content-Length: (\d+)/', $data, $matches)) {
-			$contentLength = (int)$matches[1];
-		}
+		header('Content-Length: '. filesize($path)); // provide file size
 
-//force user to download file contents
-		header('Content-Transfer-Encoding: binary');
-		header('Content-Type: audio/mpeg');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate');
-		header('Content-Length: ' . $contentLength);
-		ob_clean();
-		flush();
-		echo $data;
-		exit;
+		header("Expires: -1");
 
-		/*$url = Input::get('url');
+		header("Cache-Control: no-store, no-cache, must-revalidate");
 
-		$data = file_get_contents($url);
+		header("Cache-Control: post-check=0, pre-check=0", false);
 
-		$response = Response::make($data, 300);
-
-		$response->header('Content-Type', 'audio/mp3');
-		$response->header('Content-Length', strlen($data));
-
-		return $response;*/
+		readfile($path);
 	}
 }
