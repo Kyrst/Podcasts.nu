@@ -1,5 +1,7 @@
 var $player;
 
+var playing_url = null;
+
 $(function()
 {
 	$.cookie.json = true;
@@ -57,6 +59,10 @@ $(function()
 				{
 					$player.jPlayer('play', playing_cookie_object.progress);
 				}
+				else
+				{
+					$player.jPlayer('playHead', playing_cookie_object.percent);
+				}
 			}
 		},
 		loadstart: function()
@@ -65,7 +71,17 @@ $(function()
 		},
 		play: function()
 		{
-			console.log('play');
+			$('.play').each(function(index, element)
+			{
+				if ( $(element).data('url') === playing_url )
+				{
+					$(element).addClass('sm2_playing');
+				}
+				else
+				{
+					$(element).removeClass('sm2_playing');
+				}
+			});
 		},
 		progress: function()
 		{
@@ -73,7 +89,17 @@ $(function()
 		},
 		pause: function(e)
 		{
-			console.log('pause');
+			$('.play').each(function(index, element)
+			{
+				if ( $(element).data('url') === playing_url )
+				{
+					$(element).removeClass('sm2_playing');
+				}
+				else
+				{
+					$(element).addClass('sm2_playing');
+				}
+			});
 		}
 	});
 
@@ -82,14 +108,30 @@ $(function()
 		var $this = $(this),
 			url = $this.data('url');
 
-		$player.jPlayer('setMedia',
+		if ( $this.hasClass('sm2_playing') ) // Pause
 		{
-			mp3: url
-		});
+			//$this.removeClass('sm2_playing');
 
-		show_player();
+			$player.jPlayer('pause');
+		}
+		else // Play
+		{
+			//$this.addClass('sm2_playing');
 
-		$player.jPlayer('play'/*, TIME */);
+			if ( $player.data().jPlayer.status.src !== url )
+			{
+				$player.jPlayer('setMedia',
+				{
+					mp3: url
+				});
+			}
+
+			show_player();
+
+			$player.jPlayer('play'/*, TIME */);
+
+			playing_url = url;
+		}
 	});
 
 	$('#player_controls').find('.jp-stop').on('click', function()
@@ -124,7 +166,8 @@ window.onbeforeunload = function()
 			 episode_link: '',
 			 progress: player_data.jPlayer.status.currentTime,
 			 duration: player_data.jPlayer.status.duration,
-			 is_playing: (player_data.jPlayer.status.paused === false) ? 1 : 0
+			 is_playing: (player_data.jPlayer.status.paused === false) ? 1 : 0,
+			 percent: (player_data.jPlayer.status.currentTime / player_data.jPlayer.status.duration) * 100
 		 };
 
 		 $.cookie('playing', cookie_object, { path: '/' });
