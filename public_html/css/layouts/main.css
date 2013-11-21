@@ -143,7 +143,6 @@ a
 
 #player
 {
-	display: none;
 	float: left;
 	cursor: pointer;
 }
@@ -217,4 +216,9 @@ a.sm2_button:focus
 a.sm2_button.sm2_playing
 {
 	background-image: url(../../images/player/control_pause.png);
+}
+
+#add_button_container
+{
+	margin-bottom: 15px
 }

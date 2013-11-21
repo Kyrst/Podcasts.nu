@@ -1,6 +1,8 @@
 <h1>Poddar</h1>
 
-<p><a href="<?= URL::route('admin/podd', array(), false); ?>" class="btn btn-primary">Lägg till</a></p>
+<div id="add_button_container">
+	<a href="<?= URL::route('admin/podd', array(), false); ?>" class="btn btn-primary">Lägg till</a>
+</div>
 
 <table class="table table-bordered">
 	<tr>

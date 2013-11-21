@@ -1,8 +1,8 @@
 $(function()
 {
-	CKEDITOR.replace('_content',
+	CKEDITOR.replace('body',
 	{
-		filebrowserUploadUrl: BASE_URL + '/admin/upload_news_item_image',
+		filebrowserUploadUrl: BASE_URL + '/admin/upload_blog_item_image',
 		height: 345
 	});
 

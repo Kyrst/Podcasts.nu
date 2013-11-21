@@ -1,9 +1,78 @@
 <?php
 class AdminController extends BaseController
 {
-	public function view_blogs()
+	public function view_blog_items()
 	{
+		$blog_items = Blog_Item::all();
+
+		$this->assign('num_blog_items', count($blog_items));
+		$this->assign('blog_items', $blog_items);
+
 		$this->display('admin.view_blogs', 'Blogg - Administatör');
+	}
+
+	public function blog_item($id = NULL)
+	{
+		$input = Input::all();
+
+		// Save
+		if ( isset($input['save']) )
+		{
+			if ( isset($input['blog_item_id']) && filter_var($input['blog_item_id'], FILTER_VALIDATE_INT) ) // Edit
+			{
+				$blog_item_to_edit = Blog_Item::find($id);
+
+				if ( $blog_item_to_edit !== NULL )
+				{
+					$blog_item_to_edit->title = trim($input['title']);
+					$blog_item_to_edit->slug = Str::slug(trim($input['slug']));
+					$blog_item_to_edit->body = trim($input['body']);
+					$blog_item_to_edit->save();
+
+					$this->showAlert('Blogginlägget sparad!');
+				}
+
+				return Redirect::to('admin/blogg');
+			}
+			else // Add
+			{
+				$blog_item = new Blog_Item();
+				$blog_item->user_id = $this->user->id;
+				$blog_item->title = trim($input['title']);
+				$blog_item->slug = Str::slug(trim($input['slug']));
+				$blog_item->body = trim($input['body']);
+				$blog_item->save();
+
+				$this->showAlert('Blogginlägget tillagt!');
+
+				return Redirect::to('admin/blogg');
+			}
+		}
+
+		$edit_mode = false;
+
+		if ( $id !== NULL ) // Edit
+		{
+			$blog_item = Blog_Item::find($id);
+
+			// If user was not found
+			if ( $blog_item === NULL )
+			{
+				$this->showAlert('Kunde inte hitta blogginlägget!');
+
+				return Redirect::to('admin/nyheter');
+			}
+
+			$this->assign('blog_item_to_edit', $blog_item);
+
+			$edit_mode = true;
+		}
+
+		$this->assign('edit_mode', $edit_mode);
+
+		$this->loadLib('ckeditor');
+
+		$this->display('admin.blog_item');
 	}
 
 	public function view_news_items()

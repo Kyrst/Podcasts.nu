@@ -160,9 +160,23 @@ Route::get('/bli-medlem', array
 // Admin: Blogg
 Route::get('/admin/blogg', array
 (
-	'uses' => 'AdminController@view_blogs',
+	'uses' => 'AdminController@view_blog_items',
 	'as' => 'admin/blogg'
 ));
+
+// Admin: Blogg: Lägg till
+Route::get('/admin/blogginlagg/{id?}', array
+(
+	'uses' => 'AdminController@blog_item',
+	'as' => 'admin/blogginlagg'
+))->where('id', '[0-9]+');
+
+// Admin: Blogg: Lägg till/Ändra (POST)
+Route::post('/admin/blogginlagg/{id?}', array
+(
+	'uses' => 'AdminController@blog_item'
+))->where('id', '[0-9]+');
+
 
 // Admin: Nyheter
 Route::get('/admin/nyheter', array
@@ -247,4 +261,16 @@ Route::get('/ajax/get-episode-comments/{id}', array
 Route::post('/ajax/comment-episode', array
 (
 	'uses' => 'AjaxController@comment_episode'
+));
+
+// AJAX: Slugify
+Route::get('/slugify', array
+(
+	'uses' => 'AjaxController@slugify'
+));
+
+// AJAX: Play
+Route::get('/play', array
+(
+	'uses' => 'AjaxController@play'
 ));

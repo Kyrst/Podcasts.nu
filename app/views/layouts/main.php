@@ -149,7 +149,11 @@
 				<?php endif; ?>
 
 				<?php foreach ( $js_vars as $key => $value ): ?>
-					var <?= $key; ?> = '<?= $value; ?>';
+					<?php if ( is_array($value) ): ?>
+						var <?= $key; ?> = <?= json_encode($value); ?>;
+					<?php else: ?>
+						var <?= $key; ?> = '<?= $value; ?>';
+					<?php endif ?>
 				<?php endforeach; ?>
 			</script>
 		<?php endif; ?>

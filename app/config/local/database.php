@@ -9,7 +9,7 @@ return array
 			'host'      => '127.0.0.1',
 			'database'  => 'podcasts_nu',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => 'p3edz9',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => ''

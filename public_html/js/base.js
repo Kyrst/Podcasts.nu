@@ -43,7 +43,7 @@ $(function()
 			// Load from cookie?
 			if ( typeof playing_cookie_object !== 'undefined' )
 			{
-				playing_cookie_object = JSON.parse(playing_cookie_object);
+				//playing_cookie_object = JSON.parse(playing_cookie_object);
 
 				current_id = playing_cookie_object.id;
 				current_title = playing_cookie_object.title;
@@ -56,7 +56,7 @@ $(function()
 					sound.position = playing_cookie_object.progress;
 				}
 
-				update_player_position(playing_cookie_object.progress, playing_cookie_object.duration, true);
+				//update_player_position(playing_cookie_object.progress, playing_cookie_object.duration, true);
 
 				loaded_from_cookie = true;
 			}
@@ -110,10 +110,10 @@ $(function()
 						used_ids.push(current_id);
 
 						// Save liten
-						$.post(BASE_URL + 'save-listen', { episode_id: current_episode_id }, function(result)
+						/*$.post(BASE_URL + 'save-listen', { episode_id: current_episode_id }, function(result)
 						{
 							console.log(result);
-						});
+						});*/
 					}
 					else
 					{
@@ -229,6 +229,8 @@ $(window).on('unload', function()
 {
 	if ( sound )
 	{
+		console.log('had sound on unload');
+
 		var cookie_object =
 		{
 			id: sound.id,
@@ -245,7 +247,15 @@ $(window).on('unload', function()
 	}
 	else
 	{
-		$.removeCookie('playing', { path: '/' });
+		console.log('no sound on unload');
+
+		// Check if cookie exists
+		/*var cookie = $.cookie('playing');
+
+		if ( typeof cookie !== 'undefined' )
+		{
+			$.removeCookie('playing', { path: '/' });
+		}*/
 	}
 });
 
@@ -265,6 +275,7 @@ function createSound(player_id, url, volume, progress, play)
 	return sound_manager.createSound(
 	{
 		id: player_id,
+		//url: BASE_URL + 'play?url=' + url,
 		url: url,
 		volume: volume,
 		autoLoad: true,
@@ -346,6 +357,8 @@ function createSound(player_id, url, volume, progress, play)
 
 function update_player_position(position, duration, update_progress_bar)
 {
+	console.log(position + ' / ' + duration);
+
 	var _current = new Date(position),
 		_duration = new Date(duration),
 		current_minutes = _current.getMinutes(),

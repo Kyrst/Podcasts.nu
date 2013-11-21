@@ -107,10 +107,12 @@ class BaseController extends Controller
 				$this->assign('bootbox_alert', $bootbox_alert, array('layout'));
 			}
 
+			error_log('isset($_COOKIE[\'playing\']): ' . (isset($_COOKIE['playing']) ? 'yes' : 'no'));
+
 			// Playing cookie
 			if ( isset($_COOKIE['playing']) )
 			{
-				$this->assign('playing_cookie_object', $_COOKIE['playing'], array('js'));
+				$this->assign('playing_cookie_object', json_decode($_COOKIE['playing'], TRUE), array('js'));
 			}
 
 			// Load jQuery
