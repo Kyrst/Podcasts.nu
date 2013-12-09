@@ -112,7 +112,7 @@
 		<div class="clear"></div>
 
 		<!-- Content -->
-		<div class="container">
+		<div id="content" class="container">
 			<?php if ( in_array($current_route, array('/min-sida', '/admin/blogg', '/admin/nyheter', '/admin/nyhet', '/admin/nyhet/{id}', '/admin/anvandare')) ): ?>
 				<ul class="nav nav-tabs">
 					<li<?php if ($current_route === '/min-sida'): ?> class="active"<?php endif; ?>><a href="<?= URL::route('min-sida', array(), false); ?>">Min sida</a></li>
@@ -128,7 +128,7 @@
 			<?= $content; ?>
 		</div>
 
-		<div class="navbar navbar-fixed-bottom" style="background-color:#000">
+		<div id="footer" class="navbar navbar-fixed-bottom" style="background-color:#000">
 			<div class="container text-center">
 				<div id="player" class="jp-jplayer center"></div>
 
@@ -146,26 +146,22 @@
 							<div class="jp-progress">
 								<div class="jp-seek-bar">
 									<div class="jp-play-bar"></div>
-
 								</div>
 							</div>
+
 							<div class="jp-volume-bar">
 								<div class="jp-volume-bar-value"></div>
 							</div>
-							<div class="jp-current-time"></div>
-							<div class="jp-duration"></div>
-							<?php /*
-							<ul class="jp-toggles">
-								<?php <li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li> ?>
-								<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
-							</ul>
-							*/ ?>/
+
+							<div id="player_time_container">
+								<div class="jp-current-time"></div> <div id="player_time_separator">/</div> <div class="jp-duration"></div>
+							</div>
+
+							<div id="player_title">
+								Artist - Song
+							</div>
 						</div>
-						<div class="jp-title">
-							<ul>
-								<li>Cro Magnon Man</li>
-							</ul>
-						</div>
+
 						<div class="jp-no-solution">
 							<span>Update Required</span>
 							To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.

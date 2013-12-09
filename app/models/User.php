@@ -21,4 +21,9 @@ class User extends VerifyUser
 	{
 		return !empty($this->first_name) && !empty($this->last_name) ? $this->first_name . ' ' . $this->last_name : $this->email;
 	}
+
+	public function blog()
+	{
+		return $this->belongsTo('Blog');
+	}
 }

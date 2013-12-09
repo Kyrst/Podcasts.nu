@@ -188,12 +188,49 @@ class HomeController extends BaseController
 
     public function view_blogs()
     {
+    	$blogs = Blog::all();
+
+    	$this->assign('blogs', $blogs);
+
         $this->display('home.view_blogs', 'Bloggar');
     }
-    public function view_blog()
+
+    public function view_blog($slug)
     {
-        $this->display('home.view_blog', 'Blogg');
+		try
+		{
+			$blog = Blog::where('slug', '=', $slug)->firstOrFail();
+		}
+		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+		{
+			$this->showAlert('Kunde inte hitta bloggen!');
+
+			return Redirect::route('bloggar');
+		}
+
+		$this->assign('blog', $blog);
+
+        $this->display('home.view_blog', $blog->name);
     }
+
+    public function view_blog_item($blog_slug, $blog_item_date, $blog_item_slug)
+	{
+		try
+		{
+			$blog_item = Blog_Item::where('slug', '=', $blog_item_slug)->firstOrFail();
+		}
+		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+		{
+			$this->showAlert('Kunde inte hitta blogginlägget!');
+
+			return Redirect::route('bloggar');
+		}
+
+		$this->assign('blog_item', $blog_item);
+
+		$this->display('home.view_blog_item', $blog_item->title . ' - ' . $blog_item->blog->name);
+	}
+
     public function view_poddsnacks()
     {
         $this->display('home.view_poddsnacks', 'poddsnacks');

@@ -27,6 +27,19 @@ Route::get('/bloggar', array
     'uses' => 'HomeController@view_blogs',
     'as' => 'bloggar'
 ));
+
+// Blogg
+Route::get('/bloggar/{slug}', array
+(
+	'uses' => 'HomeController@view_blog'
+))->where(array('slug' => '[a-z0-9\-]+'));
+
+// Blogginläggg
+Route::get('/bloggar/{blog_slug}/{blog_item_date}/{blog_item_slug}', array
+(
+	'uses' => 'HomeController@view_blog_item'
+))->where(array('blog_slug' => '[a-z0-9\-]+', 'blog_item_date' => '[0-9]{4}-[0-9]{2}-[0-9]{2}', 'blog_item_slug' => '[a-z0-9\-]+'));
+
 //För varje blogg, kanske Route::get('/blogg/{namn}')
 Route::get('/blogg', array
 (

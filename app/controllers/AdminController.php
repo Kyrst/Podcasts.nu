@@ -3,10 +3,13 @@ class AdminController extends BaseController
 {
 	public function view_blog_items()
 	{
-		$blog_items = Blog_Item::all();
+		if ( $this->user->blog_id !== NULL )
+		{
+			$blog_items = Blog_Item::where('blog_id', '=', $this->user->blog_id)->get();
 
-		$this->assign('num_blog_items', count($blog_items));
-		$this->assign('blog_items', $blog_items);
+			$this->assign('num_blog_items', $blog_items->count());
+			$this->assign('blog_items', $blog_items);
+		}
 
 		$this->display('admin.view_blogs', 'Blogg - Administatör');
 	}

@@ -222,3 +222,13 @@ a.sm2_button.sm2_playing
 {
 	margin-bottom: 15px
 }
+
+#content
+{
+	padding-bottom: 120px;
+}
+
+#footer
+{
+	height: 70px;
+}

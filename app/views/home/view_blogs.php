@@ -5,31 +5,19 @@
 
 <!-- Presentation av bloggare. Bild och länk -->
 <h1>Bloggar</h1>
-<div class="artist col-lg-4 col-md-4 col-sm-4 col-xs-4">
-    <div class="thumbnail">
-        <div class="caption">
-            <h3>Daniel Myrberg</h3>
-            <p>Info om bloggen</p>
-        </div>
-    </div>
-</div>
-<div class="artist col-lg-4 col-md-4 col-sm-4 col-xs-4">
-    <div class="thumbnail">
-        <div class="caption">
-            <h3>Jens Öhlund</h3>
-            <p>Info om bloggen</p>
-        </div>
-    </div>
-</div>
-<div class="artist col-lg-4 col-md-4 col-sm-4 col-xs-4">
-    <div class="thumbnail">
-        <div class="caption">
-            <h3>Lovisa Ohlson</h3>
-            <p>Info om bloggen</p>
-        </div>
-    </div>
-</div>
-<!-- -->
+
+<?php foreach ( $blogs as $blog ): ?>
+	<div class="artist col-lg-4 col-md-4 col-sm-4 col-xs-4">
+		<div class="thumbnail">
+			<div class="caption">
+				<h3><a href="<?= $blog->getLink() ?>"><?= $blog->name ?></a></h3>
+				<p>Info om bloggen</p>
+			</div>
+		</div>
+	</div>
+<?php endforeach ?>
+
+<div class="clear"></div>
 
 <!-- En container per inlägg -->
 <div class="container">
@@ -48,5 +36,4 @@
     <!-- -->
 </div>
 <!--  -->
-
 

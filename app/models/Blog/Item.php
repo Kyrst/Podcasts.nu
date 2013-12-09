@@ -7,4 +7,14 @@ class Blog_Item extends Eloquent
 	{
 		return $this->belongsTo('User');
 	}
+
+	public function blog()
+	{
+		return $this->belongsTo('Blog');
+	}
+
+	public function getLink()
+	{
+		return URL::to($this->blog->getLink() . '/' . date('Y-m-d', strtotime($this->created_at)) . '/' . $this->slug);
+	}
 }
