@@ -40,6 +40,7 @@ class AdminController extends BaseController
 			else // Add
 			{
 				$blog_item = new Blog_Item();
+				$blog_item->blog_id = $this->user->blog->id;
 				$blog_item->user_id = $this->user->id;
 				$blog_item->title = trim($input['title']);
 				$blog_item->slug = Str::slug(trim($input['slug']));
