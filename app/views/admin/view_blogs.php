@@ -1,6 +1,6 @@
-<h1><?= $user->blog->name ?></h1>
-
 <?php if ( $user->blog !== NULL ): ?>
+	<h1><?= $user->blog->name ?></h1>
+
 	<div id="add_button_container">
 		<a href="<?= URL::route('admin/blogginlagg', array(), false); ?>" class="btn btn-primary">Nytt blogginlägg</a>
 	</div>
@@ -31,5 +31,7 @@
 		<p>Inga blogginlägg.</p>
 	<?php endif ?>
 <?php else: ?>
+	<h1>Blogg</h1>
+
 	<p>Du är inte kopplad till någon blogg.</p>
 <?php endif; ?>
