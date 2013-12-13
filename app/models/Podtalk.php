@@ -5,7 +5,7 @@ class Podtalk extends Eloquent
 
 	public function get_link()
 	{
-		return URL::to('poddsnacks/' . $this->slug);
+		return URL::to('poddsnack/' . $this->slug);
 	}
 
 	public function image_exists()

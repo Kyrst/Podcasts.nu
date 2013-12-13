@@ -93,18 +93,16 @@ Route::get('/topplista', array
    'as' => 'topplista'
 ));
 
-//Poddsnack, blir sen /poddsnack & /poddsnack/poddsnack-titel Samma som på Podcasts.nu
-Route::get('/poddsnacks', array
+Route::get('/poddsnack', array
 (
     'uses' => 'HomeController@view_poddsnacks',
     'as' => 'poddsnacks'
 ));
-Route::get('/poddsnack', array
-(
-    'uses' => 'HomeController@view_poddsnack',
-    'as' => 'poddsnack'
-));
 
+Route::get('/poddsnack/{slug}', array
+(
+    'uses' => 'HomeController@view_poddsnack'
+));
 
 // Logga in
 Route::get('/logga-in', array

@@ -67,7 +67,7 @@
 										<li><a href="<?= URL::route('admin/blogg', array(), false); ?>">Blogg</a></li>
 										<li><a href="<?= URL::route('admin/poddar', array(), false); ?>">Poddar</a></li>
 										<li><a href="<?= URL::route('admin/episodes', array(), false); ?>">Avsnitt</a></li>
-										<li><a href="<?= URL::route('admin/poddsnacks', array(), false); ?>">Poddsnack</a></li>
+										<li><a href="<?= URL::route('admin/poddsnack', array(), false); ?>">Poddsnack</a></li>
 										<li><a href="<?= URL::route('admin/anvandare', array(), false); ?>">Användare</a></li>
 										<li class="divider"></li>
 									<?php endif ?>

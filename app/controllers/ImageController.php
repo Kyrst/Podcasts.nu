@@ -10,6 +10,11 @@ class ImageController extends BaseController
 			'width' => 64,
 			'height' => 64
 		),
+		'medium' => array
+		(
+			'width' => 128,
+			'height' => 128
+		),
 		'admin_poddsnack' => array
 		(
 			'width' => NULL,

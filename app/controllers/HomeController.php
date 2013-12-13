@@ -245,10 +245,25 @@ class HomeController extends BaseController
 
         $this->display('home.view_poddsnacks', 'Poddsnack');
     }
-    public function view_poddsnack()
+
+    public function view_poddsnack($slug)
     {
+    	try
+		{
+    		$podtalk = Podtalk::where('slug', '=', $slug)->firstOrFail();
+		}
+		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+		{
+			$this->showAlert('Kunde inte hitta poddsnacket!');
+
+			return Redirect::route('poddsnacks');
+		}
+
+		$this->assign('podtalk', $podtalk);
+
         $this->display('home.view_poddsnack', 'poddsnack');
     }
+
     public function view_toplist()
     {
         $this->display('home.view_toplist', 'topplista');
