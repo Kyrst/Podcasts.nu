@@ -427,10 +427,14 @@ class AdminController extends BaseController
 				return Redirect::to('admin/podtalks');
 			}
 
-			$this->assign('podtalk_to_edit', $podtalk);
-
 			$edit_mode = true;
 		}
+		else
+		{
+			$podtalk = NULL;
+		}
+
+		$this->assign('podtalk_to_edit', $podtalk);
 
 		$this->assign('podtalks', Podtalk::all());
 
