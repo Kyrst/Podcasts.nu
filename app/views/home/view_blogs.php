@@ -21,19 +21,16 @@
 
 <!-- En container per inlägg -->
 <div class="container">
-    <h1>Senaste 10 inläggen nedanför</h1>
-    <h1>...</h1>
-    <h1>...</h1>
-    <h1>...</h1>
-    <!-- Miniatyr av bloggaren, med namn -->
-    <div class="media">
-        <img class="media-object" src="">
-        </a>
-        <div class="media-body">
-            <h4 class="media-heading">Daniel Myrberg</h4>
-        </div>
-    </div>
-    <!-- -->
+    <h1>Senaste inläggen</h1>
+
+	<?php foreach ( $latest_blog_items as $blog_item ): ?>
+		<div class="media">
+			<div class="media-body">
+				<h4 class="media-heading"><a href="<?= $blog_item->getLink() ?>"><?= $blog_item->title ?> - <?= $blog_item->blog->name ?></a></h4>
+				<p class="added"><?= $blog_item->created_at ?></p>
+			</div>
+		</div>
+    <?php endforeach ?>
 </div>
 <!--  -->
 

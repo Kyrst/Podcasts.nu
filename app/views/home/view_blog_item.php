@@ -7,8 +7,9 @@
 
 <div class="panel panel-danger" style="margin-top:20px">
 	<div class="panel-heading">
-		<h3 class="panel-title"><a href="<?= $blog_item->getLink() ?>"><?= $blog_item->title ?></a></h3>
+		<h1 class="panel-title"><a href="<?= $blog_item->getLink() ?>"><?= $blog_item->title ?></a></h1>
 	</div>
+
 	<div class="panel-body">
 		<div id="comments_container">
 		</div>

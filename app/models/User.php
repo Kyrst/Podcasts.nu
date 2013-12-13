@@ -12,7 +12,7 @@ class User extends VerifyUser
 		return URL::to('images/avatars/default.png', array(), false);
 	}
 
-	public function isAdmin()
+	public function is_admin()
 	{
 		return $this->is('Admin');
 	}

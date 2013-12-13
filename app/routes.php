@@ -231,6 +231,32 @@ Route::post('/admin/podd/{id?}', array
 	'uses' => 'AdminController@podcast'
 ))->where('id', '[0-9]+');
 
+// Admin: Poddsnack
+Route::get('/admin/poddsnacks', array
+(
+	'uses' => 'AdminController@view_podtalks',
+	'as' => 'admin/poddsnacks'
+));
+
+// Admin: Poddsnack
+Route::get('/admin/poddsnack', array
+(
+	'uses' => 'AdminController@podtalk',
+	'as' => 'admin/poddsnack'
+));
+
+// Admin: Poddsnack: Lägg till/Ändra
+Route::get('/admin/poddsnack/{id?}', array
+(
+	'uses' => 'AdminController@podtalk'
+))->where('id', '[0-9]+');
+
+// Admin: Poddsnack: Lägg till/Ändra (POST)
+Route::post('/admin/poddsnack/{id?}', array
+(
+	'uses' => 'AdminController@podtalk'
+))->where('id', '[0-9]+');
+
 // Admin: Avsnitt
 Route::get('/admin/episodes', array
 (
@@ -287,3 +313,13 @@ Route::get('/play', array
 (
 	'uses' => 'AjaxController@play'
 ));
+
+Route::post('/admin/upload_news_item_image', array
+(
+	'uses' => 'AdminController@upload_news_item_image'
+));
+
+Route::get('/bild/{type}/{id}/{size}', array
+(
+	'uses' => 'ImageController@init'
+))->where(array('type' => '(poddsnack)', 'id' => '\d+', 'size' => '.*'));

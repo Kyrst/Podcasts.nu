@@ -151,7 +151,7 @@ class AdminController extends BaseController
 
 		$this->loadLib('ckeditor');
 
-		$this->display('admin.news_item', 'Nyhet - Nyheter - Administatör');
+		$this->display('admin.news_item', '[Nyhet] - Nyheter - Administatör');
 	}
 
 	public function view_podcasts()
@@ -252,7 +252,7 @@ class AdminController extends BaseController
 
 		$this->assign('edit_mode', $edit_mode);
 
-		$this->display('admin.podcast', 'Podcast - Poddar - Administatör');
+		$this->display('admin.podcast', '[Podcast] - Poddar - Administatör');
 	}
 
 	public function view_episodes()
@@ -264,7 +264,7 @@ class AdminController extends BaseController
 		$this->display('admin.view_episodes', 'Avsnitt - Administatör');
 	}
 
-	// Add/Edit episode
+	// Add/edit episode
 	public function episode($id = NULL)
 	{
 		$input = Input::all();
@@ -340,5 +340,104 @@ class AdminController extends BaseController
 		$this->assign('users', $users);
 
 		$this->display('admin.view_users', 'Användare - Administatör');
+	}
+
+	public function upload_news_item_image()
+	{
+		$input = Input::file('upload');
+
+		$dst_path = NEWS_IMAGES_DIR_ABSOLUTE;
+
+		$output_path = basename(Str::slug($input->getClientOriginalName()), $input->getClientOriginalExtension()) . '.' . $input->getClientOriginalExtension();
+
+		Input::file('upload')->move($dst_path, $output_path);
+
+		die(BASE_URL . 'images/news/' . $output_path);
+	}
+
+	public function view_podtalks()
+	{
+		$podtalks = Podtalk::all();
+
+		$this->assign('podtalks', $podtalks);
+
+		$this->display('admin.view_podtalks', 'Poddsnack - Administatör');
+	}
+
+	// Add/edit podtalk
+	public function podtalk($id = NULL)
+	{
+		$input = Input::all();
+
+		if ( isset($input['save']) )
+		{
+			if ( isset($input['podtalk_id']) && filter_var($input['podtalk_id'], FILTER_VALIDATE_INT) ) // Edit
+			{
+				$podtalk_to_edit = Podtalk::find($id);
+
+				if ( $podtalk_to_edit !== NULL )
+				{
+					$podtalk_to_edit->title = trim(Input::get('title'));
+					$podtalk_to_edit->slug = trim(Input::get('slug'));
+					$podtalk_to_edit->description = trim(Input::get('description'));
+					$podtalk_to_edit->body = trim(Input::get('body'));
+					$podtalk_to_edit->save();
+
+					if ( Input::hasFile('image') )
+					{
+						$podtalk_to_edit->save_image(Input::file('image'));
+					}
+
+					$this->showAlert('Poddsnack sparat!');
+				}
+
+				return Redirect::to('admin/poddsnacks');
+			}
+			else // Add
+			{
+				$podtalk = new Podtalk();
+				$podtalk->title = trim(Input::get('title'));
+				$podtalk->slug = trim(Input::get('slug'));
+				$podtalk->description = trim(Input::get('description'));
+				$podtalk->body = trim(Input::get('body'));
+				$podtalk->save();
+
+				if ( Input::hasFile('image') )
+				{
+					$podtalk->save_image(Input::file('image'));
+				}
+
+				$this->showAlert('Poddsnack tillagt!');
+
+				return Redirect::to('admin/poddsnacks');
+			}
+		}
+
+		$edit_mode = false;
+
+		if ( $id !== NULL ) // Edit
+		{
+			$podtalk = Podtalk::find($id);
+
+			// If podtalk was not found
+			if ( $podtalk === NULL )
+			{
+				$this->showAlert('Kunde inte hitta poddsnacket!');
+
+				return Redirect::to('admin/podtalks');
+			}
+
+			$this->assign('podtalk_to_edit', $podtalk);
+
+			$edit_mode = true;
+		}
+
+		$this->assign('podtalks', Podtalk::all());
+
+		$this->assign('edit_mode', $edit_mode);
+
+		$this->loadLib('ckeditor');
+
+		$this->display('admin.podtalk', '[Poddsnack] - Poddsnack - Administatör');
 	}
 }

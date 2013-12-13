@@ -188,9 +188,15 @@ class HomeController extends BaseController
 
     public function view_blogs()
     {
-    	$blogs = Blog::all();
+ 		// Bloggar
+ 	  	$blogs = Blog::all();
 
     	$this->assign('blogs', $blogs);
+
+    	// Senaste blogginläggen
+    	$latest_blog_items = Blog_Item::orderBy('created_at', 'DESC')->get();
+
+    	$this->assign('latest_blog_items', $latest_blog_items);
 
         $this->display('home.view_blogs', 'Bloggar');
     }
@@ -233,7 +239,11 @@ class HomeController extends BaseController
 
     public function view_poddsnacks()
     {
-        $this->display('home.view_poddsnacks', 'poddsnacks');
+		$podtalks = Podtalk::all();
+
+		$this->assign('podtalks', $podtalks);
+
+        $this->display('home.view_poddsnacks', 'Poddsnack');
     }
     public function view_poddsnack()
     {
