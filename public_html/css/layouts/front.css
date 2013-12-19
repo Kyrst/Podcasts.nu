@@ -230,5 +230,29 @@ a.sm2_button.sm2_playing
 
 #footer
 {
-	height: 70px;
+	min-height: 26px;
+	height: 26px
+}
+
+#footer.open
+{
+	height: 70px
+}
+
+#toggle_footer_button
+{
+	display: inline-block;
+	width: 45px;
+	height: 20px;
+	margin-top: 3px;
+	margin-left: 10px;
+	color: #DE3A4A;
+	background-color: #333;
+	text-align: center;
+	line-height: 19px;
+}
+
+#toggle_footer_button:hover
+{
+	text-decoration: none;
 }

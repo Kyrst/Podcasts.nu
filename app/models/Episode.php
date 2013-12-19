@@ -35,4 +35,21 @@ class Episode extends Eloquent
 	{
 		return '<a href="javascript:" id="player_' . $this->id . '" class="play sm2_button" data-episode_id="' . $this->id . '" data-url="' . $this->media_link . '" data-id="player_' . $this->id . '" data-title="' . $this->title . '" data-episode_link="' . $this->getLink('avsnitt') . '"></a>';
 	}
+
+	public function get_score()
+	{
+		$result = DB::table('episodes')
+			->join('episode_votes', 'episodes.id', '=', 'episode_votes.episode_id')
+			->select((DB::raw('AVG(episode_votes.score) AS avg_score')))
+			->where('episode_votes.episode_id', $this->id)
+			//->groupBy('episodes.id')
+			->first();
+
+		return $result->avg_score;
+	}
+
+	public function print_rater()
+	{
+		return '<div data-rating="' . $this->get_score() . '" data-id="' . $this->id . '" class="raty"></div>';
+	}
 }

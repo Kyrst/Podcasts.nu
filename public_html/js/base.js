@@ -1,5 +1,7 @@
 var $player,
-	$jp_container_1;
+	$jp_container_1,
+	$footer,
+	$toggle_footer_button;
 
 var playing_url = null;
 
@@ -14,6 +16,49 @@ $(function()
 
 	$.cookie.json = true;
 
+	$footer = $('#footer');
+	$toggle_footer_button = $('#toggle_footer_button');
+
+	init_player();
+	init_raty();
+});
+
+window.onbeforeunload = function()
+{
+	if ( $player.data().jPlayer.status.src !== '' )
+	{
+		var player_data = $player.data();
+
+		var cookie_object =
+		{
+			url: player_data.jPlayer.status.src,
+			volume: player_data.jPlayer.options.volume,
+			title: current_title,
+			episode_link: '',
+			progress: player_data.jPlayer.status.currentTime,
+			duration: player_data.jPlayer.status.duration,
+			is_playing: (player_data.jPlayer.status.paused === false) ? 1 : 0,
+			percent: (player_data.jPlayer.status.currentTime / player_data.jPlayer.status.duration) * 100
+		};
+
+		$.cookie('playing', cookie_object, { path: '/' });
+	}
+	else
+	{
+		// Check if cookie exists
+		var cookie = $.cookie('playing');
+
+		if ( typeof cookie !== 'undefined' )
+		{
+			$.removeCookie('playing', { path: '/' });
+		}
+	}
+
+	$.cookie('player_state', is_player_open() ? 'open' : 'closed');
+}
+
+function init_player()
+{
 	$player = $('#player');
 
 	$jp_container_1 = $('#jp_container_1');
@@ -59,9 +104,9 @@ $(function()
 			if ( typeof playing_cookie_object !== 'undefined' )
 			{
 				$player.jPlayer('setMedia',
-				{
-					mp3: playing_cookie_object.url
-				});
+					{
+						mp3: playing_cookie_object.url
+					});
 
 				current_title = playing_cookie_object.title;
 				$('#player_title').html(current_title);
@@ -131,6 +176,11 @@ $(function()
 		}
 		else // Play
 		{
+			if ( !is_player_open() )
+			{
+				open_player();
+			}
+
 			//$this.addClass('sm2_playing');
 
 			if ( $player.data().jPlayer.status.src !== url )
@@ -157,7 +207,19 @@ $(function()
 
 		hide_player();
 	});
-});
+
+	$toggle_footer_button.on('click', function()
+	{
+		if ( is_player_open() )
+		{
+			close_player();
+		}
+		else
+		{
+			open_player();
+		}
+	});
+}
 
 function hide_player()
 {
@@ -169,34 +231,74 @@ function show_player()
 	$jp_container_1.show();
 }
 
-window.onbeforeunload = function()
+function init_raty()
 {
-	if ( $player.data().jPlayer.status.src !== '' )
+	var raty_img_dir = BASE_URL + 'libs/raty/img/';
+
+	$('.raty').raty(
 	{
-		var player_data = $player.data();
-
-		var cookie_object =
-		 {
-			 url: player_data.jPlayer.status.src,
-			 volume: player_data.jPlayer.options.volume,
-			 title: current_title,
-			 episode_link: '',
-			 progress: player_data.jPlayer.status.currentTime,
-			 duration: player_data.jPlayer.status.duration,
-			 is_playing: (player_data.jPlayer.status.paused === false) ? 1 : 0,
-			 percent: (player_data.jPlayer.status.currentTime / player_data.jPlayer.status.duration) * 100
-		 };
-
-		 $.cookie('playing', cookie_object, { path: '/' });
-	}
-	else
-	{
-		// Check if cookie exists
-		var cookie = $.cookie('playing');
-
-		if ( typeof cookie !== 'undefined' )
+		path: raty_img_dir,
+		/*cancelOff: raty_img_dir + 'cancel-off.png',
+		cancelOn: raty_img_dir + 'cancel-on.png',
+		starHalf: raty_img_dir + 'star-half.png',
+		starOff: raty_img_dir + 'star-off.png',
+		starOn: raty_img_dir + 'star-on.png',*/
+		score: function()
 		{
-			$.removeCookie('playing', { path: '/' });
+			return $(this).attr('data-rating');
+		},
+		click: function(score)
+		{
+			var target = $(this),
+				episode_id = target.data('id');
+
+			$(this).find('img').unbind('click');
+
+			$.post
+			(
+				BASE_URL + 'rate-episode',
+				{
+					episode_id: episode_id,
+					score: score
+				},
+				function(result)
+				{
+					if ( result.error === 'NOT_LOGGED_IN' )
+					{
+						alert('Du måste logga in för att kunna rösta!');
+
+						return;
+					}
+
+					console.log(result.data.new_score);
+
+					target.raty(
+					{
+						path: raty_img_dir,
+						score: result.data.new_score
+					})
+					.data('rating', result.data.new_score);
+				}
+			);
 		}
-	}
+	});
+}
+
+function open_player()
+{
+	$toggle_footer_button.html('&hearts;');
+
+	$footer.addClass('open');
+}
+
+function close_player()
+{
+	$toggle_footer_button.html('&spades;');
+
+	$footer.removeClass('open');
+}
+
+function is_player_open()
+{
+	return $footer.hasClass('open');
 }

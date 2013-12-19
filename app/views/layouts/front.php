@@ -108,7 +108,7 @@
                 <div class="row">
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Sök">
                     </div>
                 </form>
                 </div>
@@ -133,7 +133,9 @@
 			<?= $content; ?>
 		</div>
 
-		<div id="footer" class="navbar navbar-fixed-bottom" style="background-color:#000">
+		<div id="footer" class="navbar navbar-fixed-bottom<?php if ( $player_state === 'open' ): ?> open<?php endif ?>" style="background-color:#000">
+			<a href="javascript:" id="toggle_footer_button"><?= ($player_state === 'closed') ? '&spades;' : '&hearts;' ?></a>
+
 			<div class="container text-center">
 				<div id="player" class="jp-jplayer center"></div>
 

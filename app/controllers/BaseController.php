@@ -5,7 +5,7 @@ class BaseController extends Controller
 	const PAGE_TITLE_APPENDIX = 'Podcasts.nu';
 	const PAGE_TITLE_SEPARATOR = '-';
 
-	public $layout = 'layouts.main';
+	public $layout = 'layouts.front';
 
 	private $debug = FALSE;
 
@@ -51,6 +51,10 @@ class BaseController extends Controller
 			'css' => 'css/player.css',
 			'js' => 'libs/jplayer/jquery.jplayer.min.js'
 		),
+		'raty' => array
+		(
+			'js' => 'libs/raty/jquery.raty.min.js'
+		)
 	);
 
 	private $loaded_libs = array
@@ -101,6 +105,9 @@ class BaseController extends Controller
 			// jPlayer
 			$this->loadLib('jplayer', true);
 
+			// Raty
+			$this->loadLib('raty', true);
+
 			// Add current route to views
 			if ( $current_route !== NULL )
 				$this->assign('current_route', $current_route->getPath(), array('layout', 'content'));
@@ -126,6 +133,11 @@ class BaseController extends Controller
 
 			$this->assign('BASE_URL', URL::route('home', array(), false), 'js');
 			$this->assign('DEBUG', $this->debug, array('layout', 'content', 'js'));
+
+			// Check for player state
+			$player_state = isset($_COOKIE['player_state']) ? str_replace('"', '', $_COOKIE['player_state']) : 'closed';
+
+			$this->assign('player_state', $player_state, array('layout'));
 		}
 	}
 

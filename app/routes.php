@@ -321,3 +321,16 @@ Route::get('/bild/{type}/{id}/{size}', array
 (
 	'uses' => 'ImageController@init'
 ))->where(array('type' => '(poddsnack)', 'id' => '\d+', 'size' => '.*'));
+
+Route::post('/rate-episode', array
+(
+	'uses' => 'AjaxController@rate_episode'
+));
+
+Event::listen('illuminate.query', function($query)
+{
+	if ( app()->environment() === 'local' && Input::get('profiler') )
+	{
+		echo $query, '<hr>';
+	}
+});

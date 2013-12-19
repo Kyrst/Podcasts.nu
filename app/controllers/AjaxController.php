@@ -73,103 +73,6 @@ class AjaxController extends BaseController
 		die($slug);
 	}
 
-function rangeDownload($file) {
-
-	$fp = @fopen($file, 'rb');
-
-	$size   = filesize($file); // File size
-	$length = $size;           // Content length
-	$start  = 0;               // Start byte
-	$end    = $size - 1;       // End byte
-	// Now that we've gotten so far without errors we send the accept range header
-	/* At the moment we only support single ranges.
-	 * Multiple ranges requires some more work to ensure it works correctly
-	 * and comply with the spesifications: http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.2
-	 *
-	 * Multirange support annouces itself with:
-	 * header('Accept-Ranges: bytes');
-	 *
-	 * Multirange content must be sent with multipart/byteranges mediatype,
-	 * (mediatype = mimetype)
-	 * as well as a boundry header to indicate the various chunks of data.
-	 */
-	header("Accept-Ranges: 0-$length");
-	// header('Accept-Ranges: bytes');
-	// multipart/byteranges
-	// http://www.w3.org/Protocols/rfc2616/rfc2616-sec19.html#sec19.2
-	if (isset($_SERVER['HTTP_RANGE'])) {
-
-		$c_start = $start;
-		$c_end   = $end;
-		// Extract the range string
-		list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
-		// Make sure the client hasn't sent us a multibyte range
-		if (strpos($range, ',') !== false) {
-
-			// (?) Shoud this be issued here, or should the first
-			// range be used? Or should the header be ignored and
-			// we output the whole content?
-			header('HTTP/1.1 416 Requested Range Not Satisfiable');
-			header("Content-Range: bytes $start-$end/$size");
-			// (?) Echo some info to the client?
-			exit;
-		}
-		// If the range starts with an '-' we start from the beginning
-		// If not, we forward the file pointer
-		// And make sure to get the end byte if spesified
-		if ($range0 == '-') {
-
-			// The n-number of the last bytes is requested
-			$c_start = $size - substr($range, 1);
-		}
-		else {
-
-			$range  = explode('-', $range);
-			$c_start = $range[0];
-			$c_end   = (isset($range[1]) && is_numeric($range[1])) ? $range[1] : $size;
-		}
-		/* Check the range and make sure it's treated according to the specs.
-		 * http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
-		 */
-		// End bytes can not be larger than $end.
-		$c_end = ($c_end > $end) ? $end : $c_end;
-		// Validate the requested range and return an error if it's not correct.
-		if ($c_start > $c_end || $c_start > $size - 1 || $c_end >= $size) {
-
-			header('HTTP/1.1 416 Requested Range Not Satisfiable');
-			header("Content-Range: bytes $start-$end/$size");
-			// (?) Echo some info to the client?
-			exit;
-		}
-		$start  = $c_start;
-		$end    = $c_end;
-		$length = $end - $start + 1; // Calculate new content length
-		fseek($fp, $start);
-		header('HTTP/1.1 206 Partial Content');
-	}
-	// Notify the client the byte range we'll be outputting
-	header("Content-Range: bytes $start-$end/$size");
-	header("Content-Length: $length");
-
-	// Start buffered download
-	$buffer = 1024 * 8;
-	while(!feof($fp) && ($p = ftell($fp)) <= $end) {
-
-		if ($p + $buffer > $end) {
-
-			// In case we're only outputtin a chunk, make sure we don't
-			// read past the length
-			$buffer = $end - $p + 1;
-		}
-		set_time_limit(0); // Reset time limit for big files
-		echo fread($fp, $buffer);
-		flush(); // Free up memory. Otherwise large files will trigger PHP's memory limit.
-	}
-
-	fclose($fp);
-
-}
-
 	public function play()
 	{
 		$url = Input::get('url');
@@ -187,5 +90,56 @@ function rangeDownload($file) {
 		header("Cache-Control: post-check=0, pre-check=0", false);
 
 		readfile($path);
+	}
+
+	public function rate_episode()
+	{
+		$result = array
+		(
+			'data' => array(),
+			'error' => ''
+		);
+
+		if ( $this->user !== NULL )
+		{
+			$input = Input::all();
+
+			$episode_id = $input['episode_id'];
+
+			$episode = Episode::find($episode_id);
+
+			// Check if user already has voted for this
+			$result_already_voted = Episode_Vote::where('episode_id', $episode_id)->where('user_id', $this->user->id);
+
+			$already_voted = ($result_already_voted->count() === 1);
+
+			if ( !$already_voted ) // If not voted already
+			{
+				$episode_vote = new Episode_Vote();
+				$episode_vote->episode_id = $episode_id;
+				$episode_vote->user_id = $this->user->id;
+				$episode_vote->score = $input['score'];
+				$episode_vote->save();
+
+				$episode->score = $episode->get_score();
+				$episode->save();
+
+				$result['data']['new_score'] = $episode->score;
+			}
+			else // If voted already
+			{
+				$already_voted_row = $result_already_voted->first();
+				$already_voted_row->score = $input['score'];
+				$already_voted_row->save();
+
+				$result['data']['new_score'] = $already_voted_row->score;
+			}
+		}
+		else
+		{
+			$result['data']['error'] = 'NOT_LOGGED_IN';
+		}
+
+		return Response::json($result);
 	}
 }
