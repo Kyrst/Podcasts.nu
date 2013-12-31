@@ -241,6 +241,7 @@ a.sm2_button.sm2_playing
 
 #toggle_footer_button
 {
+	position: absolute;
 	display: inline-block;
 	width: 45px;
 	height: 20px;

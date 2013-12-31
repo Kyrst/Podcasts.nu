@@ -5,7 +5,8 @@ var $player,
 
 var playing_url = null;
 
-var current_title = '';
+var current_title = '',
+	current_episode_link = '';
 
 $(function()
 {
@@ -34,7 +35,7 @@ window.onbeforeunload = function()
 			url: player_data.jPlayer.status.src,
 			volume: player_data.jPlayer.options.volume,
 			title: current_title,
-			episode_link: '',
+			episode_link: current_episode_link,
 			progress: player_data.jPlayer.status.currentTime,
 			duration: player_data.jPlayer.status.duration,
 			is_playing: (player_data.jPlayer.status.paused === false) ? 1 : 0,
@@ -54,7 +55,7 @@ window.onbeforeunload = function()
 		}
 	}
 
-	$.cookie('player_state', is_player_open() ? 'open' : 'closed');
+	//$.cookie('player_state', is_player_open() ? 'open' : 'closed');
 }
 
 function init_player()
@@ -104,12 +105,14 @@ function init_player()
 			if ( typeof playing_cookie_object !== 'undefined' )
 			{
 				$player.jPlayer('setMedia',
-					{
-						mp3: playing_cookie_object.url
-					});
+				{
+					mp3: playing_cookie_object.url
+				});
 
 				current_title = playing_cookie_object.title;
-				$('#player_title').html(current_title);
+				current_episode_link = playing_cookie_object.episode_link;
+
+				$('#player_title').html('<a href="' + current_episode_link + '">' + current_title + '</a>');
 
 				show_player();
 
@@ -141,32 +144,23 @@ function init_player()
 				}
 			});
 		},
-		progress: function()
+		progress: function(e)
 		{
 			//console.log('progress');
 		},
 		pause: function(e)
 		{
-			$('.play').each(function(index, element)
-			{
-				if ( $(element).data('url') === playing_url )
-				{
-					$(element).removeClass('sm2_playing');
-				}
-				else
-				{
-					$(element).addClass('sm2_playing');
-				}
-			});
+			refresh_player_controls();
 		}
 	});
 
 	$('.play').on('click', function()
 	{
 		var $this = $(this),
-			url = $this.data('url');
-
-		current_title = $this.data('title');
+			url = $this.data('url'),
+			episode_id = $this.data('episode_id'),
+			episode_link = $this.data('episode_link'),
+			current_title = $this.data('title');
 
 		if ( $this.hasClass('sm2_playing') ) // Pause
 		{
@@ -185,7 +179,7 @@ function init_player()
 
 			if ( $player.data().jPlayer.status.src !== url )
 			{
-				$('#player_title').html(current_title);
+				$('#player_title').html('<a href="' + episode_link + '">' + current_title + '</a>');
 
 				$player.jPlayer('setMedia',
 				{
@@ -198,6 +192,17 @@ function init_player()
 			$player.jPlayer('play'/*, TIME */);
 
 			playing_url = url;
+
+			// Save listen
+			$.ajax(
+			{
+				type: 'POST',
+				url: BASE_URL + 'save-listen',
+				data:
+				{
+					episode_id: episode_id
+				}
+			});
 		}
 	});
 
@@ -205,7 +210,9 @@ function init_player()
 	{
 		$player.jPlayer('clearMedia');
 
-		hide_player();
+		close_player();
+
+		refresh_player_controls();
 	});
 
 	$toggle_footer_button.on('click', function()
@@ -238,6 +245,7 @@ function init_raty()
 	$('.raty').raty(
 	{
 		path: raty_img_dir,
+		readOnly: function() { return $(this).attr('data-readOnly') },
 		/*cancelOff: raty_img_dir + 'cancel-off.png',
 		cancelOn: raty_img_dir + 'cancel-on.png',
 		starHalf: raty_img_dir + 'star-half.png',
@@ -249,10 +257,8 @@ function init_raty()
 		},
 		click: function(score)
 		{
-			var target = $(this),
-				episode_id = target.data('id');
-
-			$(this).find('img').unbind('click');
+			var $target = $(this),
+				episode_id = $target.data('id');
 
 			$.post
 			(
@@ -270,14 +276,26 @@ function init_raty()
 						return;
 					}
 
-					console.log(result.data.new_score);
-
-					target.raty(
+					/*$target.raty(
 					{
 						path: raty_img_dir,
 						score: result.data.new_score
 					})
-					.data('rating', result.data.new_score);
+					.data('rating', result.data.new_score);*/
+
+					$target.raty('score', result.data.new_score).data('rating', result.data.new_score);
+
+					// Disable clicking again
+					//$target.find('img').unbind('click');
+
+					if ( result.data.voted_before === 'yes' )
+					{
+						show_jgrowl('Tack för din röst!' + '<br>' + 'Din tidigare röst har ersatts.');
+					}
+					else
+					{
+						show_jgrowl('Tack för din röst!');
+					}
 				}
 			);
 		}
@@ -293,6 +311,8 @@ function open_player()
 
 function close_player()
 {
+	hide_player();
+
 	$toggle_footer_button.html('&spades;');
 
 	$footer.removeClass('open');
@@ -301,4 +321,31 @@ function close_player()
 function is_player_open()
 {
 	return $footer.hasClass('open');
+}
+
+function show_jgrowl(message, sticky)
+{
+	$.jGrowl
+	(
+		message,
+		{
+			sticky: (sticky === true)
+		}
+	);
+}
+
+function refresh_player_controls()
+{
+	$('.play').each(function(index, element)
+	{
+		console.log($(element).data('url') + ' === ' + playing_url);
+
+		// Om den som spelar är den vi klickade på
+		if ( $(element).data('url') === playing_url )
+		{
+			$(element).removeClass('sm2_playing'); // Visa pause-knapp
+
+			return false; // break
+		}
+	});
 }

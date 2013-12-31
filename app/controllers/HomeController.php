@@ -140,7 +140,7 @@ class HomeController extends BaseController
 		$this->assign('num_episodes', count($episodes));
 		$this->assign('episodes', $episodes);
 
-		$this->display('home.view_episodes', 'Avsnitt');
+		$this->display('home.view_episodes', ($podcast !== NULL ? $podcast->name : '') . ' - Avsnitt');
 	}
 
 	public function view_episode($podcast, $episode)
@@ -183,6 +183,8 @@ class HomeController extends BaseController
 
 	public function my_page()
 	{
+		$this->assign('history', $this->user->get_history());
+
 		$this->display('home.my_page');
 	}
 

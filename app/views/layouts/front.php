@@ -133,8 +133,8 @@
 			<?= $content; ?>
 		</div>
 
-		<div id="footer" class="navbar navbar-fixed-bottom<?php if ( $player_state === 'open' ): ?> open<?php endif ?>" style="background-color:#000">
-			<a href="javascript:" id="toggle_footer_button"><?= ($player_state === 'closed') ? '&spades;' : '&hearts;' ?></a>
+		<div id="footer" class="navbar navbar-fixed-bottom<?php if ( isset($playing_cookie_object) ): ?> open<?php endif ?>" style="background-color:#000">
+			<a href="javascript:" id="toggle_footer_button"><?= (!isset($playing_cookie_object)) ? '&spades;' : '&hearts;' ?></a>
 
 			<div class="container text-center">
 				<div id="player" class="jp-jplayer center"></div>
@@ -164,9 +164,7 @@
 								<div class="jp-current-time"></div> <div id="player_time_separator">/</div> <div class="jp-duration"></div>
 							</div>
 
-							<div id="player_title">
-								Artist - Song
-							</div>
+							<div id="player_title"></div>
 						</div>
 
 						<div class="jp-no-solution">

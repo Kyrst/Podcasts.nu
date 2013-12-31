@@ -3,7 +3,29 @@ class AjaxController extends BaseController
 {
 	public function save_listen()
 	{
-		die('save_listen');
+		$result = array
+		(
+			'error' => ''
+		);
+
+		$input = Input::all();
+
+		$episode_listen = Episode_Listen::find($input['episode_id']);
+
+		$time = date('Y-m-d H:i:s');
+
+		if ( $episode_listen === NULL )
+		{
+			$episode_listen = new Episode_Listen();
+			$episode_listen->episode_id = $input['episode_id'];
+			$episode_listen->user_id = $this->user->id;
+		}
+
+		$episode_listen->first_time = $time;
+		$episode_listen->time = $time;
+		$episode_listen->save();
+
+		return Response::json($result);
 	}
 
 	public function comment_episode()
@@ -124,6 +146,7 @@ class AjaxController extends BaseController
 				$episode->score = $episode->get_score();
 				$episode->save();
 
+				$result['data']['voted_before'] = 'no';
 				$result['data']['new_score'] = $episode->score;
 			}
 			else // If voted already
@@ -132,6 +155,7 @@ class AjaxController extends BaseController
 				$already_voted_row->score = $input['score'];
 				$already_voted_row->save();
 
+				$result['data']['voted_before'] = 'yes';
 				$result['data']['new_score'] = $already_voted_row->score;
 			}
 		}

@@ -50,4 +50,21 @@ class Podcast extends Eloquent
 
 		return URL::to($section . '/' . $this->slug);
 	}
+
+	public function get_score($decimals = NULL)
+	{
+		$result = DB::table('podcasts')
+			->join('episodes', 'podcasts.id', '=', 'episodes.podcast_id')
+			->join('episode_votes', 'episodes.id', '=', 'episode_votes.episode_id')
+			->select((DB::raw('AVG(episode_votes.score) AS avg_score')))
+			->where('podcasts.id', $this->id)
+			->first();
+
+		return ($decimals === NULL) ? $result->avg_score : number_format($result->avg_score, $decimals);
+	}
+
+	public function print_rater()
+	{
+		return '<div data-rating="' . $this->get_score() . '" data-id="' . $this->id . '" data-type="podcast" data-readOnly="true" class="raty"></div>';
+	}
 }

@@ -26,4 +26,38 @@ class User extends VerifyUser
 	{
 		return $this->belongsTo('Blog');
 	}
+
+	public function get_history()
+	{
+		$history = array();
+
+		$user = Auth::user();
+
+		$history[] = array
+		(
+			'message' => 'Registrerade sig medlem på Podcasts.nu.',
+			'timestamp' => strtotime($user->created_at)
+		);
+
+		// Hämta lyssningar
+		$episode_listens = Episode_Listen::all();
+
+		foreach ( $episode_listens as $episode_listen )
+		{
+			$history[] = array
+			(
+				'message' => 'Lyssnade på <a href="' . $episode_listen->episode->getLink('poddar') . '">' . $episode_listen->episode->getTitle() . '</a>.',
+				'timestamp' => strtotime($episode_listen->time)
+			);
+		}
+
+		usort($history, array($this, 'sort_history'));
+
+		return $history;
+	}
+
+	private function sort_history(array $a, array $b)
+	{
+		return $b['timestamp'] - $a['timestamp'];
+	}
 }

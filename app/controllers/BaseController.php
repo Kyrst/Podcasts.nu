@@ -54,6 +54,11 @@ class BaseController extends Controller
 		'raty' => array
 		(
 			'js' => 'libs/raty/jquery.raty.min.js'
+		),
+		'jgrowl' => array
+		(
+			'css' => 'libs/jgrowl/jquery.jgrowl.css',
+			'js' => 'libs/jgrowl/jquery.jgrowl.min.js'
 		)
 	);
 
@@ -108,6 +113,8 @@ class BaseController extends Controller
 			// Raty
 			$this->loadLib('raty', true);
 
+			$this->loadLib('jgrowl', true);
+
 			// Add current route to views
 			if ( $current_route !== NULL )
 				$this->assign('current_route', $current_route->getPath(), array('layout', 'content'));
@@ -125,7 +132,7 @@ class BaseController extends Controller
 			// Playing cookie
 			if ( isset($_COOKIE['playing']) )
 			{
-				$this->assign('playing_cookie_object', json_decode($_COOKIE['playing'], TRUE), array('js'));
+				$this->assign('playing_cookie_object', json_decode($_COOKIE['playing'], TRUE), array('js', 'layout'));
 			}
 
 			// Load jQuery
@@ -135,9 +142,9 @@ class BaseController extends Controller
 			$this->assign('DEBUG', $this->debug, array('layout', 'content', 'js'));
 
 			// Check for player state
-			$player_state = isset($_COOKIE['player_state']) ? str_replace('"', '', $_COOKIE['player_state']) : 'closed';
+			//$player_state = isset($_COOKIE['player_state']) ? str_replace('"', '', $_COOKIE['player_state']) : 'closed';
 
-			$this->assign('player_state', $player_state, array('layout'));
+			//$this->assign('player_state', $player_state, array('layout'));
 		}
 	}
 
