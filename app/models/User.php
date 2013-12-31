@@ -35,7 +35,7 @@ class User extends VerifyUser
 
 		$history[] = array
 		(
-			'message' => 'Registrerade sig medlem på Podcasts.nu.',
+			'message' => 'Registrerade sig som medlem på Podcasts.nu.',
 			'timestamp' => strtotime($user->created_at)
 		);
 
