@@ -68,7 +68,7 @@ class Podcast extends Eloquent
 		return '<div data-rating="' . $this->get_score() . '" data-id="' . $this->id . '" data-type="podcast" data-readOnly="true" class="raty"></div>';
 	}
 
-	public function get_subscription_link($subscribe_link_text, $unsubscribe_link_text, $user)
+	public function get_subscription_link($subscribe_link_text, $unsubscribe_link_text, $user, $classes = '')
 	{
 		$is_subscribing = false;
 
@@ -79,7 +79,7 @@ class Podcast extends Eloquent
 				->count() === 1);
 		}
 
-		return '<a href="javascript:" data-id="' . $this->id . '" data-' . (!$is_subscribing ? 'unsubscribe_text="' . e($unsubscribe_link_text) . '"' : 'subscribe_text="' . e($subscribe_link_text) . '"') . ' class="' . ($is_subscribing ? 'unsubscribe' : 'subscribe') . '">' . ($is_subscribing ? $unsubscribe_link_text : $subscribe_link_text) . '</a>';
+		return '<a href="javascript:" data-id="' . $this->id . '" data-' . (!$is_subscribing ? 'unsubscribe_text="' . e($unsubscribe_link_text) . '"' : 'subscribe_text="' . e($subscribe_link_text) . '"') . ' class="' . ($is_subscribing ? 'unsubscribe' : 'subscribe') . ($classes !== '' ? ' ' . $classes : '') . '">' . ($is_subscribing ? $unsubscribe_link_text : $subscribe_link_text) . '</a>';
 	}
 
 	public function get_num_listens($user_id)
