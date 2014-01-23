@@ -42,7 +42,7 @@
 					?>
 
 					<tr>
-						<td><a href="<?= $podcast->getLink() ?>"><?= $podcast->name ?></a></td>
+						<td><a href="<?= $podcast->getLink('avsnitt') ?>"><?= $podcast->name ?></a></td>
 						<td><?= $latest_episode !== NULL ? $latest_episode->title : '/' ?></td>
 						<td><?= '[kommer]' //$latest_listened_episode !== NULL ? $latest_listened_episode->title : '/' ?></td>
 						<td><?= $podcast->episodes->count() > 0 ? round($podcast->get_num_listens($user->id) / $podcast->episodes->count() * 100) . '%' : '-' ?></td>
