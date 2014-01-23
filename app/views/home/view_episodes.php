@@ -39,7 +39,7 @@
 
 			<div class="clear"></div>
 
-			<?= $podcast->get_subscription_link() ?>
+			<?= $podcast->get_subscription_link('Följ', 'Följer', $user) ?>
 		</div>
 	<?php endif ?>
 </div>
