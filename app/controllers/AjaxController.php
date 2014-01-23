@@ -10,20 +10,37 @@ class AjaxController extends BaseController
 
 		$input = Input::all();
 
-		$episode_listen = Episode_Listen::find($input['episode_id']);
+		$user_listen = User_Listen::find($input['episode_id']);
 
 		$time = date('Y-m-d H:i:s');
 
-		if ( $episode_listen === NULL )
+		if ( $user_listen === NULL )
 		{
-			$episode_listen = new Episode_Listen();
-			$episode_listen->episode_id = $input['episode_id'];
-			$episode_listen->user_id = $this->user->id;
+			$user_listen = new User_Listen();
+			$user_listen->episode_id = $input['episode_id'];
+			$user_listen->user_id = $this->user->id;
+			$user_listen->first_time = $time;
 		}
 
-		$episode_listen->first_time = $time;
-		$episode_listen->time = $time;
-		$episode_listen->save();
+		$user_listen->time = $time;
+		$user_listen->is_listening = 'yes';
+		$user_listen->save();
+
+		return Response::json($result);
+	}
+
+	public function stop_listening()
+	{
+		$result = array
+		(
+			'error' => ''
+		);
+
+		$input = Input::all();
+
+		$user_listen = User_Listen::find($input['episode_id']);
+		$user_listen->is_listening = 'no';
+		$user_listen->save();
 
 		return Response::json($result);
 	}
@@ -99,19 +116,29 @@ class AjaxController extends BaseController
 	{
 		$url = Input::get('url');
 
-		die('-->'.strlen(file_get_contents($url)));
+		$remoteFile = $url;
+		$ch = curl_init($remoteFile);
+		curl_setopt($ch, CURLOPT_NOBODY, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HEADER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); //not necessary unless the file redirects (like the PHP example we're using here)
+		$data = curl_exec($ch);
+		curl_close($ch);
+		if ($data === false) {
+			echo 'cURL failed';
+			exit;
+		}
 
-		header('Content-type: audio/mpeg');
+		$contentLength = 'unknown';
+		if (preg_match('/Content-Length: (\d+)/', $data, $matches)) {
+			$contentLength = (int)$matches[1];
+		}
 
-		header('Content-Length: '. filesize($path)); // provide file size
+		header('Content-Type: audio/mpeg');
+		header('Content-Length: ' . $contentLength);
 
-		header("Expires: -1");
-
-		header("Cache-Control: no-store, no-cache, must-revalidate");
-
-		header("Cache-Control: post-check=0, pre-check=0", false);
-
-		readfile($path);
+		readfile($remoteFile);
+		exit;
 	}
 
 	public function rate_episode()
@@ -163,6 +190,41 @@ class AjaxController extends BaseController
 		{
 			$result['data']['error'] = 'NOT_LOGGED_IN';
 		}
+
+		return Response::json($result);
+	}
+
+	public function subscribe_podcast()
+	{
+		$result = array
+		(
+			'error' => ''
+		);
+
+		$input = Input::all();
+
+		$podcast_id = $input['podcast_id'];
+
+		$user_podcast = new User_Podcast();
+		$user_podcast->user_id = $this->user->id;
+		$user_podcast->podcast_id = $podcast_id;
+		$user_podcast->save();
+
+		return Response::json($result);
+	}
+
+	public function unsubscribe_podcast()
+	{
+		$result = array
+		(
+			'error' => ''
+		);
+
+		$input = Input::all();
+
+		$podcast_id = $input['podcast_id'];
+
+		User_Podcast::where('user_id', $this->user->id)->where('podcast_id', $podcast_id)->delete();
 
 		return Response::json($result);
 	}

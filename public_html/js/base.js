@@ -5,8 +5,9 @@ var $player,
 
 var playing_url = null;
 
-var current_title = '',
-	current_episode_link = '';
+var current_episode_id = null,
+	current_title = null,
+	current_episode_link = null;
 
 $(function()
 {
@@ -22,6 +23,7 @@ $(function()
 
 	init_player();
 	init_raty();
+	init_subscription();
 });
 
 window.onbeforeunload = function()
@@ -35,6 +37,7 @@ window.onbeforeunload = function()
 			url: player_data.jPlayer.status.src,
 			volume: player_data.jPlayer.options.volume,
 			title: current_title,
+			episode_id: current_episode_id,
 			episode_link: current_episode_link,
 			progress: player_data.jPlayer.status.currentTime,
 			duration: player_data.jPlayer.status.duration,
@@ -110,6 +113,7 @@ function init_player()
 				});
 
 				current_title = playing_cookie_object.title;
+				current_episode_id = playing_cookie_object.id;
 				current_episode_link = playing_cookie_object.episode_link;
 
 				$('#player_title').html('<a href="' + current_episode_link + '">' + current_title + '</a>');
@@ -130,6 +134,9 @@ function init_player()
 		{
 			//console.log('loadstart');
 		},
+		canplay: function()
+		{
+		},
 		play: function()
 		{
 			$('.play').each(function(index, element)
@@ -146,7 +153,6 @@ function init_player()
 		},
 		progress: function(e)
 		{
-			//console.log('progress');
 		},
 		pause: function(e)
 		{
@@ -157,10 +163,11 @@ function init_player()
 	$('.play').on('click', function()
 	{
 		var $this = $(this),
-			url = $this.data('url'),
-			episode_id = $this.data('episode_id'),
-			episode_link = $this.data('episode_link'),
-			current_title = $this.data('title');
+			url = $this.data('url');
+
+		current_episode_id = $this.data('episode_id'),
+		current_episode_link = $this.data('episode_link');
+		current_title = $this.data('title');
 
 		if ( $this.hasClass('sm2_playing') ) // Pause
 		{
@@ -179,7 +186,7 @@ function init_player()
 
 			if ( $player.data().jPlayer.status.src !== url )
 			{
-				$('#player_title').html('<a href="' + episode_link + '">' + current_title + '</a>');
+				$('#player_title').html('<a href="' + current_episode_link + '">' + current_title + '</a>');
 
 				$player.jPlayer('setMedia',
 				{
@@ -200,7 +207,7 @@ function init_player()
 				url: BASE_URL + 'save-listen',
 				data:
 				{
-					episode_id: episode_id
+					episode_id: current_episode_id
 				}
 			});
 		}
@@ -208,6 +215,16 @@ function init_player()
 
 	$('#player_controls').find('.jp-stop').on('click', function()
 	{
+		$.ajax(
+		{
+			type: 'POST',
+			url: BASE_URL + 'stop-listening',
+			data:
+			{
+				episode_id: current_episode_id
+			}
+		});
+
 		$player.jPlayer('clearMedia');
 
 		close_player();
@@ -338,8 +355,6 @@ function refresh_player_controls()
 {
 	$('.play').each(function(index, element)
 	{
-		console.log($(element).data('url') + ' === ' + playing_url);
-
 		// Om den som spelar är den vi klickade på
 		if ( $(element).data('url') === playing_url )
 		{
@@ -347,5 +362,71 @@ function refresh_player_controls()
 
 			return false; // break
 		}
+	});
+}
+
+function init_subscription()
+{
+	subscribe_podcast_bind();
+	unsubscribe_podcast_bind();
+}
+
+function subscribe_podcast_bind($this)
+{
+	$('.subscribe').unbind('click').on('click', function()
+	{
+		var $this = $(this),
+			id = $this.data('id'),
+			unsubscribe_text = $this.data('unsubscribe_text'),
+			subscribe_text = $this.html();
+
+		console.log('unsubscribe_text: ' + unsubscribe_text);
+
+		$.ajax(
+		{
+			type: 'POST',
+			url: BASE_URL + 'subscribe-podcast',
+			data:
+			{
+				podcast_id: id
+			}
+		}).done(function(result)
+		{
+			if ( result.error === '' )
+			{
+				$this.removeClass('subscribe').addClass('unsubscribe').removeAttr('data-unsubscribe_text').attr('data-subscribe_text', subscribe_text).html(unsubscribe_text);
+
+				unsubscribe_podcast_bind();
+			}
+		});
+	});
+}
+
+function unsubscribe_podcast_bind($this)
+{
+	$('.unsubscribe').unbind('click').on('click', function()
+	{
+		var $this = $(this),
+			id = $this.data('id'),
+			subscribe_text = $this.data('subscribe_text'),
+			unsubscribe_text = $this.html();
+
+		$.ajax(
+		{
+			type: 'POST',
+			url: BASE_URL + 'unsubscribe-podcast',
+			data:
+			{
+				podcast_id: id
+			}
+		}).done(function(result)
+		{
+			if ( result.error === '' )
+			{
+				$this.removeClass('unsubscribe').addClass('subscribe').removeAttr('data-subscribe_text').attr('data-unsubscribe_text', unsubscribe_text).html(subscribe_text);
+
+				subscribe_podcast_bind();
+			}
+		});
 	});
 }

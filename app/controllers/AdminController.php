@@ -444,4 +444,81 @@ class AdminController extends BaseController
 
 		$this->display('admin.podtalk', '[Poddsnack] - Poddsnack - Administatör');
 	}
+
+	// Add user
+	public function user($id = NULL)
+	{
+		$input = Input::all();
+
+		if ( isset($input['save']) )
+		{
+			if ( isset($input['user_id']) && filter_var($input['user_id'], FILTER_VALIDATE_INT) ) // Edit
+			{
+				$user_to_edit = User::find($id);
+
+				$username = trim(Input::get('username'));
+
+				if ( $user_to_edit !== NULL )
+				{
+					$user_to_edit->username = $username;
+					$user_to_edit->slug = Str::slug($username);
+					$user_to_edit->first_name = trim(Input::get('first_name'));
+					$user_to_edit->last_name = trim(Input::get('last_name'));
+					$user_to_edit->email = trim(Input::get('email'));
+					$user_to_edit->city = trim(Input::get('city'));
+					$user_to_edit->birthdate = date('Y-m-d', strtotime(trim(Input::get('birthdate'))));
+					$user_to_edit->save();
+
+					$this->showAlert('Användare sparad!');
+				}
+
+				return Redirect::to('admin/users');
+			}
+			else // Add
+			{
+				$username = trim(Input::get('username'));
+
+				$user = new User();
+				$user->username = $username;
+				$user->slug = Str::slug($username);
+				$user->first_name = Str::slug($username);
+				$user->last_name = trim(Input::get('last_name'));
+				$user->email = trim(Input::get('email'));
+				$user->city = trim(Input::get('city'));
+				$user->birthdate = date('Y-m-d', strtotime(trim(Input::get('birthdate'))));
+				$user->save();
+
+				$this->showAlert('Användare  tillagd!');
+
+				return Redirect::to('admin/users');
+			}
+		}
+
+		$edit_mode = false;
+
+		if ( $id !== NULL ) // Edit
+		{
+			$user = User::find($id);
+
+			// If podtalk was not found
+			if ( $user === NULL )
+			{
+				$this->showAlert('Kunde inte hitta användaren!');
+
+				return Redirect::to('admin/users');
+			}
+
+			$edit_mode = true;
+		}
+		else
+		{
+			$user = NULL;
+		}
+
+		$this->assign('user_to_edit', $user);
+
+		$this->assign('edit_mode', $edit_mode);
+
+		$this->display('admin.user', ($user !== NULL ? $user->getDisplayName() : 'Ny') . ' - Användare - Administratör');
+	}
 }

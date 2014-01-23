@@ -36,6 +36,10 @@
 
 			<?= $podcast->print_rater() ?>
 			<?= $podcast->get_score(1) ?>
+
+			<div class="clear"></div>
+
+			<?= $podcast->get_subscription_link() ?>
 		</div>
 	<?php endif ?>
 </div>

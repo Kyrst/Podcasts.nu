@@ -27,31 +27,35 @@
 				<h3 class="icon comment">Kommenterat</h3>
 			</div>
 			<div class="container">
-				<div class="row">
-					<p>
-						Oscar kommenterade Alex Och Sigges "grym!"
-					</p>
-					<p>
-						Oscar kommenterade
-						Den blÃ¥ hÃ¤sten "Otroligt bra avsnitt! mycket intressant"
-					</p>
-				</div>
+				<?php foreach ( $latest_comments as $comment ): ?>
+					<div class="row">
+						<div class="col-lg-2">
+							<?= $comment['avatar'] ?>
+						</div>
+
+						<div class="col-lg-10">
+							<?= $comment['comment'] ?>
+						</div>
+					</div>
+				<?php endforeach ?>
 			</div>
 		</div>
-		<div class="sidebar col-xs-12 col-sm-4 col-md-4 col-lg-4">
-			<div class="page-header">
-				<h3 class="icon played">Spelas Nu</h3>
-			</div>
-			<div class="container">
-				<div class="row">
-					<p>
-						C/o Hannah Och Amanda 57. â€Cellulit 2013â€
-					</p>
-					<p>
-						Alex Och Sigges 21. "Den inre resan"
-					</p>
+
+		<?php if ( count($listens_right_now) > 0 ): ?>
+			<div class="sidebar col-xs-12 col-sm-4 col-md-4 col-lg-4">
+				<div class="page-header">
+					<h3 class="icon played">Spelas Nu</h3>
+				</div>
+				<div class="container">
+					<?php foreach ( $listens_right_now as $listen ): ?>
+						<div class="row">
+							<p>
+								<?= $listen['text'] ?>
+							</p>
+						</div>
+					<?php endforeach ?>
 				</div>
 			</div>
-		</div>
+		<?php endif ?>
 	</div>
 </div>

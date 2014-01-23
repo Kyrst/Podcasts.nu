@@ -1,7 +1,7 @@
 <?php
-class Episode_Listen extends Eloquent
+class User_Listen extends Eloquent
 {
-	protected $table = 'episode_listens';
+	protected $table = 'user_listens';
 
 	public function user()
 	{

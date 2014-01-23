@@ -24,7 +24,7 @@
 					</button>
 
 					<a id="logo" class="navbar-brand" href="<?= URL::route('home', array(), false); ?>"></a>
-                    <!-- Orginal utförande
+                    <!-- Orginalutforande
                     <div id="player_container">
 						<div class="player-row clearfix">
 							<a id="player" class="sm2_button"></a>
@@ -68,7 +68,7 @@
 										<li><a href="<?= URL::route('admin/poddar', array(), false); ?>">Poddar</a></li>
 										<li><a href="<?= URL::route('admin/episodes', array(), false); ?>">Avsnitt</a></li>
 										<li><a href="<?= URL::route('admin/poddsnacks', array(), false); ?>">Poddsnack</a></li>
-										<li><a href="<?= URL::route('admin/anvandare', array(), false); ?>">Användare</a></li>
+										<li><a href="<?= URL::route('admin/users', array(), false); ?>">Användare</a></li>
 										<li class="divider"></li>
 									<?php endif ?>
 
@@ -118,14 +118,14 @@
 
 		<!-- Content -->
 		<div id="content" class="container">
-			<?php if ( in_array($current_route, array('/min-sida', '/admin/blogg', '/admin/nyheter', '/admin/nyhet', '/admin/nyhet/{id}', '/admin/anvandare')) ): ?>
+			<?php if ( in_array($current_route, array('/min-sida', '/admin/blogg', '/admin/nyheter', '/admin/nyhet', '/admin/nyhet/{id}', '/admin/users', '/admin/user', '/admin/user/{id}')) ): ?>
 				<ul class="nav nav-tabs">
 					<li<?php if ($current_route === '/min-sida'): ?> class="active"<?php endif; ?>><a href="<?= URL::route('min-sida', array(), false); ?>">Min sida</a></li>
 
 					<?php if ( $user->is('Admin') ): ?>
 						<li<?php if ($current_route === '/admin/nyheter' || $current_route === '/admin/nyhet' || $current_route === '/admin/nyhet/{id}'): ?> class="active"<?php endif; ?>><a href="<?= URL::route('admin/nyheter', array(), false); ?>">Nyheter</a></li>
 						<li<?php if ($current_route === '/admin/blogg'): ?> class="active"<?php endif; ?>><a href="<?= URL::route('admin/blogg', array(), false); ?>">Blogg</a></li>
-						<li<?php if ($current_route === '/admin/anvandare'): ?> class="active"<?php endif; ?>><a href="<?= URL::route('admin/anvandare', array(), false); ?>">Användare</a></li>
+						<li<?php if ($current_route === '/admin/user' || $current_route === '/admin/user/{id}'): ?> class="active"<?php endif; ?>><a href="<?= URL::to('admin/user', array(), false); ?>">Användare</a></li>
 					<?php endif; ?>
 				</ul>
 			<?php endif; ?>

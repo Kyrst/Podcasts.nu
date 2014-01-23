@@ -7,4 +7,10 @@ class Episode_Comment extends Eloquent
 	{
 		return $this->belongsTo('User');
 	}
+
+	public function episode()
+	{
+		return $this->belongsTo('Episode');
+	}
+
 }

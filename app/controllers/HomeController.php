@@ -5,12 +5,52 @@ class HomeController extends BaseController
 {
 	public function index()
 	{
-		// Test
-		// ...
+		// Senaste kommentarer
+		$latest_comments = array();
 
+		$append_latest_comments = function($user, $episode) use(&$latest_comments)
+		{
+			$latest_comments[] = array
+			(
+				'avatar' => '<img src="' . $user->getAvatar() . '" width="32" height="32" alt="">',
+				'comment' => $user->getDisplayName() . ' kommenterade <a href="' . $episode->getLink() . '">' . $episode->getTitle() . '</a>.'
+			);
+		};
+
+		$latest_episode_comments = Episode_Comment::orderBy('created_at', 'DESC')
+			->limit(2)
+			->get();
+
+		foreach ( $latest_episode_comments as $comment )
+		{
+			$append_latest_comments($comment->user, $comment->episode);
+		}
+
+		$this->assign('latest_comments', $latest_comments);
+
+		// Senaste nyheter
 		$latest_news_items = News_Item::orderBy('created_at', 'DESC');
 
 		$this->assign('latest_news_items', $latest_news_items->get());
+
+		// Lyssnas just nu
+		$listens_right_now = array();
+
+		$episode_listens_right_now = User_Listen::where('is_listening', 'yes')
+			->orderBy('created_at', 'DESC')
+			->limit(2)
+			->groupBy('user_listens.user_id')
+			->get();
+
+		foreach ( $episode_listens_right_now as $listen )
+		{
+			$listens_right_now[] = array
+			(
+				'text' => $listen->user->getDisplayName() . ' lyssnar på <a href="' . $listen->episode->getLink() . '">' . $listen->episode->getTitle() . '</a>.'
+			);
+		}
+
+		$this->assign('listens_right_now', $listens_right_now);
 
 		$this->display('home.index');
 	}
@@ -54,6 +94,7 @@ class HomeController extends BaseController
 		$podcasts_html = View::make('home/partials/get_podcasts');
 		$podcasts_html->num_podcasts = count($podcasts);
 		$podcasts_html->podcasts = $podcasts;
+		$podcasts_html->user = $this->user;
 
 		$this->assign('podcasts_html', $podcasts_html->render());
 
@@ -77,6 +118,7 @@ class HomeController extends BaseController
 		$podcasts_html->selected_view_type = Input::get('view_type');
 		$podcasts_html->num_podcasts = count($podcasts);
 		$podcasts_html->podcasts = $podcasts;
+		$podcasts_html->user = $this->user;
 
 		die(json_encode(array
 		(

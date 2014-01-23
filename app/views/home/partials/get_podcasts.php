@@ -10,7 +10,7 @@
 					<h3><a href="<?= $podcast->getLink('poddar'); ?>"><?= $podcast->name; ?></a></h3>
 
 					<div class="btn-group">
-						<button type="button" class="btn btn-default">Följ</button>
+						<button type="button" class="btn btn-default"><?= $podcast->get_subscription_link('Följ', 'Följer', $user) ?></button>
 						<button type="button" class="btn btn-default">0</button>
 						<button type="button" class="btn btn-default">0</button>
 					</div>
@@ -26,7 +26,7 @@
 
 		<?php foreach ( $podcasts as $podcast ): ?>
             <div class="media">
-                <a class="pull-left" href="<?= $podcast->getLink('poddar'); ?>"<?= $podcast->name; ?>">
+                <a class="pull-left" href="<?= $podcast->getLink('poddar'); ?>" title="<?= $podcast->name; ?>">
                     <img class="media-object" src="<?= $podcast->getImage('standard', false, true); ?>" width="50" height="" alt="...">
                 </a>
                 <div class="media-body">

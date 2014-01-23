@@ -8,6 +8,11 @@ class Episode extends Eloquent
 		return $this->belongsTo('Podcast');
 	}
 
+	public function listens()
+	{
+		return $this->belongsToMany('Podcast', 'user_podcasts');
+	}
+
 	public function comments()
 	{
 		return $this->hasMany('Episode_Comment');
@@ -18,7 +23,7 @@ class Episode extends Eloquent
 		return $this->podcast->name . ' - ' . $this->title;
 	}
 
-	public function getLink($section)
+	public function getLink($section = 'avsnitt')
 	{
 		if ( !in_array($section, array('poddar', 'avsnitt')) )
 			throw new Exception();
@@ -33,7 +38,9 @@ class Episode extends Eloquent
 
 	public function printPlayButton()
 	{
-		return '<a href="javascript:" id="player_' . $this->id . '" class="play sm2_button" data-episode_id="' . $this->id . '" data-url="' . $this->media_link . '" data-id="player_' . $this->id . '" data-title="' . $this->podcast->name . ' - ' . $this->title . '" data-episode_link="' . $this->getLink('avsnitt') . '"></a>';
+		$media_link = URL::to('play?url=' . urlencode($this->media_link));
+
+		return '<a href="javascript:" id="player_' . $this->id . '" class="play sm2_button" data-episode_id="' . $this->id . '" data-url="' . $media_link . '" data-id="player_' . $this->id . '" data-title="' . $this->podcast->name . ' - ' . $this->title . '" data-episode_link="' . $this->getLink('avsnitt') . '"></a>';
 	}
 
 	public function get_score()

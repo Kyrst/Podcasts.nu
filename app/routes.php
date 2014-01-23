@@ -262,7 +262,7 @@ Route::get('/admin/episodes', array
 	'as' => 'admin/episodes'
 ));
 
-// Admin: Avsnitt: Lägg till
+// Admin: Avsnitt: Lägg till/Ändra
 Route::get('/admin/episode/{id?}', array
 (
 	'uses' => 'AdminController@episode',
@@ -276,16 +276,46 @@ Route::post('/admin/episode/{id?}', array
 ))->where('id', '[0-9]+');
 
 // Admin: Användare
-Route::get('/admin/anvandare', array
+Route::get('/admin/users', array
 (
 	'uses' => 'AdminController@view_users',
-	'as' => 'admin/anvandare'
+	'as' => 'admin/users'
 ));
+
+// Admin: Användare: Ändra
+Route::get('/admin/user/{id?}', array
+(
+	'uses' => 'AdminController@user'
+))->where('id', '[0-9]+');
+
+// Admin: Användare: Ändra (POST)
+Route::post('/admin/user/{id?}', array
+(
+	'uses' => 'AdminController@user'
+))->where('id', '[0-9]+');
 
 // AJAX: Save episode listen
 Route::post('/save-listen', array
 (
 	'uses' => 'AjaxController@save_listen'
+));
+
+// AJAX: Stop episode listen
+Route::post('/stop-listening', array
+(
+	'uses' => 'AjaxController@stop_listening'
+));
+
+// AJAX: Subscribe to podcast
+Route::post('/subscribe-podcast', array
+(
+	'uses' => 'AjaxController@subscribe_podcast'
+));
+
+// AJAX: Unsubscribe podcast
+Route::post('/unsubscribe-podcast', array
+(
+	'uses' => 'AjaxController@unsubscribe_podcast'
 ));
 
 // AJAX: Get episode comments

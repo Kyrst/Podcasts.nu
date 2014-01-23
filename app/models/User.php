@@ -5,7 +5,14 @@ class User extends VerifyUser
 {
 	protected $table = 'users';
 
+	protected $softDelete = true;
+
 	protected $hidden = array('password');
+
+	public function episode_listens()
+	{
+		return $this->belongsToMany('Episode', 'user_listens');
+	}
 
 	public function getAvatar()
 	{
@@ -27,6 +34,11 @@ class User extends VerifyUser
 		return $this->belongsTo('Blog');
 	}
 
+	public function podcasts()
+	{
+		return $this->belongsToMany('Podcast', 'user_podcasts');
+	}
+
 	public function get_history()
 	{
 		$history = array();
@@ -40,14 +52,14 @@ class User extends VerifyUser
 		);
 
 		// Hämta lyssningar
-		$episode_listens = Episode_Listen::all();
+		$user_listens = User_Listen::all();
 
-		foreach ( $episode_listens as $episode_listen )
+		foreach ( $user_listens as $user_listen )
 		{
 			$history[] = array
 			(
-				'message' => 'Lyssnade på <a href="' . $episode_listen->episode->getLink('poddar') . '">' . $episode_listen->episode->getTitle() . '</a>.',
-				'timestamp' => strtotime($episode_listen->time)
+				'message' => 'Lyssnade på <a href="' . $user_listen->episode->getLink('poddar') . '">' . $user_listen->episode->getTitle() . '</a>.',
+				'timestamp' => strtotime($user_listen->time)
 			);
 		}
 
@@ -59,5 +71,32 @@ class User extends VerifyUser
 	private function sort_history(array $a, array $b)
 	{
 		return $b['timestamp'] - $a['timestamp'];
+	}
+
+	public function get_age()
+	{
+		$now = new DateTime();
+		$birthday = new DateTime($this->birthdate);
+		$interval = $now->diff($birthday);
+
+		return $interval->format('%y');
+	}
+
+	public function get_profile_page()
+	{
+		return URL::route('home');
+	}
+
+	public function get_latest_listened_episode($podcast_id)
+	{
+		try
+		{
+			$latest_listened_episode = $this->episode_listens()->where('episodes.podcast_id', $podcast_id)->orderBy('user_listens.created_at', 'DESC')->firstOrFail();
+		} catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+		{
+			return NULL;
+		}
+
+		return $latest_listened_episode;
 	}
 }
