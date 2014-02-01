@@ -45,7 +45,7 @@
 						<td><a href="<?= $podcast->getLink('avsnitt') ?>"><?= $podcast->name ?></a></td>
 						<td><?= $latest_episode !== NULL ? $latest_episode->title : '/' ?></td>
 						<td><?= '[kommer]' //$latest_listened_episode !== NULL ? $latest_listened_episode->title : '/' ?></td>
-						<td><?= $podcast->episodes->count() > 0 ? round($podcast->get_num_listens($user->id) / $podcast->episodes->count() * 100) . '%' : '-' ?></td>
+						<td><?= $podcast->episodes->count() > 0 ? $podcast->get_num_listens($user->id) . ' av ' . $podcast->episodes->count() : '-' ?></td>
 						<td><a href="javascript:" data-id="<?= $podcast->id ?>" class="stop-subscribe btn btn-default btn-sm">Sluta prenumerera</a></td>
 					</tr>
 				<?php endforeach ?>
