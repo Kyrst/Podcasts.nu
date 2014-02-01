@@ -2,10 +2,10 @@
 <project version="4">
   <component name="PublishConfigData" uploadOnCheckin="582e290e-9bcd-4989-9efd-65131a76a75d">
     <serverData>
-      <paths name="MyrbergInnovation.se">
+      <paths name="myrberginnovation">
         <serverdata>
           <mappings>
-            <mapping deploy="/myrberginnovation.se" local="$PROJECT_DIR$" web="" />
+            <mapping deploy="/myrberginnovation.se" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
