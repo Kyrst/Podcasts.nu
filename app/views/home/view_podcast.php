@@ -29,12 +29,14 @@
 					<div id="episodes">
 						<?php foreach ( $episodes as $episode ): ?>
 							<div class="episode">
-								<?php if ( $episode->haveMedia() ): ?>
-									<?= $episode->printPlayButton(); ?>
-								<?php endif; ?>
-
 								<div class="right">
-									<h3><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->podcast->name, ' - ', $episode->title; ?></a></h3>
+									<h3>
+										<?php if ( $episode->haveMedia() ): ?>
+											<?= $episode->printPlayButton(); ?>
+										<?php endif; ?>
+
+										<a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->podcast->name, ' - ', $episode->title; ?></a>
+									</h3>
 
 									<p class="created"><?= $episode->created_at; ?></p>
 
