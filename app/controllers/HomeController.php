@@ -174,7 +174,7 @@ class HomeController extends BaseController
 		}
 		else
 		{
-			$episodes = Episode::take(10);
+			$episodes = Episode::all()->take(10);
 		}
 
 		$this->assign('podcast', $podcast);
