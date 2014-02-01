@@ -28,7 +28,7 @@
 				<?php if ( $num_episodes > 0 ): ?>
 					<div id="episodes">
 						<?php foreach ( $episodes as $episode ): ?>
-							<div class="episode">
+							<div class="episode clearfix">
 								<div class="right">
 									<h3>
 										<?php if ( $episode->haveMedia() ): ?>
