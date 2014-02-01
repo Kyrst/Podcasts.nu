@@ -364,3 +364,9 @@ Event::listen('illuminate.query', function($query)
 		echo $query, '<hr>';
 	}
 });
+
+Route::get('/scripts/download-podcasts', array
+(
+	'uses' => 'ScriptController@download_podcasts',
+	'as' => 'scripts/download-podcasts'
+));
