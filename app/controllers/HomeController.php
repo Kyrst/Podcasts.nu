@@ -153,8 +153,6 @@ class HomeController extends BaseController
 
 	public function view_episodes($podcast = NULL)
 	{
-		die('woot');
-
 		$is_filtered = false;
 
 		if ( $podcast !== NULL )
