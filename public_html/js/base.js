@@ -11,6 +11,7 @@ var current_episode_id = null,
 
 $(function()
 {
+	//
 	if ( typeof bootbox_alert !== 'undefined' )
 	{
 		bootbox.alert(bootbox_alert);
