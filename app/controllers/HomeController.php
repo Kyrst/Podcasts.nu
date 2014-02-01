@@ -153,6 +153,8 @@ class HomeController extends BaseController
 
 	public function view_episodes($podcast = NULL)
 	{
+		die('woot');
+
 		$is_filtered = false;
 
 		if ( $podcast !== NULL )
@@ -176,8 +178,6 @@ class HomeController extends BaseController
 		{
 			$episodes = Episode::all()->take(10);
 		}
-
-		die(var_dump($episodes));
 
 		$this->assign('podcast', $podcast);
 
