@@ -365,8 +365,8 @@ Event::listen('illuminate.query', function($query)
 	}
 });
 
-Route::get('/scripts/download-podcasts', array
+Route::get('/scripts/download-podcasts/{podcast_id?}', array
 (
 	'uses' => 'ScriptController@download_podcasts',
 	'as' => 'scripts/download-podcasts'
-));
+))->where('podcast_id', '\d+');

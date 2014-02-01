@@ -1,4 +1,6 @@
 <?php
+set_time_limit(0);
+
 class ScriptController extends Controller
 {
 	private function fix_imported_str($str)
@@ -6,17 +8,35 @@ class ScriptController extends Controller
 		return html_entity_decode($str, ENT_COMPAT, 'UTF-8');
 	}
 
-	public function download_podcasts()
+	public function download_podcasts($podcast_id = NULL)
 	{
-		$simple_pie = new SimplePie();
-		$simple_pie->set_cache_location(storage_path() . '/cache');
-		$simple_pie->set_cache_duration(100);
+		$podcasts = array();
 
-		$podcasts = Podcast::all();
+		if ( $podcast_id !== NULL )
+		{
+			try
+			{
+				$podcast = Podcast::find($podcast_id)->firstOrFail();
+
+				$podcasts[] = $podcast;
+			}
+			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+			{
+				die('Kunde inte hitta podcasten med ID "' . $podcast_id . '".');
+			}
+		}
+		else
+		{
+			$podcasts = Podcast::all();
+		}
+
+		$simple_pie = new SimplePie();
+		$simple_pie->set_cache_location(storage_path() . DIRECTORY_SEPARATOR . 'cache');
+		$simple_pie->set_cache_duration(100);
 
 		foreach ( $podcasts as $podcast )
 		{
-			error_log('Loading podcast "' . $podcast->name . '"...');
+			error_log('Laddar podcast "' . $podcast->name . '"...');
 
 			$simple_pie->set_feed_url($podcast->rss);
 			$simple_pie->init();
@@ -37,7 +57,7 @@ class ScriptController extends Controller
 
 				try
 				{
-					$episode = Episode::where('unique_id', $unique_id)->get();
+					$episode = Episode::where('unique_id', $unique_id)->firstOrFail();
 				}
 				catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
 				{
@@ -53,8 +73,6 @@ class ScriptController extends Controller
 				$episode->pub_date = $date->getTimestamp();
 
 				$episode->save();
-
-				die('save');
 			}
 		}
 	}

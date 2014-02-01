@@ -321,6 +321,8 @@ function init_raty()
 
 function open_player()
 {
+	show_player();
+
 	$toggle_footer_button.html('&hearts;');
 
 	$footer.addClass('open');
