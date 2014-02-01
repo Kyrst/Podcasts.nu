@@ -38,7 +38,7 @@
 
 									<p class="created"><?= $episode->created_at; ?></p>
 
-									<?php if ( $user->is_admin() ): ?>
+									<?php if ( $user !== NULL && $user->is_admin() ): ?>
 										<div class="btn-group" style="margin-top:8px">
 											<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
 												Admin <span class="caret"></span>

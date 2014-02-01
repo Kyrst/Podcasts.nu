@@ -102,7 +102,7 @@ function init_player()
 			noSolution: '.jp-no-solution'
 		},
 		errorAlerts: true,
-		warningAlerts: false,
+		warningAlerts: true,
 		ready: function()
 		{
 			if ( typeof playing_cookie_object !== 'undefined' )
@@ -223,6 +223,9 @@ function init_player()
 			{
 				episode_id: current_episode_id
 			}
+		}).done(function()
+		{
+			current_episode_id = null;
 		});
 
 		$player.jPlayer('clearMedia');
@@ -321,7 +324,10 @@ function init_raty()
 
 function open_player()
 {
-	show_player();
+	if ( current_episode_id !== null )
+	{
+		show_player();
+	}
 
 	$toggle_footer_button.html('&hearts;');
 
