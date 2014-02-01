@@ -177,6 +177,8 @@ class HomeController extends BaseController
 			$episodes = Episode::all()->take(10);
 		}
 
+		die(var_dump($episodes));
+
 		$this->assign('podcast', $podcast);
 
 		$this->assign('num_episodes', count($episodes));
