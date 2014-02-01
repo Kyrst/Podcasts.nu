@@ -184,18 +184,6 @@ function init_player()
 
 			//$this.addClass('sm2_playing');
 
-			// Save listen
-			/*$.ajax(
-			{
-				type: 'POST',
-				url: BASE_URL + 'save-listen',
-				async: false,
-				data:
-				{
-					episode_id: current_episode_id
-				}
-			});*/
-
 			if ( $player.data().jPlayer.status.src !== url )
 			{
 				$('#player_title').html('<a href="' + current_episode_link + '">' + current_title + '</a>');
@@ -211,6 +199,18 @@ function init_player()
 			$player.jPlayer('play'/*, TIME */);
 
 			playing_url = url;
+
+			// Save listen
+			$.ajax(
+			{
+				type: 'POST',
+				url: BASE_URL + 'save-listen',
+				async: false,
+				data:
+				{
+					episode_id: current_episode_id
+				}
+			});
 		}
 	});
 
