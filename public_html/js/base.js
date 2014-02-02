@@ -11,6 +11,7 @@ var current_episode_id = null,
 
 $(function()
 {
+	//
 	if ( typeof bootbox_alert !== 'undefined' )
 	{
 		bootbox.alert(bootbox_alert);
@@ -45,7 +46,7 @@ window.onbeforeunload = function()
 			percent: (player_data.jPlayer.status.currentTime / player_data.jPlayer.status.duration) * 100
 		};
 
-		$.cookie('playing', cookie_object, { path: '/' });
+		$.cookie('playing', cookie_object, { path: '/', domain: document.domain });
 	}
 	else
 	{
@@ -54,7 +55,7 @@ window.onbeforeunload = function()
 
 		if ( typeof cookie !== 'undefined' )
 		{
-			$.removeCookie('playing', { path: '/' });
+			$.removeCookie('playing', { path: '/', domain: document.domain });
 		}
 	}
 
@@ -190,7 +191,7 @@ function init_player()
 
 				$player.jPlayer('setMedia',
 				{
-					mp3: url
+					mp3: decodeURIComponent(url)
 				});
 			}
 
@@ -201,15 +202,19 @@ function init_player()
 			playing_url = url;
 
 			// Save listen
-			$.ajax(
+			if ( user_id > 0 )
 			{
-				type: 'POST',
-				url: BASE_URL + 'save-listen',
-				data:
+				$.ajax(
 				{
-					episode_id: current_episode_id
-				}
-			});
+					type: 'POST',
+					url: BASE_URL + 'save-listen',
+					async: false,
+					data:
+					{
+						episode_id: current_episode_id
+					}
+				});
+			}
 		}
 	});
 
@@ -224,6 +229,8 @@ function init_player()
 				episode_id: current_episode_id
 			}
 		});
+
+		current_episode_id = null;
 
 		$player.jPlayer('clearMedia');
 
@@ -321,7 +328,10 @@ function init_raty()
 
 function open_player()
 {
-	show_player();
+	if ( current_episode_id !== null )
+	{
+		show_player();
+	}
 
 	$toggle_footer_button.html('&hearts;');
 

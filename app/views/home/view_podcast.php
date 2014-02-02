@@ -28,17 +28,19 @@
 				<?php if ( $num_episodes > 0 ): ?>
 					<div id="episodes">
 						<?php foreach ( $episodes as $episode ): ?>
-							<div class="episode">
-								<?php if ( $episode->haveMedia() ): ?>
-									<?= $episode->printPlayButton(); ?>
-								<?php endif; ?>
-
+							<div class="episode clearfix">
 								<div class="right">
-									<h3><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->podcast->name, ' - ', $episode->title; ?></a></h3>
+									<h3>
+										<?php if ( $episode->haveMedia() ): ?>
+											<?= $episode->printPlayButton(); ?>
+										<?php endif; ?>
+
+										<a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->podcast->name, ' - ', $episode->title; ?></a>
+									</h3>
 
 									<p class="created"><?= $episode->created_at; ?></p>
 
-									<?php if ( $user->is_admin() ): ?>
+									<?php if ( $user !== NULL && $user->is_admin() ): ?>
 										<div class="btn-group" style="margin-top:8px">
 											<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
 												Admin <span class="caret"></span>

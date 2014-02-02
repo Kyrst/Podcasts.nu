@@ -10,21 +10,24 @@ class AjaxController extends BaseController
 
 		$input = Input::all();
 
-		$user_listen = User_Listen::find($input['episode_id']);
-
-		$time = date('Y-m-d H:i:s');
-
-		if ( $user_listen === NULL )
+		if ( $this->user !== NULL )
 		{
-			$user_listen = new User_Listen();
-			$user_listen->episode_id = $input['episode_id'];
-			$user_listen->user_id = $this->user->id;
-			$user_listen->first_time = $time;
-		}
+			$user_listen = User_Listen::find($input['episode_id']);
 
-		$user_listen->time = $time;
-		$user_listen->is_listening = 'yes';
-		$user_listen->save();
+			$time = date('Y-m-d H:i:s');
+
+			if ( $user_listen === NULL )
+			{
+				$user_listen = new User_Listen();
+				$user_listen->episode_id = $input['episode_id'];
+				$user_listen->user_id = $this->user->id;
+				$user_listen->first_time = $time;
+			}
+
+			$user_listen->time = $time;
+			$user_listen->is_listening = 'yes';
+			$user_listen->save();
+		}
 
 		return Response::json($result);
 	}
@@ -38,9 +41,15 @@ class AjaxController extends BaseController
 
 		$input = Input::all();
 
-		$user_listen = User_Listen::find($input['episode_id']);
-		$user_listen->is_listening = 'no';
-		$user_listen->save();
+		try
+		{
+			$user_listen = User_Listen::where(array('episode_id' => $input['episode_id'], 'user_id' => $this->user->id))->firstOrFail();
+			$user_listen->is_listening = 'no';
+			$user_listen->save();
+		}
+		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+		{
+		}
 
 		return Response::json($result);
 	}

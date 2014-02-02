@@ -38,7 +38,8 @@ class Episode extends Eloquent
 
 	public function printPlayButton()
 	{
-		$media_link = URL::to('play?url=' . urlencode($this->media_link));
+		//$media_link = URL::to('play?url=' . urlencode($this->media_link));
+		$media_link = urlencode($this->media_link);
 
 		return '<a href="javascript:" id="player_' . $this->id . '" class="play sm2_button" data-episode_id="' . $this->id . '" data-url="' . $media_link . '" data-id="player_' . $this->id . '" data-title="' . $this->podcast->name . ' - ' . $this->title . '" data-episode_link="' . $this->getLink('avsnitt') . '"></a>';
 	}
