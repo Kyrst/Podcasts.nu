@@ -202,16 +202,19 @@ function init_player()
 			playing_url = url;
 
 			// Save listen
-			$.ajax(
+			if ( user_id > 0 )
 			{
-				type: 'POST',
-				url: BASE_URL + 'save-listen',
-				async: false,
-				data:
+				$.ajax(
 				{
-					episode_id: current_episode_id
-				}
-			});
+					type: 'POST',
+					url: BASE_URL + 'save-listen',
+					async: false,
+					data:
+					{
+						episode_id: current_episode_id
+					}
+				});
+			}
 		}
 	});
 
@@ -225,10 +228,9 @@ function init_player()
 			{
 				episode_id: current_episode_id
 			}
-		}).done(function()
-		{
-			current_episode_id = null;
 		});
+
+		current_episode_id = null;
 
 		$player.jPlayer('clearMedia');
 

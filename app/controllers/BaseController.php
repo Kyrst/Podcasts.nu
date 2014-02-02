@@ -91,6 +91,7 @@ class BaseController extends Controller
 
 			//App::setLocale('es');
 			$this->assign('user', $this->user, array('layout', 'content'));
+			$this->assign('user_id', $this->user !== NULL ? $this->user->id : 0, 'js');
 
 			$this->layout = View::make($this->layout);
 
