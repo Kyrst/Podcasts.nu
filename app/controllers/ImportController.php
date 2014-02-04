@@ -15,7 +15,7 @@ class ImportController extends BaseController
 		//$this->import_news();
 		//$this->import_blogs();
 		//$this->import_artists();
-		//$this->import_songs();
+		$this->import_songs();
 
 		die('Done!');
 	}
