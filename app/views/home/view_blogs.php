@@ -10,7 +10,7 @@
 	<div class="artist col-lg-4 col-md-4 col-sm-6 col-xs-12">
 		<div class="thumbnail">
 			<div class="caption">
-				<h3><a href="<?= $blog->getLink() ?>"><?= $blog->name ?></a></h3>
+				<h2><a href="<?= $blog->getLink() ?>"><?= $blog->name ?></a></h2>
 				<p>Info om bloggen</p>
 			</div>
 		</div>

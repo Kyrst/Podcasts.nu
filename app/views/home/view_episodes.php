@@ -18,7 +18,7 @@
 
 						<div class="media-body">
 							<h4 class="media-heading"><?= $episode->printPlayButton() ?> <a href="<?= $episode->podcast->getLink('avsnitt') ?>"><?= $episode->podcast->name ?></a> - <a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a> </h4>
-							<p><?= $episode->created_at; ?></p>
+                            <p><?=date('Y-m-d H:i:s', $episode->pub_date) ?></p>
 
 							<?= $episode->print_rater() ?>
 						</div>
