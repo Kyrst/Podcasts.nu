@@ -129,14 +129,20 @@ Route::post('logga-in', function()
 	catch ( Exception $e )
 	{
 		// Find user with email
-		$user = User::where('email', Input::get('email'))->firstOrFail();
+		$user = Auth::attempt(array
+		(
+			'email' => $email,
+			'password' => 'have_to_reset'
+		), true);
 
-		if ( $user->password === NULL )
+		if ( $user !== NULL )
 		{
-			return Redirect::route('new-password');
+			return Redirect::route('set-password');
 		}
-
-		$error = 'E-mailen eller löseordet är fel.';
+		else
+		{
+			$error = 'E-mailen eller löseordet är fel.';
+		}
 	}
 
 	if ( $error === '' )
