@@ -13,7 +13,7 @@
 
             <div class="container col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- Podcast-bild -->
-                <img class="media-object" src="<?= $podcast->getImage('standard', false, true); ?>" width="270" height="" alt="...">
+                <img class="media-object" src="<?= $podcast->getImage('standard', false, true); ?>" width="200" height="" alt="...">
             </div>
             <div class="content col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- Podcast-information -->

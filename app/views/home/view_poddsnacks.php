@@ -1,3 +1,5 @@
+<h1>Poddsnack</h1>
+
 <?php foreach ( $podtalks as $podtalk ): ?>
 	<div id="podtalk_<?= $podtalk->id ?>" class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
 		<div class="thumbnail text-center">
@@ -9,4 +11,5 @@
 			</div>
 		</div>
 	</div>
+
 <?php endforeach ?>

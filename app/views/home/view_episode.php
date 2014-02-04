@@ -4,10 +4,12 @@
 	<li><a href="<?= $episode->podcast->getLink('poddar'); ?>"><?= $episode->podcast->name; ?></a></li>
 	<li><?= $episode->title; ?></li>
 </ul>
-
+<h1><?= $episode->podcast->name; ?></h1>
 <h1><?= $episode->title; ?></h1>
 
+
 <p class="created"><?= $episode->created_at; ?></p>
+
 
 <?php if ( $episode->haveMedia() ): ?>
 	<?= $episode->printPlayButton(); ?>

@@ -25,5 +25,9 @@
 		<div class="col-lg-offset-2 col-lg-10">
 			<button type="submit" class="btn btn-default">Logga in</button>
 		</div>
+        /* Bli medlem-funktion. Manuellt eller med facebook*/
+        <div class="col-lg-offset-2 col-lg-10">
+            <button type="submit" class="btn btn-default">Bli medlem</button>
+        </div>
 	</div>
 </form>
