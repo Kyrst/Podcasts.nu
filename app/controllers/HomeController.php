@@ -317,4 +317,19 @@ class HomeController extends BaseController
     {
         $this->display('home.view_toplist', 'topplista');
     }
+
+	public function set_password()
+	{
+		$input = Input::all();
+
+		if ( $input )
+		{
+			$this->user->password = trim($input['password']);
+			$this->user->save();
+
+			return Redirect::route('min-sida');
+		}
+
+		$this->display('home.set_password', 'Sätt nytt lösenord');
+	}
 }

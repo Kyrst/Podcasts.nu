@@ -109,6 +109,7 @@ class ImportController extends BaseController
 				$user->facebook_id = $_user['facebook_id'] ? trim($_user['facebook_id']) : NULL;
 				$user->last_login = date('Y-m-d H:i:s', trim($_user['last_login']));
 				$user->created_at = date('Y-m-d H:i:s', trim($_user['registered']));
+				$user->verified = 1;
 
 				$blog_id = NULL;
 

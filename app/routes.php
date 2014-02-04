@@ -141,13 +141,13 @@ Route::post('logga-in', function()
 		}
 		else
 		{
-			$error = 'E-mailen eller löseordet är fel.';
+			$error = 'E-mail eller löseordet är fel.';
 		}
 	}
 
 	if ( $error === '' )
 	{
-		return Redirect::route('home');
+		return Redirect::route('min-sida');
 	}
 	else
 	{
@@ -397,3 +397,14 @@ Route::get('/scripts/download-podcasts/{podcast_id?}', array
 	'uses' => 'ScriptController@download_podcasts',
 	'as' => 'scripts/download-podcasts'
 ))->where('podcast_id', '\d+');
+
+Route::get('/set-password', array
+(
+	'uses' => 'HomeController@set_password',
+	'as' => 'set-password'
+));
+
+Route::post('/set-password', array
+(
+	'uses' => 'HomeController@set_password'
+));
