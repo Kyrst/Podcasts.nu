@@ -13,7 +13,6 @@ Route::get('/nyheter', array
 	'as' => 'nyheter'
 ));
 
-
 // Nyhet
 Route::get('/nyheter/{date}/{slug}', array
 (
@@ -129,15 +128,19 @@ Route::post('logga-in', function()
 	catch ( Exception $e )
 	{
 		// Find user with email
-		$user = Auth::attempt(array
+		$login = Auth::attempt(array
 		(
 			'email' => $email,
 			'password' => 'have_to_reset'
 		), true);
 
-		if ( $user !== NULL )
+		if ( $login === true )
 		{
-			return Redirect::route('set-password');
+			$user = Auth::user();
+
+			Auth::logout();
+
+			return Redirect::route('set-password')->with('user_id', $user->id);
 		}
 		else
 		{

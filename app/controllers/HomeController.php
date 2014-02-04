@@ -324,11 +324,38 @@ class HomeController extends BaseController
 
 		if ( $input )
 		{
-			$this->user->password = trim($input['password']);
-			$this->user->save();
+			$user_id = $input['user_id'];
 
-			return Redirect::route('min-sida');
+			try
+			{
+				$user = User::find($user_id);
+				$password = trim($input['password']);
+
+				$user->password = $password;
+				$user->save();
+
+				Auth::attempt(array
+				(
+					'email' => $user->email,
+					'password' => $password
+				), true);
+
+				return Redirect::route('min-sida');
+			}
+			catch ( Exception $e )
+			{
+				return Redirect::route('home');
+			}
 		}
+
+		$user_id = Session::get('user_id');
+
+		if ( !$user_id )
+		{
+			return Redirect::route('home');
+		}
+
+		$this->assign('user_id', $user_id);
 
 		$this->display('home.set_password', 'Sätt nytt lösenord');
 	}
