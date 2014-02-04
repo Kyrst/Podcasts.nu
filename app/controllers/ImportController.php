@@ -15,6 +15,8 @@ class ImportController extends BaseController
 		$this->import_blogs();
 		$this->import_artists();
 		$this->import_songs();
+
+		die('Done!');
 	}
 
 	private function clear_db_tables()
@@ -44,7 +46,7 @@ class ImportController extends BaseController
 			DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 		}
 
-		print('Tables cleared!');
+		//print('Tables cleared!');
 	}
 
 	private function import_categories()
@@ -56,7 +58,7 @@ class ImportController extends BaseController
 
 		foreach ( $categories as $_category )
 		{
-			print($_category['title']);
+			//print($_category['title']);
 
 			$category = new Category();
 			$category->id = $_category['id'];
@@ -67,7 +69,7 @@ class ImportController extends BaseController
 			$num_total++;
 		}
 
-		print('Categories Done (Num: ' . $num_total . ')!');
+		//print('Categories Done (Num: ' . $num_total . ')!');
 	}
 
 	private function import_users()
@@ -80,7 +82,7 @@ class ImportController extends BaseController
 
 		foreach ( $users as $_user )
 		{
-			print($_user['username']);
+			//print($_user['username']);
 
 			try
 			{
@@ -119,7 +121,7 @@ class ImportController extends BaseController
 			}
 			catch ( Exception $e )
 			{
-				print($e->getMessage());
+				//print($e->getMessage());
 
 				continue;
 			}
@@ -130,7 +132,7 @@ class ImportController extends BaseController
 			$num_total++;
 		}
 
-		print('Users Done (Num: ' . $num_total . ')!');
+		//print('Users Done (Num: ' . $num_total . ')!');
 
 		// Subscriptions
 		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'user_subscriptions.php';
@@ -139,7 +141,7 @@ class ImportController extends BaseController
 
 		foreach ( $user_subscriptions as $user_subscription )
 		{
-			print('User Subscription...');
+			//print('User Subscription...');
 
 			try
 			{
@@ -156,7 +158,7 @@ class ImportController extends BaseController
 			$num_total++;
 		}
 
-		print('User Subscriptions Done (Num: ' . $num_total . ')!');
+		//print('User Subscriptions Done (Num: ' . $num_total . ')!');
 	}
 
 	private function import_artists()
@@ -167,7 +169,7 @@ class ImportController extends BaseController
 
 		foreach ( $artists as $artist )
 		{
-			print($artist['name']);
+			//print($artist['name']);
 
 			$podcast = new Podcast();
 			$podcast->id = $artist['id'];
@@ -185,7 +187,7 @@ class ImportController extends BaseController
 			$num_total++;
 		}
 
-		print('Artists Done (Num: ' . $num_total . ')!');
+		//print('Artists Done (Num: ' . $num_total . ')!');
 	}
 
 	private function import_songs()
@@ -197,7 +199,7 @@ class ImportController extends BaseController
 
 		foreach ( $songs as $song )
 		{
-			print($song['title']);
+			//print($song['title']);
 
 			$episode = new Episode();
 			$episode->id = $song['id'];
@@ -216,14 +218,14 @@ class ImportController extends BaseController
 			$num_total++;
 		}
 
-		print('Songs Done (Num: ' . $num_total . ')!');
+		//print('Songs Done (Num: ' . $num_total . ')!');
 
 		// Comments
 		$num_total = 0;
 
 		foreach ( $song_comments as $song_comment )
 		{
-			print('Song Comment #' . $song_comment['id']);
+			//print('Song Comment #' . $song_comment['id']);
 
 			$episode_comment = new Episode_Comment();
 			$episode_comment->episode_id = $song_comment['song_id'];
@@ -235,7 +237,7 @@ class ImportController extends BaseController
 			$num_total++;
 		}
 
-		print('Song Comments Done (Num: ' . $num_total . ')!');
+		//print('Song Comments Done (Num: ' . $num_total . ')!');
 
 		// Votes
 		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'votes.php';
@@ -245,7 +247,7 @@ class ImportController extends BaseController
 		foreach ( $votes as $vote )
 		{
 			//
-			print('Song Vote...');
+			//print('Song Vote...');
 
 			$episode_vote = new Episode_Vote();
 			$episode_vote->episode_id = $vote['song_id'];
@@ -257,7 +259,7 @@ class ImportController extends BaseController
 			$num_total++;
 		}
 
-		print('Songs Votes Done (Num: ' . $num_total . ')!');
+		//print('Songs Votes Done (Num: ' . $num_total . ')!');
 
 		// Listens
 		$num_total = 0;
@@ -271,7 +273,7 @@ class ImportController extends BaseController
 
 				$created_at = date('Y-m-d H:i:s', $_views_date);
 
-				print('$num_total: ' . $num_total . ' / $_views_song_id: ' . $_views_song_id . ' / $created_at: ' . $created_at);
+				//print('$num_total: ' . $num_total . ' / $_views_song_id: ' . $_views_song_id . ' / $created_at: ' . $created_at);
 
 				$user_listen = new User_Listen();
 				$user_listen->user_id = 0;
@@ -286,7 +288,7 @@ class ImportController extends BaseController
 			fclose($handle);
 		}
 
-		print('User Listen Done (Num: ' . $num_total . ')!');
+		//print('User Listen Done (Num: ' . $num_total . ')!');
 	}
 
 	private function import_news()
@@ -298,7 +300,7 @@ class ImportController extends BaseController
 
 		foreach ( $news as $_news_item )
 		{
-			print($_news_item['title']);
+			//print($_news_item['title']);
 
 			try
 			{
@@ -317,7 +319,7 @@ class ImportController extends BaseController
 			$num_total++;
 		}
 
-		print('News Done (Num: ' . $num_total . ')!');
+		//print('News Done (Num: ' . $num_total . ')!');
 	}
 
 	private function import_blogs()
@@ -329,7 +331,7 @@ class ImportController extends BaseController
 
 		foreach ( $blogs as $_blog )
 		{
-			print($_blog['title']);
+			//print($_blog['title']);
 
 			$blog = new Blog();
 			$blog->id = $_blog['id'];
@@ -341,7 +343,7 @@ class ImportController extends BaseController
 			$num_total++;
 		}
 
-		print('Blogs Done (Num: ' . $num_total . ')!');
+		//print('Blogs Done (Num: ' . $num_total . ')!');
 
 		// Blog Items
 		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'blog_items.php';
@@ -350,7 +352,7 @@ class ImportController extends BaseController
 
 		foreach ( $blog_items as $_blog_item )
 		{
-			print($_blog_item['title']);
+			//print($_blog_item['title']);
 
 			$user_id = $_blog_item['blog_writer_id'];
 
@@ -368,7 +370,7 @@ class ImportController extends BaseController
 			$num_total++;
 		}
 
-		print('Blog Items Done (Num: ' . $num_total . ')!');
+		//print('Blog Items Done (Num: ' . $num_total . ')!');
 
 		// Fix user_id
 		foreach ( Blog_Item::all() as $blog_item )
@@ -389,6 +391,6 @@ class ImportController extends BaseController
 			}
 		}
 
-		print('Fixed user_id.');
+		//print('Fixed user_id.');
 	}
 }
