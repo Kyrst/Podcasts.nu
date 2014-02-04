@@ -16,10 +16,10 @@ class ImportOldDbCommand extends Command
 	{
 		$this->clear_db_tables();
 		$this->import_users();
-		//$this->import_categories();
-		//$this->import_news();
-		//$this->import_blogs();
-		//$this->import_artists();
+		$this->import_categories();
+		$this->import_news();
+		$this->import_blogs();
+		$this->import_artists();
 		$this->import_songs();
 	}
 

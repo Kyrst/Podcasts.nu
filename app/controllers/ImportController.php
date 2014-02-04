@@ -101,7 +101,7 @@ class ImportController extends BaseController
 
 				$user->slug = Str::slug($user->username);
 				$user->email = trim($_user['email']);
-				$user->password = '';
+				$user->password = NULL;
 				$user->first_name = trim($_user['first_name']);
 				$user->last_name = trim($_user['last_name']);
 				$user->city = !empty($_user['city']) ? trim($_user['city']) : NULL;
