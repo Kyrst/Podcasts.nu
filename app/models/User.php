@@ -64,7 +64,7 @@ class User extends VerifyUser
 			$history[] = array
 			(
 				'message' => 'Lyssnade på <a href="' . $user_listen->episode->getLink('poddar') . '">' . $user_listen->episode->getTitle() . '</a>.',
-				'timestamp' => strtotime($user_listen->time)
+				'timestamp' => strtotime($user_listen->created_at)
 			);
 		}
 

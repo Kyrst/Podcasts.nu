@@ -1,4 +1,6 @@
 <?php
+set_time_limit(0);
+
 use Illuminate\Console\Command;
 
 use Toddish\Verify\Models\User as VerifyUser;
@@ -14,7 +16,10 @@ class ImportOldDbCommand extends Command
 	{
 		$this->clear_db_tables();
 		$this->import_users();
-		$this->import_artists();
+		//$this->import_categories();
+		//$this->import_news();
+		//$this->import_blogs();
+		//$this->import_artists();
 		$this->import_songs();
 	}
 
@@ -48,10 +53,34 @@ class ImportOldDbCommand extends Command
 		$this->line('Tables cleared!');
 	}
 
+	private function import_categories()
+	{
+		// Categories
+		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'categories.php';
+
+		$num_total = 0;
+
+		foreach ( $categories as $_category )
+		{
+			$this->line($_category['title']);
+
+			$category = new Category();
+			$category->id = $_category['id'];
+			$category->title = trim($_category['title']);
+			$category->slug = Str::slug($category->title);
+			$category->save();
+
+			$num_total++;
+		}
+
+		$this->line('Categories Done (Num: ' . $num_total . ')!');
+	}
+
 	private function import_users()
 	{
 		// Users
 		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'users.php';
+		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'blog_writers.php';
 
 		$num_total = 0;
 
@@ -79,10 +108,25 @@ class ImportOldDbCommand extends Command
 				$user->facebook_id = trim($_user['facebook_id']);
 				$user->last_login = date('Y-m-d H:i:s', trim($_user['last_login']));
 				$user->created_at = date('Y-m-d H:i:s', trim($_user['registered']));
+
+				$blog_id = NULL;
+
+				foreach ( $blog_writers as $blog_writer )
+				{
+					if ( $blog_writer['user_id'] == $_user['id'] )
+					{
+						$blog_id = $blog_writer['blog_id'];
+					}
+				}
+
+				$user->blog_id = $blog_id;
+
 				$user->save();
 			}
 			catch ( Exception $e )
 			{
+				$this->line($e->getMessage());
+
 				continue;
 			}
 
@@ -206,6 +250,7 @@ class ImportOldDbCommand extends Command
 
 		foreach ( $votes as $vote )
 		{
+			//
 			$this->line('Song Vote...');
 
 			$episode_vote = new Episode_Vote();
@@ -219,5 +264,137 @@ class ImportOldDbCommand extends Command
 		}
 
 		$this->line('Songs Votes Done (Num: ' . $num_total . ')!');
+
+		// Listens
+		$num_total = 0;
+
+		if ( ($handle = fopen(public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'views.csv', 'r')) !== FALSE )
+		{
+			while ( ($data = fgetcsv($handle, 0, ',')) !== FALSE )
+			{
+				$_views_song_id = $data[1];
+				$_views_date = $data[2];
+
+				$created_at = date('Y-m-d H:i:s', $_views_date);
+
+				$this->line('$num_total: ' . $num_total . ' / $_views_song_id: ' . $_views_song_id . ' / $created_at: ' . $created_at);
+
+				$user_listen = new User_Listen();
+				$user_listen->user_id = 0;
+				$user_listen->episode_id = $_views_song_id;
+				$user_listen->first_time = $created_at;
+				$user_listen->created_at = $created_at;
+				$user_listen->save();
+
+				$num_total++;
+			}
+
+			fclose($handle);
+		}
+
+		$this->line('User Listen Done (Num: ' . $num_total . ')!');
+	}
+
+	private function import_news()
+	{
+		// Users
+		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'news.php';
+
+		$num_total = 0;
+
+		foreach ( $news as $_news_item )
+		{
+			$this->line($_news_item['title']);
+
+			try
+			{
+				$news_item = new News_Item();
+				$news_item->title = trim($_news_item['title']);
+				$news_item->slug = Str::slug($news_item->title);
+				$news_item->content = trim($_news_item['content']);
+				$news_item->created_at = date('Y-m-d H:i:s', trim($_news_item['added']));
+				$news_item->updated_at = date('Y-m-d H:i:s', trim($_news_item['modified']));
+				$news_item->save();
+			} catch ( Exception $e )
+			{
+				continue;
+			}
+
+			$num_total++;
+		}
+
+		$this->line('News Done (Num: ' . $num_total . ')!');
+	}
+
+	private function import_blogs()
+	{
+		// Blogs
+		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'blogs.php';
+
+		$num_total = 0;
+
+		foreach ( $blogs as $_blog )
+		{
+			$this->line($_blog['title']);
+
+			$blog = new Blog();
+			$blog->id = $_blog['id'];
+			$blog->name = trim($_blog['title']);
+			$blog->slug = Str::slug($blog->name);
+			$blog->description = trim($_blog['description']);
+			$blog->save();
+
+			$num_total++;
+		}
+
+		$this->line('Blogs Done (Num: ' . $num_total . ')!');
+
+		// Blog Items
+		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'blog_items.php';
+
+		$num_total = 0;
+
+		foreach ( $blog_items as $_blog_item )
+		{
+			$this->line($_blog_item['title']);
+
+			$user_id = $_blog_item['blog_writer_id'];
+
+			$user = User::find($user_id);
+
+			$blog_item = new Blog_Item();
+			$blog_item->blog_id = $user->blog_id;
+			$blog_item->user_id = $user_id;
+			$blog_item->title = trim($_blog_item['title']);
+			$blog_item->slug = Str::slug($blog_item->title);
+			$blog_item->body = trim($_blog_item['content']);
+			$blog_item->created_at = date('Y-m-d H:i:s', trim($_blog_item['added']));
+			$blog_item->save();
+
+			$num_total++;
+		}
+
+		$this->line('Blog Items Done (Num: ' . $num_total . ')!');
+
+		// Fix user_id
+		foreach ( Blog_Item::all() as $blog_item )
+		{
+			try
+			{
+				$user = User::where('blog_id', $blog_item->blog_id)->firstOrFail();
+
+				if ( $user )
+				{
+					$blog_item->user_id = $user->id;
+					$blog_item->save();
+				}
+			}
+			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+			{
+				continue;
+			}
+		}
+
+		$this->line('Fixed user_id.');
 	}
 }

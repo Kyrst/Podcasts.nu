@@ -24,7 +24,6 @@ class AjaxController extends BaseController
 				$user_listen->first_time = $time;
 			}
 
-			$user_listen->time = $time;
 			$user_listen->is_listening = 'yes';
 			$user_listen->save();
 		}
