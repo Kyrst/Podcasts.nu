@@ -1,3 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="4" />
+<project version="4">
+  <component name="PublishConfigData" uploadOnCheckin="ae7b22f5-aa8e-4048-9fd7-91f9118aa053">
+    <serverData>
+      <paths name="myrberginnovation">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/myrberginnovation.se" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myUploadOnCheckinName" value="myrberginnovation" />
+  </component>
+</project>
 
