@@ -16,6 +16,9 @@ class ImportController extends BaseController
 		//$this->import_blogs();
 		//$this->import_artists();
 		$this->import_songs();
+		//$this->import_song_comments();
+		//$this->import_song_votes();
+		//$this->import_song_listens();
 
 		die('Done!');
 	}
@@ -220,7 +223,10 @@ class ImportController extends BaseController
 		}
 
 		//print('Songs Done (Num: ' . $num_total . ')!');
+	}
 
+	private function import_song_comments()
+	{
 		// Comments
 		$num_total = 0;
 
@@ -239,7 +245,10 @@ class ImportController extends BaseController
 		}
 
 		//print('Song Comments Done (Num: ' . $num_total . ')!');
+	}
 
+	private function import_song_votes()
+	{
 		// Votes
 		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'votes.php';
 
@@ -261,7 +270,10 @@ class ImportController extends BaseController
 		}
 
 		//print('Songs Votes Done (Num: ' . $num_total . ')!');
+	}
 
+	private function import_song_listens()
+	{
 		// Listens
 		$num_total = 0;
 
