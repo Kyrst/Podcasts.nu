@@ -128,21 +128,24 @@ Route::post('logga-in', function()
 	catch ( Exception $e )
 	{
 		// Find user with email
-		$login = Auth::attempt(array
-		(
-			'email' => $email,
-			'password' => 'have_to_reset'
-		), true);
-
-		if ( $login === true )
+		try
 		{
-			$user = Auth::user();
+			$login = Auth::attempt(array
+			(
+				'email' => $email,
+				'password' => 'have_to_reset'
+			), true);
 
-			Auth::logout();
+			if ( $login === true )
+			{
+				$user = Auth::user();
 
-			return Redirect::route('set-password')->with('user_id', $user->id);
+				Auth::logout();
+
+				return Redirect::route('set-password')->with('user_id', $user->id);
+			}
 		}
-		else
+		catch ( Exception $e )
 		{
 			$error = 'E-mail eller löseordet är fel.';
 		}
