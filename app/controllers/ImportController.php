@@ -1,5 +1,6 @@
 <?php
 set_time_limit(0);
+ini_set('memory_limit', '512M');
 
 use Toddish\Verify\Models\User as VerifyUser;
 use Toddish\Verify\Models\Role as VerifyRole;
