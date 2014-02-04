@@ -74,7 +74,7 @@ function init_player()
 		solution: 'html, flash',
 		supplied: 'mp3',
 		preload: 'metadata',
-		volume: 0.8,
+		volume: .8,
 		muted: false,
 		backgroundColor: '#000000',
 		cssSelectorAncestor: '#jp_container_1',
@@ -114,7 +114,7 @@ function init_player()
 				});
 
 				current_title = playing_cookie_object.title;
-				current_episode_id = playing_cookie_object.id;
+				current_episode_id = playing_cookie_object.episode_id;
 				current_episode_link = playing_cookie_object.episode_link;
 
 				$('#player_title').html('<a href="' + current_episode_link + '">' + current_title + '</a>');
@@ -157,6 +157,8 @@ function init_player()
 		},
 		pause: function(e)
 		{
+			save_current_position();
+
 			refresh_player_controls();
 		}
 	});
@@ -185,8 +187,12 @@ function init_player()
 
 			//$this.addClass('sm2_playing');
 
+			// Changed episode!
 			if ( $player.data().jPlayer.status.src !== url )
 			{
+				// Spara position
+				save_current_position();
+
 				$('#player_title').html('<a href="' + current_episode_link + '">' + current_title + '</a>');
 
 				$player.jPlayer('setMedia',
@@ -440,5 +446,24 @@ function unsubscribe_podcast_bind($this)
 				subscribe_podcast_bind();
 			}
 		});
+	});
+}
+
+function save_current_position()
+{
+	if ( current_episode_id === null || user_id === 0 )
+	{
+		return;
+	}
+
+	$.ajax(
+	{
+		type: 'POST',
+		url: BASE_URL + 'save-listen-position',
+		data:
+		{
+			episode_id: current_episode_id,
+			position: $player.data().jPlayer.status.currentTime
+		}
 	});
 }

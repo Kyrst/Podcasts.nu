@@ -300,6 +300,11 @@ Route::post('/save-listen', array
 	'uses' => 'AjaxController@save_listen'
 ));
 
+Route::post('/save-listen-position', array
+(
+	'uses' => 'AjaxController@save_listen_position'
+));
+
 // AJAX: Stop episode listen
 Route::post('/stop-listening', array
 (
@@ -361,7 +366,7 @@ Event::listen('illuminate.query', function($query)
 {
 	if ( app()->environment() === 'local' && Input::get('profiler') )
 	{
-		echo $query, '<hr>';
+		error_log($query);
 	}
 });
 

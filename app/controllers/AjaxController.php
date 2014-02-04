@@ -39,16 +39,19 @@ class AjaxController extends BaseController
 			'error' => ''
 		);
 
-		$input = Input::all();
+		if ( $this->user !== NULL )
+		{
+			$input = Input::all();
 
-		try
-		{
-			$user_listen = User_Listen::where(array('episode_id' => $input['episode_id'], 'user_id' => $this->user->id))->firstOrFail();
-			$user_listen->is_listening = 'no';
-			$user_listen->save();
-		}
-		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
-		{
+			try
+			{
+				$user_listen = User_Listen::where(array('episode_id' => $input['episode_id'], 'user_id' => $this->user->id))->firstOrFail();
+				$user_listen->is_listening = 'no';
+				$user_listen->save();
+			}
+			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+			{
+			}
 		}
 
 		return Response::json($result);
@@ -125,29 +128,106 @@ class AjaxController extends BaseController
 	{
 		$url = Input::get('url');
 
-		$remoteFile = $url;
-		$ch = curl_init($remoteFile);
-		curl_setopt($ch, CURLOPT_NOBODY, true);
+		$content_length = $this->get_content_length($url);
+
+		$ch = curl_init($url);
+
+		$writefn = function($ch, $chunk)
+		{
+			static $data = '';
+			static $limit = 1024;
+
+			$len = strlen($data) + strlen($chunk);
+
+			if ( $len >= $limit )
+			{
+				$data .= substr($chunk, 0, $limit-strlen($data));
+
+				echo strlen($data) , ' ', $data;
+
+				return -1;
+			}
+
+			$data .= $chunk;
+
+			return strlen($chunk);
+		};
+
+		$begin = 0;
+		$end = $content_length - 1;
+
+		if ( isset($_SERVER['HTTP_RANGE']) )
+		{
+			if ( preg_match('/bytes=\h*(\d+)-(\d*)[\D.*]?/i', $_SERVER['HTTP_RANGE'], $matches) )
+			{
+				$begin = intval($matches[1]);
+
+				if ( !empty($matches[2]) )
+				{
+					$end = intval($matches[2]);
+				}
+
+				error_log('yes: ' . $begin . ' - ' . $end);
+			}
+		}
+		else
+		{
+			error_log('no: ' . $begin . ' - ' . $end);
+		}
+
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RANGE, '0-1024');
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_WRITEFUNCTION, $writefn);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+
+		$data = curl_exec($ch);
+
+		curl_close($ch);
+
+		if ( $begin > 0 || $end < $content_length )
+		{
+			header('HTTP/1.1 206 Partial Content');
+		}
+		else
+		{
+			header('HTTP/1.1 200 OK');
+		}
+
+		//header('Content-Type: audio/mpeg');
+		header('Cache-Control: public, must-revalidate, max-age=0');
+		header('Pragma: no-cache');
+		header('Accept-Ranges: bytes');
+		header('Content-Length:' . ($end - $begin) + 1);
+
+		if ( isset($_SERVER['HTTP_RANGE']) )
+		{
+			header('Content-Range: bytes ' . ($begin - $end / $content_length));
+		}
+
+		header('Content-Transfer-Encoding: binary' . "\n");
+		//header("Last-Modified: $time");
+
+		echo $data;
+
+		//readfile($url);
+		exit;
+	}
+
+	private function get_content_length($url)
+	{
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HEADER, true);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); //not necessary unless the file redirects (like the PHP example we're using here)
-		$data = curl_exec($ch);
-		curl_close($ch);
-		if ($data === false) {
-			echo 'cURL failed';
-			exit;
-		}
+		curl_setopt($ch, CURLOPT_NOBODY, true);
+		curl_exec($ch);
 
-		$contentLength = 'unknown';
-		if (preg_match('/Content-Length: (\d+)/', $data, $matches)) {
-			$contentLength = (int)$matches[1];
-		}
+		$size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
 
-		header('Content-Type: audio/mpeg');
-		header('Content-Length: ' . $contentLength);
-
-		readfile($remoteFile);
-		exit;
+		return intval($size);
 	}
 
 	public function rate_episode()
@@ -234,6 +314,30 @@ class AjaxController extends BaseController
 		$podcast_id = $input['podcast_id'];
 
 		User_Podcast::where('user_id', $this->user->id)->where('podcast_id', $podcast_id)->delete();
+
+		return Response::json($result);
+	}
+
+	public function save_listen_position()
+	{
+		$result = array
+		(
+			'error' => ''
+		);
+
+		$input = Input::all();
+
+		$episode_id = $input['episode_id'];
+
+		try
+		{
+			$user_listen = User_Listen::where('episode_id', $episode_id)->where('user_id', $this->user->id)->firstOrFail();
+			$user_listen->current_position = $input['position'];
+			$user_listen->save();
+		}
+		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+		{
+		}
 
 		return Response::json($result);
 	}

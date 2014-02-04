@@ -225,7 +225,12 @@ class HomeController extends BaseController
 
 	public function my_page()
 	{
-		$this->assign('history', $this->user->get_history());
+		// Historik
+		$this->assign('history', $this->user->get_history(5));
+
+		// Oklara lyssningar
+		$this->assign('num_user_listens', $this->user->episode_listens()->where('done', 'no')->count());
+		$this->assign('user_listens', $this->user->get_episode_listens());
 
 		$this->display('home.my_page');
 	}

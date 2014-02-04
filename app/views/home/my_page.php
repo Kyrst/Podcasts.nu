@@ -22,6 +22,19 @@
 			<p>Ingen historik.</p>
 		<?php endif ?>
 
+		<!-- Ej lyssnat klart -->
+		<?php if ( $num_user_listens > 0 ): ?>
+			<h2>Ej lyssnat klart</h2>
+
+			<table class="table">
+				<?php foreach ( $user_listens as $user_listen ): ?>
+					<tr>
+						<td><?= var_dump($user_listen->title) ?></td>
+					</tr>
+				<?php endforeach ?>
+			</table>
+		<?php endif ?>
+
 		<!-- Prenumerationer -->
 		<h2>Prenumerationer</h2>
 

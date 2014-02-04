@@ -39,7 +39,7 @@ class User extends VerifyUser
 		return $this->belongsToMany('Podcast', 'user_podcasts');
 	}
 
-	public function get_history()
+	public function get_history($num = NULL)
 	{
 		$history = array();
 
@@ -53,6 +53,11 @@ class User extends VerifyUser
 
 		// Hämta lyssningar
 		$user_listens = User_Listen::all();
+
+		if ( $num !== NULL )
+		{
+			$user_listens = $user_listens->take($num);
+		}
 
 		foreach ( $user_listens as $user_listen )
 		{
@@ -98,5 +103,10 @@ class User extends VerifyUser
 		}
 
 		return $latest_listened_episode;
+	}
+
+	public function get_episode_listens()
+	{
+		return array();
 	}
 }
