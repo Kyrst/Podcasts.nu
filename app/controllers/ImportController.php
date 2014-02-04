@@ -100,12 +100,13 @@ class ImportController extends BaseController
 				}
 
 				$user->slug = Str::slug($user->username);
+				$user->email = trim($_user['email']);
 				$user->password = '';
 				$user->first_name = trim($_user['first_name']);
 				$user->last_name = trim($_user['last_name']);
 				$user->city = !empty($_user['city']) ? trim($_user['city']) : NULL;
 				$user->birthdate = $_user['birthdate'] !== '0000-00-00' ? trim($_user['birthdate']) : NULL;
-				$user->facebook_id = trim($_user['facebook_id']);
+				$user->facebook_id = $_user['facebook_id'] ? trim($_user['facebook_id']) : NULL;
 				$user->last_login = date('Y-m-d H:i:s', trim($_user['last_login']));
 				$user->created_at = date('Y-m-d H:i:s', trim($_user['registered']));
 
