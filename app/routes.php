@@ -363,9 +363,10 @@ Route::post('/rate-episode', array
 ));
 
 // Import
-Route::get('/import', array
+Route::get('/import-old', array
 (
-	'uses' => 'ImportController@import'
+	'uses' => 'ImportController@import',
+	'as' => 'import-old'
 ));
 
 Event::listen('illuminate.query', function($query)
