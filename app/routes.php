@@ -414,3 +414,24 @@ Route::post('/set-password', array
 (
 	'uses' => 'HomeController@set_password'
 ));
+
+Route::post('/save-episode-duration', array
+(
+	'uses' => 'AjaxController@save_episode_duration'
+));
+
+Route::get('/sign-up', array
+(
+	'uses' => 'HomeController@sign_up',
+	'as' => 'sign-up'
+));
+
+Route::post('/sign-up', array
+(
+	'uses' => 'HomeController@sign_up'
+));
+
+Route::post('/user-exists', array
+(
+	'uses' => 'AjaxController@user_exists'
+));

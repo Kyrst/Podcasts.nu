@@ -131,6 +131,17 @@ function init_player()
 				}
 			}
 		},
+		durationchange: function(e)
+		{
+			$.ajax(
+			{
+				url: BASE_URL + 'save-episode-duration',
+				type: 'POST',
+				data: { episode_id: current_episode_id, duration: $player.data().jPlayer.status.duration }
+			}).done(function()
+			{
+			});
+		},
 		loadstart: function()
 		{
 			//console.log('loadstart');

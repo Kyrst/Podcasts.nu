@@ -359,4 +359,53 @@ class HomeController extends BaseController
 
 		$this->display('home.set_password', 'Sätt nytt lösenord');
 	}
+
+	public function sign_up()
+	{
+		$input = Input::all();
+
+		if ( $input )
+		{
+			$username = trim($input['username']);
+			$email = trim($input['email']);
+			$password = trim($input['password']);
+			$first_name = trim($input['first_name']);
+			$last_name = trim($input['last_name']);
+			$city = trim($input['city']);
+			$birthdate = trim($input['birthdate']);
+
+			try
+			{
+				$user = new User();
+				$user->username = $username;
+				$user->slug = Str::slug($username);
+				$user->password = $password;
+				$user->email = $email;
+				$user->first_name = $first_name;
+				$user->last_name = $last_name;
+				$user->city = $city;
+				$user->birthdate = $birthdate;
+				$user->verified = 1;
+				$user->save();
+
+				Auth::attempt
+				(
+					array
+					(
+						'email' => $email,
+						'password' => $password
+					),
+					true
+				);
+			}
+			catch ( Exception $e )
+			{
+				return Redirect::route('sign-up')->with('sign_up_error', 'Det gick inte att bli medlem just nu.');
+			}
+		}
+
+		$this->assign('sign_up_error', Session::get('sign_up_error'));
+
+		$this->display('home.sign_up', 'Bli medlem');
+	}
 }

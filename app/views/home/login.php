@@ -1,7 +1,7 @@
 <h1>Logga in</h1>
 
 <?php if ( Session::has('log_in_error') ): ?>
-	<p class="alert alert-error">
+	<p class="alert alert-danger">
 		<?php echo Session::get('log_in_error'); ?>
 	</p>
 <?php endif; ?>
@@ -24,10 +24,8 @@
 	<div class="form-group">
 		<div class="col-lg-offset-2 col-lg-10">
 			<button type="submit" class="btn btn-default">Logga in</button>
+
+            <a href="<?= URL::route('sign-up') ?>" class="btn btn-default">Bli medlem</a>
 		</div>
-        /* Bli medlem-funktion. Manuellt eller med facebook*/
-        <div class="col-lg-offset-2 col-lg-10">
-            <button type="submit" class="btn btn-default">Bli medlem</button>
-        </div>
 	</div>
 </form>

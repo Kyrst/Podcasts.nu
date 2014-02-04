@@ -7,3 +7,8 @@ body
 {
 	clear: both
 }
+
+label em
+{
+	color: red
+}

@@ -6,7 +6,13 @@
 	<input type="hidden" name="user_id" value="<?= $user_id ?>">
 
 	<div class="form-group">
+		<label for="password">Ditt lösenord:</label>
 		<input type="password" name="password" id="password" class="form-control">
+	</div>
+
+	<div class="form-group">
+		<label for="password_verify">Ditt lösenord igen:</label>
+		<input type="password" name="password_verify" id="password_verify" class="form-control">
 	</div>
 
 	<div class="form-group">

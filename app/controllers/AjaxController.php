@@ -1,6 +1,33 @@
 <?php
 class AjaxController extends BaseController
 {
+	public function save_episode_duration()
+	{
+		$result = array
+		(
+			'error' => ''
+		);
+
+		$input = Input::all();
+
+		try
+		{
+			$episode = Episode::find($input['episode_id']);
+
+			if ( $episode->duration === NULL )
+			{
+				$episode->duration = $input['duration'];
+				$episode->save();
+			}
+		}
+		catch ( Exception $e )
+		{
+			$result['error'] = $e->getMessage();
+		}
+
+		return Response::json($result);
+	}
+
 	public function save_listen()
 	{
 		$result = array
@@ -336,6 +363,39 @@ class AjaxController extends BaseController
 		}
 		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
 		{
+		}
+
+		return Response::json($result);
+	}
+
+	public function user_exists()
+	{
+		$result = array
+		(
+			'error' => ''
+		);
+
+		$input = Input::all();
+
+		if ( $input )
+		{
+			$username = trim($input['username']);
+			$email = trim($input['email']);
+
+			// Check if user with username exists
+			if ( User::where('username', $username)->count() === 1 )
+			{
+				$result['error'] = 'USERNAME_EXISTS';
+			}
+
+			// Username ok, check e-mail
+			if ( $result['error'] === '' )
+			{
+				if ( User::where('email', $email)->count() === 1 )
+				{
+					$result['error'] = 'EMAIL_EXISTS';
+				}
+			}
 		}
 
 		return Response::json($result);
