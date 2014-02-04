@@ -126,13 +126,17 @@ class ImportController extends BaseController
 			}
 			catch ( Exception $e )
 			{
-				//print($e->getMessage());
-
 				continue;
 			}
 
-			$role = VerifyRole::find(2);
-			$user->roles()->sync(array($role->id));
+			$member_role = VerifyRole::find(2);
+			$user->roles()->sync(array($member_role->id));
+
+			if ( $_user['type'] === 'admin' )
+			{
+				$admin_role = VerifyRole::find(1);
+				$user->roles()->sync(array($admin_role->id));
+			}
 
 			$num_total++;
 		}
@@ -373,6 +377,11 @@ class ImportController extends BaseController
 			$user_id = $_blog_item['blog_writer_id'];
 
 			$user = User::find($user_id);
+
+			if ( $user === NULL )
+			{
+				die(var_dump($user_id));
+			}
 
 			$blog_item = new Blog_Item();
 			$blog_item->blog_id = $user->blog_id;

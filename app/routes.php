@@ -116,17 +116,26 @@ Route::post('logga-in', function()
 {
 	$error = '';
 
+	$email = trim(Input::get('email'));
+
 	try
 	{
-		Auth::attempt(array
+		$user = Auth::attempt(array
 		(
-			'email' => Input::get('email'),
-			'password' => Input::get('password')
+			'email' => $email,
+			'password' => trim(Input::get('password'))
 		), true);
 	}
 	catch ( Exception $e )
 	{
-		//$error = $e->getMessage();
+		// Find user with email
+		$user = User::where('email', Input::get('email'))->firstOrFail();
+
+		if ( $user->password === NULL )
+		{
+			die('asd');
+		}
+
 		$error = 'E-mailen eller löseordet är fel.';
 	}
 
