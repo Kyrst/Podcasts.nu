@@ -30,15 +30,14 @@
 						<?php foreach ( $episodes as $episode ): ?>
 							<div class="episode clearfix">
 								<div class="right">
-									<h3>
+									<h4>
 										<?php if ( $episode->haveMedia() ): ?>
 											<?= $episode->printPlayButton(); ?>
 										<?php endif; ?>
 
-										<a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->podcast->name, ' - ', $episode->title; ?></a>
-									</h3>
-
-									<p class="created"><?= $episode->created_at; ?></p>
+										<a href="<?= $episode->getLink('avsnitt'); ?>"><?=$episode->title; ?></a>
+									</h4>
+									<p class="created"><?=date('Y-m-d H:i:s', $episode->pub_date) ?></p>
 
 									<?php if ( $user !== NULL && $user->is_admin() ): ?>
 										<div class="btn-group" style="margin-top:8px">
