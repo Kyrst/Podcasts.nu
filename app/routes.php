@@ -133,7 +133,7 @@ Route::post('logga-in', function()
 
 		if ( $user->password === NULL )
 		{
-			die('asd');
+			return Redirect::route('new-password');
 		}
 
 		$error = 'E-mailen eller löseordet är fel.';
