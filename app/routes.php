@@ -362,6 +362,12 @@ Route::post('/rate-episode', array
 	'uses' => 'AjaxController@rate_episode'
 ));
 
+// Import
+Route::get('/import', array
+(
+	'uses' => 'ImportController@import'
+));
+
 Event::listen('illuminate.query', function($query)
 {
 	if ( app()->environment() === 'local' && Input::get('profiler') )
