@@ -10,15 +10,15 @@ class ImportController extends BaseController
 	public function import()
 	{
 		$this->clear_db_tables();
-		//$this->import_users();
-		//$this->import_categories();
-		//$this->import_news();
-		//$this->import_blogs();
-		//$this->import_artists();
-		//$this->import_songs();
-		//$this->import_song_comments();
-		//$this->import_song_votes();
-		$this->import_song_listens();
+		$this->import_users();
+		$this->import_categories();
+		$this->import_news();
+		$this->import_blogs();
+		$this->import_artists();
+		$this->import_songs();
+		$this->import_song_comments();
+		$this->import_song_votes();
+		//$this->import_song_listens();
 
 		die('Done!');
 	}
