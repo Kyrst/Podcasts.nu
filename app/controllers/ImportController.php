@@ -227,6 +227,8 @@ class ImportController extends BaseController
 
 	private function import_song_comments()
 	{
+		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'songs.php';
+
 		// Comments
 		$num_total = 0;
 
