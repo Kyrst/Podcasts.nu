@@ -26,6 +26,7 @@
 			<button type="submit" class="btn btn-default">Logga in</button>
 
             <a href="<?= URL::route('sign-up') ?>" class="btn btn-default">Bli medlem</a>
+            <a href="<?= $facebook_login_link ?>" class="btn btn-default">Logga in med Facebook</a>
 		</div>
 	</div>
 </form>

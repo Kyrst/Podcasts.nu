@@ -179,10 +179,19 @@ class HomeController extends BaseController
 
 		$this->assign('podcast', $podcast);
 
-		$this->assign('num_episodes', count($episodes));
-		$this->assign('episodes', $episodes);
+		//$this->assign('num_episodes', count($episodes));
+		//$this->assign('episodes', $episodes);
 
-		$this->display('home.view_episodes', ($podcast !== NULL ? $podcast->name : '') . ' - Avsnitt');
+		$this->assign('categories', Category::all());
+
+		$episodes_view = View::make('home/partials/get_episodes');
+		$episodes_view->podcast = $podcast;
+		$episodes_view->num_episode = count($episodes);
+		$episodes_view->episodes = $episodes;
+
+		$this->assign('episodes_html', $episodes_view->render());
+
+		$this->display('home.view_episodes', ($podcast !== NULL ? $podcast->name : 'Avsnitt'));
 	}
 
 	public function view_episode($podcast, $episode)
@@ -215,6 +224,10 @@ class HomeController extends BaseController
 
 	public function login()
 	{
+		$facebook_login_link = 'https://www.facebook.com/dialog/oauth?client_id=' . Config::get('facebook.FACEBOOK_APP_ID') . '&amp;redirect_uri=' . Config::get('facebook.FACEBOOK_REDIRECT_URL');
+
+		$this->assign('facebook_login_link', $facebook_login_link);
+
 		$this->display('home.login');
 	}
 

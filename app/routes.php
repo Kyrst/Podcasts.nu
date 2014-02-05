@@ -88,7 +88,7 @@ Route::get('/avsnitt/{podcast}/{episode}', array
 //Topplista
 Route::get('/topplista', array
 (
-   'uses' => 'HomeController@view_toplist.php',
+   'uses' => 'HomeController@view_toplist',
    'as' => 'topplista'
 ));
 
@@ -435,3 +435,8 @@ Route::post('/user-exists', array
 (
 	'uses' => 'AjaxController@user_exists'
 ));
+
+Route::get('/facebook-login/{code}', array
+(
+	'uses' => 'FacebookController@login'
+))->where('code', '*');

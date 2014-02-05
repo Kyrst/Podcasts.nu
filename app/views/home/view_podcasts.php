@@ -1,4 +1,4 @@
-	<h1>Poddar</h1>
+<h1>Poddar</h1>
 
 <a href="javascript:" data-view_type="grid" class="change-view-type btn btn-primary">Grid</a>
 <a href="javascript:" data-view_type="list" class="change-view-type btn btn-primary">List</a>
