@@ -4,12 +4,14 @@
 	<li><a href="<?= $episode->podcast->getLink('poddar'); ?>"><?= $episode->podcast->name; ?></a></li>
 	<li><?= $episode->title; ?></li>
 </ul>
-<h1><?= $episode->podcast->name; ?></h1>
-<h1><?= $episode->title; ?></h1>
 
+<h1><?= $episode->title; ?> (<?= $episode->podcast->name ?>)</h1>
 
 <p class="created"><?= $episode->created_at; ?></p>
 
+<div style="margin-bottom:15px">
+	<?= $episode->print_rater() ?> <?= $episode->get_score(1) ?>
+</div>
 
 <?php if ( $episode->haveMedia() ): ?>
 	<?= $episode->printPlayButton(); ?>
@@ -19,6 +21,7 @@
 	<div class="panel-heading">
 		<h3 class="panel-title">Kommentarer</h3>
 	</div>
+
 	<div class="panel-body">
 		<div id="comments_container">
 			<?= $comments_html ?>

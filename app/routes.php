@@ -66,6 +66,13 @@ Route::get('/ajax/get-podcasts', array
 	'as' => '/ajax/get-podcasts'
 ));
 
+// Get episodes (AJAX)
+Route::get('/ajax/get-episodes', array
+(
+	'uses' => 'HomeController@ajax_get_episodes',
+	'as' => '/ajax/get-episodes'
+));
+
 // Avsnitt
 Route::get('/avsnitt', array
 (
@@ -440,3 +447,14 @@ Route::get('/facebook-login/{code}', array
 (
 	'uses' => 'FacebookController@login'
 ))->where('code', '*');
+
+Route::get('/sok', array
+(
+	'uses' => 'HomeController@search',
+	'as' => 'sok'
+));
+
+/*Event::listen('illuminate.query', function($query)
+{
+	echo $query, '<hr>';
+});*/

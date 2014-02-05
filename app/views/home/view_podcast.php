@@ -18,7 +18,40 @@
             <div class="content col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- Podcast-information -->
                 <h3><?= $podcast->name; ?></h3>
-                <h4>Podcast-information.</h4>
+
+				<div style="margin-bottom:10px">
+					<?= $podcast->get_subscription_link('Följ', 'Följer', $user, 'btn btn-default btn-sm') ?>
+				</div>
+
+				<?php if ( strlen($podcast) > 50 ): ?>
+					<div id="description"><?= Str::limit($podcast->description, 50) ?> <a href="javascript:" id="show_more_description" class="btn btn-xs btn-primary">Visa mer</a></div>
+					<div id="full_description" style="display:none"><?= $podcast->description ?></div>
+                <?php else: ?>
+					<?= $podcast->description ?>
+                <?php endif ?>
+
+				<h4>Kategori</h4>
+                <?= $podcast->category->title ?>
+
+				<?php if ( $podcast->homepage ): ?>
+					<h4>Webbplats</h4>
+					<a href="<?= $podcast->homepage ?>"><?= $podcast->homepage ?></a>
+                <?php endif ?>
+
+				<?php if ( $podcast->facebook ): ?>
+					<h4>Facebook</h4>
+					<a href="<?= $podcast->facebook ?>"><?= $podcast->facebook ?></a>
+				<?php endif ?>
+
+				<?php if ( $podcast->twitter ): ?>
+					<h4>Twitter</h4>
+					<a href="<?= $podcast->twitter ?>"><?= $podcast->twitter ?></a>
+				<?php endif ?>
+
+				<?php if ( $podcast->itunes ): ?>
+					<h4>iTunes</h4>
+					<a href="<?= $podcast->itunes ?>"><?= $podcast->itunes ?></a>
+				<?php endif ?>
             </div>
         </div>
         <div class ="content col-lg-8 col-md-8 col-sm-12 col-xs-12">

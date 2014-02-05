@@ -187,7 +187,7 @@ class ImportController extends BaseController
 			$podcast->slug = Str::slug($podcast->name);
 			$podcast->description = trim($artist['description']);
 			$podcast->rss = trim($artist['rss']);
-			$podcast->category_id = $artist['category_id'];
+			$podcast->category_id = $artist['category_id'] ? $artist['category_id'] : NULL;
 			$podcast->homepage = trim($artist['homepage']);
 			$podcast->facebook = trim($artist['facebook']);
 			$podcast->twitter = trim($artist['twitter']);

@@ -13,6 +13,11 @@ class Episode extends Eloquent
 		return $this->belongsToMany('Podcast', 'user_podcasts');
 	}
 
+	public function votes()
+	{
+		return $this->hasMany('Episode_Vote');
+	}
+
 	public function comments()
 	{
 		return $this->hasMany('Episode_Comment');
@@ -44,7 +49,7 @@ class Episode extends Eloquent
 		return '<a href="javascript:" id="player_' . $this->id . '" class="play sm2_button" data-episode_id="' . $this->id . '" data-url="' . $media_link . '" data-id="player_' . $this->id . '" data-title="' . $this->podcast->name . ' - ' . $this->title . '" data-episode_link="' . $this->getLink('avsnitt') . '"></a>';
 	}
 
-	public function get_score()
+	public function get_score($decimals = null)
 	{
 		$result = DB::table('episodes')
 			->join('episode_votes', 'episodes.id', '=', 'episode_votes.episode_id')
@@ -52,7 +57,7 @@ class Episode extends Eloquent
 			->where('episode_votes.episode_id', $this->id)
 			->first();
 
-		return $result->avg_score;
+		return $decimals !== NULL ? number_format($result->avg_score, $decimals) : $result->avg_score;
 	}
 
 	public function print_rater()

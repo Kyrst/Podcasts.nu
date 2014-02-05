@@ -12,14 +12,20 @@
 			<div class="page-header">
 				<h3 class="icon news-items">Nyheter</h3>
 			</div>
+
 			<div class="container">
-				<?php foreach ( $latest_news_items as $news_item ): ?>
+				<?php foreach ( $latest_news_and_blog_items as $news_or_blog_item ): ?>
 					<div class="row">
-						<strong><?= $news_item->title; ?></strong> - <em><?= date('Y-m-d', strtotime($news_item->created_at)); ?></em>
-						<?= Str::limit($news_item->content, 50); ?>
-						<a href="<?= URL::to('nyheter/' . date('Y-m-d', strtotime($news_item->created_at)) . '/' . $news_item->slug); ?>">Läs mer...</a>
+						<strong><?= e($news_or_blog_item['title']); ?></strong> - <em><?= date('Y-m-d', $news_or_blog_item['timestamp']); ?></em>
+
+						<?= Str::limit($news_or_blog_item['content'], 250); ?>
+
+						<br>
+
+						<a href="<?= $news_or_blog_item['link'] ?>" class="btn btn-xs btn-primary">Läs mer</a>
 					</div>
 				<?php endforeach; ?>
+
 			</div>
 		</div>
 		<div class="sidebar col-xs-12 col-sm-4 col-md-4 col-lg-4">

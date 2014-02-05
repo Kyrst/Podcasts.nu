@@ -71,7 +71,7 @@ class BaseController extends Controller
 	protected $user = NULL;
 
 	private $from_controller;
-	private $current_route_action = '';
+	protected $current_route_action = '';
 
 	public function __construct()
 	{

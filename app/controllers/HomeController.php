@@ -28,10 +28,37 @@ class HomeController extends BaseController
 
 		$this->assign('latest_comments', $latest_comments);
 
-		// Senaste nyheter
-		$latest_news_items = News_Item::orderBy('created_at', 'DESC');
+		// Senaste nyheter och blogginlägg
+		$latest_blog_items = Blog_Item::orderBy('created_at', 'DESC')->limit(5);
+		$latest_news_items = News_Item::orderBy('created_at', 'DESC')->limit(5);
 
-		$this->assign('latest_news_items', $latest_news_items->get());
+		$latest_news_and_blog_items = array();
+
+		foreach ( $latest_blog_items->get() as $blog_item )
+		{
+			$latest_news_and_blog_items[] = array
+			(
+				'id' => $blog_item->id,
+				'title' => $blog_item->title,
+				'link' => $blog_item->getLink(),
+				'content' => $blog_item->body,
+				'timestamp' => strtotime($blog_item->created_at)
+			);
+		}
+
+		foreach ( $latest_news_items->get() as $news_item )
+		{
+			$latest_news_and_blog_items[] = array
+			(
+				'id' => $news_item->id,
+				'title' => $news_item->title,
+				'link' => $news_item->getLink(),
+				'content' => $news_item->content,
+				'timestamp' => strtotime($news_item->created_at)
+			);
+		}
+
+		$this->assign('latest_news_and_blog_items', $latest_news_and_blog_items);
 
 		// Lyssnas just nu
 		$listens_right_now = array();
@@ -53,6 +80,11 @@ class HomeController extends BaseController
 		$this->assign('listens_right_now', $listens_right_now);
 
 		$this->display('home.index');
+	}
+
+	private function sort_blog_and_news_items(array $a, array $b)
+	{
+		return $b['timestamp'] - $a['timestamp'];
 	}
 
 	public function view_news_items()
@@ -126,6 +158,47 @@ class HomeController extends BaseController
 		)));
 	}
 
+	public function ajax_get_episodes()
+	{
+		$category_id = Input::get('category_id');
+
+		if ( $category_id > 0 )
+		{
+			/*foreach ( Episode::with('podcast')->take(10)->get() as $episode )
+			{
+				if ( $episode->podcast === NULL )
+				{
+					continue;
+				}
+
+				if ( $episode->podcast->category_id == $category_id )
+				{
+					$episodes[] = $episode;
+				}
+			}*/
+
+			$episodes = Episode::with(array('podcast' => function($query) use ($category_id)
+			{
+				$query->where('category_id', $category_id);
+			}))->take(10)->get();
+		}
+		else
+		{
+			$episodes = Episodes::all();
+		}
+
+		$episodes_html = View::make('home/partials/get_episodes');
+		$episodes_html->num_episodes = count($episodes);
+		$episodes_html->episodes = $episodes;
+		$episodes_html->user = $this->user;
+		$episodes_html->_podcast = NULL;
+
+		die(json_encode(array
+		(
+			'html' => $episodes_html->render()
+		)));
+	}
+
 	public function view_podcast($slug)
 	{
 		$episodes = array();
@@ -185,9 +258,9 @@ class HomeController extends BaseController
 		$this->assign('categories', Category::all());
 
 		$episodes_view = View::make('home/partials/get_episodes');
-		$episodes_view->podcast = $podcast;
-		$episodes_view->num_episode = count($episodes);
+		$episodes_view->_podcast = $podcast;
 		$episodes_view->episodes = $episodes;
+		$episodes_view->current_route = $this->current_route_action;
 
 		$this->assign('episodes_html', $episodes_view->render());
 
@@ -328,6 +401,68 @@ class HomeController extends BaseController
 
     public function view_toplist()
     {
+    	$stats = array
+		(
+			'highest_score_episodes' => array(),
+			'highest_score_podcasts' => array(),
+			'most_played' => array
+			(
+				'this_week' => array(),
+				'this_month' => array(),
+				'total' => array()
+			)
+		);
+
+		// Higest score (episodes)
+		$stats['highest_score_episodes'] = DB::table('episodes')
+			->join('episode_votes', 'episodes.id', '=', 'episode_votes.episode_id')
+			->select('episodes.title', DB::raw('AVG(episode_votes.score) AS avg_score'))
+			->orderBy('avg_score', 'DESC')
+			->groupBy('episodes.id')
+			->take(10)
+			->get();
+
+		// Higest score (podcasts)
+		$stats['highest_score_podcasts'] = DB::table('podcasts')
+			->join('episodes', 'podcasts.id', '=', 'episodes.podcast_id')
+			->join('episode_votes', 'episodes.id', '=', 'episode_votes.episode_id')
+			->select('podcasts.name', DB::raw('AVG(episode_votes.score) AS avg_score'))
+			->orderBy('avg_score', 'DESC')
+			->groupBy('podcasts.id')
+			->take(10)
+			->get();
+
+		// Most played episodes (this week)
+		$stats['most_played']['this_week'] = DB::table('user_listens')
+			->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
+			->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
+			->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'))
+			->orderBy('num_listens', 'DESC')
+			->groupBy('episodes.id')
+			->take(10)
+			->get();
+
+		// Most played episodes (this month)
+		$stats['most_played']['this_month'] = DB::table('user_listens')
+			->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
+			->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
+			->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 MONTH)'))
+			->orderBy('num_listens', 'DESC')
+			->groupBy('episodes.id')
+			->take(10)
+			->get();
+
+		// Most played episodes (total)
+		$stats['most_played']['total'] = DB::table('user_listens')
+			->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
+			->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
+			->orderBy('num_listens', 'DESC')
+			->groupBy('episodes.id')
+			->take(10)
+			->get();
+
+		$this->assign('stats', $stats);
+
         $this->display('home.view_toplist', 'topplista');
     }
 

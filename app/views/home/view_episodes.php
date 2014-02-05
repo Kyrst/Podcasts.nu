@@ -1,6 +1,6 @@
 <ul class="breadcrumb">
 	<li><a href="<?= URL::route('home', array(), ''); ?>">Podcasts.nu</a></li>
-	<li><a href="<?= URL::route('avsnitt', array(), ''); ?>">Avsnitt</a></li>
+	<li><?php if ( $podcast ): ?><a href="<?= URL::route('avsnitt', array(), ''); ?>">Avsnitt</a><?php else: ?>Avsnitt<?php endif ?></li>
 	<?php if ( $podcast ): ?><li><?= $podcast->name; ?></li><?php endif; ?>
 </ul>
 
@@ -10,7 +10,7 @@
 		<span class="caret"></span>
 	</button>
 
-	<ul class="dropdown-menu">
+	<ul id="category_select" class="dropdown-menu">
 		<?php foreach ( $categories as $category ): ?>
 			<li><a href="javascript:" data-id="<?= $category->id; ?>" data-title="<?= $category->title; ?>" class="category"><?= $category->title; ?></a></li>
 		<?php endforeach; ?>
@@ -21,7 +21,9 @@
 	<div class="col-md-9">
 		<h1>Avsnitt<?php if ( $podcast ): ?> - <?= $podcast->name ?><?php endif ?></h1>
 
-		<?= $episodes_html; ?>
+		<div id="episodes_container">
+			<?= $episodes_html; ?>
+		</div>
 	</div>
 
 	<?php if ( $podcast ): ?>
