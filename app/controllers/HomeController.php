@@ -164,23 +164,11 @@ class HomeController extends BaseController
 
 		if ( $category_id > 0 )
 		{
-			/*foreach ( Episode::with('podcast')->take(10)->get() as $episode )
-			{
-				if ( $episode->podcast === NULL )
-				{
-					continue;
-				}
-
-				if ( $episode->podcast->category_id == $category_id )
-				{
-					$episodes[] = $episode;
-				}
-			}*/
-
-			$episodes = Episode::with(array('podcast' => function($query) use ($category_id)
-			{
-				$query->where('category_id', $category_id);
-			}))->take(10)->get();
+			$episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
+				->where('podcasts.category_id', $category_id)
+				->orderBy('episodes.created_at', 'DESC')
+				->take(10)
+				->get();
 		}
 		else
 		{
@@ -253,7 +241,7 @@ class HomeController extends BaseController
 
 		$this->assign('podcast', $podcast);
 
-		$this->assign('categories', Category::all());
+		$this->assign('categories', Category::orderBy('position')->get());
 
 		$episodes_view = View::make('home/partials/get_episodes');
 		$episodes_view->_podcast = $podcast;
