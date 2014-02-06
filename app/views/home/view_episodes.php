@@ -77,4 +77,4 @@
 
 			<?= $podcast->get_subscription_link('Följ', 'Följer', $user, 'btn btn-default btn-sm') ?>
 		</div>
-	<?php endif ?>
+	<?php endif ?> */ ?>

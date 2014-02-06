@@ -250,10 +250,8 @@ class HomeController extends BaseController
 			$episodes = Episode::all()->take(10);
 		}
 
-		$this->assign('podcast', $podcast);
 
-		//$this->assign('num_episodes', count($episodes));
-		//$this->assign('episodes', $episodes);
+		$this->assign('podcast', $podcast);
 
 		$this->assign('categories', Category::all());
 
