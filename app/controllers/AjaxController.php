@@ -39,9 +39,9 @@ class AjaxController extends BaseController
 
 		if ( $this->user !== NULL )
 		{
-			$user_listen = User_Listen::find($input['episode_id']);
+			$user_listen = User_Listen::where('episode_id', $input['episode_id'])->where('user_id', $this->user->id)->get();
 
-			$time = date('Y-m-d H:i:s');
+			$time = date('Y-m-dv H:i:s');
 
 			if ( $user_listen === NULL )
 			{
@@ -363,6 +363,7 @@ class AjaxController extends BaseController
 		}
 		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
 		{
+			die($e->getMessage());
 		}
 
 		return Response::json($result);
