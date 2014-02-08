@@ -1,10 +1,49 @@
-<div class="jumbotron">
+<!--<div class="jumbotron">
 	<div class="container">
 		<h1>Podcasts.Nu!</h1>
 		<p>Svenska Podcasts. Lyssna direkt i din dator, surfplatta eller mobil!</p>
 		<p><a class="btn btn-primary btn-lg">Läs mer</a></p>
 	</div>
-</div>
+</div>-->
+<!--  Carousel - consult the Twitter Bootstrap docs at
+      http://twitter.github.com/bootstrap/javascript.html#carousel -->
+<div id="panorama-front" class="carousel slide"><!-- class of slide for animation -->
+    <div class="carousel-inner">
+        <div class="item active"><!-- class of active since it's the first item -->
+            <img src="images/carousel/panorama-front-1.jpg" alt="" />
+            <div class="carousel-caption">
+                <h3>Stor Info här</h3>
+                <p>Infotext här</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src=""images/carousel/panorama-front-1.jpg"" alt="" />
+            <div class="carousel-caption">
+                <h3>Stor Info här</h3>
+                <p>Infotext här</p>
+                <p><a href="/avsnitt"></a></p>
+            </div>
+        </div>
+        <div class="item">
+            <img src=""images/carousel/panorama-front-1.jpg"" alt="" />
+            <div class="carousel-caption">
+                <h3>Stor Info här</h3>
+                <p>Infotext här</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src=""images/carousel/panorama-front-1.jpg"" alt="" />
+            <div class="carousel-caption">
+                <h3>Stor Info här</h3>
+                <p>Infortext här</p>
+            </div>
+        </div>
+    </div><!-- /.carousel-inner -->
+    <!--  Next and Previous controls below
+          href values must reference the id for this carousel -->
+    <a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
+</div><!-- /.carousel -->
 
 <div class="container">
 	<div class="row">
