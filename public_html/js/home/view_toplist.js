@@ -32,6 +32,8 @@ $(document).ready(function()
 
 function refresh_stats()
 {
+	$stats_container.html('Laddar...');
+
 	$.ajax(
 	{
 		url: BASE_URL + 'topplista/hamta',

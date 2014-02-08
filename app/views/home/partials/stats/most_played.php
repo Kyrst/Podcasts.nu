@@ -3,7 +3,7 @@
 <?php if ( count($most_played_this_week) ): ?>
 	<ol>
 		<?php foreach ( $most_played_this_week as $episode ): ?>
-			<li><a href="/"><?= $episode->title ?></a> (<?= $episode->num_listens ?>)</li>
+			<li><a href="<?= Episode::getLinkStatic($episode->podcast_slug, $episode->slug, 'avsnitt') ?>"><?= $episode->title ?></a> (<?= $episode->num_listens ?>)</li>
 		<?php endforeach ?>
 	</ol>
 <?php else: ?>
@@ -15,7 +15,7 @@
 <?php if ( count($most_played_this_week) ): ?>
 	<ol>
 		<?php foreach ( $most_played_this_month as $episode ): ?>
-			<li><a href="/"><?= $episode->title ?></a> (<?= $episode->num_listens ?>)</li>
+			<li><a href="<?= Episode::getLinkStatic($episode->podcast_slug, $episode->slug, 'avsnitt') ?>"><?= $episode->title ?></a> (<?= $episode->num_listens ?>)</li>
 		<?php endforeach ?>
 	</ol>
 <?php else: ?>
@@ -27,7 +27,7 @@
 <?php if ( count($most_played_this_week) ): ?>
 	<ol>
 		<?php foreach ( $most_played_total as $episode ): ?>
-			<li><a href="/"><?= $episode->title ?></a> (<?= $episode->num_listens ?>)</li>
+			<li><a href="<?= Episode::getLinkStatic($episode->podcast_slug, $episode->slug, 'avsnitt') ?>"><?= $episode->title ?></a> (<?= $episode->num_listens ?>)</li>
 		<?php endforeach ?>
 	</ol>
 <?php else: ?>

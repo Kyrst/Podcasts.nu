@@ -33,7 +33,14 @@ class Episode extends Eloquent
 		if ( !in_array($section, array('poddar', 'avsnitt')) )
 			throw new Exception();
 
-		return URL::to($section . '/' . $this->podcast->slug . '/' . $this->slug);
+		return self::getLinkStatic($this->podcast->slug, $this->slug, $section);
+
+		//return URL::to($section . '/' . $this->podcast->slug . '/' . $this->slug);
+	}
+
+	public static function getLinkStatic($podcast_slug, $episode_slug, $section = 'avsnitt')
+	{
+		return URL::to($section . '/' . $podcast_slug . '/' . $episode_slug);
 	}
 
 	public function haveMedia()

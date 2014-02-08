@@ -419,7 +419,7 @@ class HomeController extends BaseController
 				$most_played_this_week = DB::table('user_listens')
 					->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
 					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
-					->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
+					->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
 					->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'));
 
 				if ( $category_id )
@@ -437,7 +437,7 @@ class HomeController extends BaseController
 				$most_played_this_month = DB::table('user_listens')
 					->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
 					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
-					->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
+					->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
 					->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 MONTH)'));
 
 				if ( $category_id )
@@ -455,7 +455,7 @@ class HomeController extends BaseController
 				$most_played_total = DB::table('user_listens')
 					->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
 					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
-					->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'));
+					->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('COUNT(user_listens.episode_id) AS num_listens'));
 
 				if ( $category_id )
 				{
@@ -487,7 +487,7 @@ class HomeController extends BaseController
 					$podcasts = $podcasts->where('podcasts.category_id', $category_id);
 				}
 
-				$podcasts = $podcasts->select('podcasts.name', DB::raw('AVG(episode_votes.score) AS avg_score'))
+				$podcasts = $podcasts->select('podcasts.name', 'podcasts.slug', DB::raw('AVG(episode_votes.score) AS avg_score'))
 					->orderBy('avg_score', 'DESC')
 					->groupBy('podcasts.id')
 					->take(10)
@@ -497,7 +497,7 @@ class HomeController extends BaseController
 				$episodes = DB::table('episodes')
 					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
 					->join('episode_votes', 'episodes.id', '=', 'episode_votes.episode_id')
-					->select('episodes.title', DB::raw('AVG(episode_votes.score) AS avg_score'));
+					->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('AVG(episode_votes.score) AS avg_score'));
 
 				if ( $category_id )
 				{
@@ -518,6 +518,27 @@ class HomeController extends BaseController
 			}
 			else if ( $type_id === 'most_comments' )
 			{
+				// Most comments (episodes)
+				$episodes_this_week = DB::table('podcasts')
+					->join('episodes', 'podcasts.id', '=', 'episodes.podcast_id')
+					->join('episode_comments', 'episodes.id', '=', 'episode_comments.episode_id')
+					->where('episode_comments.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'));
+
+				if ( $category_id )
+				{
+					$episodes_this_week = $episodes_this_week->where('podcasts.category_id', $category_id);
+				}
+
+				$episodes_this_week = $episodes_this_week->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('COUNT(episode_comments.id) AS num_comments'))
+					->orderBy('num_comments', 'DESC')
+					->groupBy('episodes.id')
+					->take(10)
+					->get();
+
+				$most_comments_view = View::make('home/partials/stats/most_comments');
+				$most_comments_view->most_commented_this_week = $episodes_this_week;
+
+				$result['html'] = $most_comments_view->render();
 			}
 
 			return Response::json($result);

@@ -48,7 +48,12 @@ class Podcast extends Eloquent
 		if ( !in_array($section, array('poddar', 'avsnitt')) )
 			throw new Exception();
 
-		return URL::to($section . '/' . $this->slug);
+		return self::getLinkStatic($this->slug, $section);
+	}
+
+	public static function getLinkStatic($podcast_slug, $section)
+	{
+		return URL::to($section . '/' . $podcast_slug);
 	}
 
 	public function get_score($decimals = NULL)
