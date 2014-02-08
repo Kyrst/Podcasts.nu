@@ -41,7 +41,7 @@
 							<?php endif ?>
 						</td>
 						<td><a href="<?= $user_listen->episode->getLink() ?>"><?= $user_listen->episode->getTitle() ?></a></td>
-						<td><?= User_Listen::format_seconds($user_listen->current_position) ?> / <?= User_Listen::format_seconds($user_listen->episode->duration) ?></td>
+						<td><span class="current-position-<?= $user_listen->episode->id ?>"><?= User_Listen::format_seconds($user_listen->current_position) ?></span> / <?= User_Listen::format_seconds($user_listen->episode->duration) ?></td>
 					</tr>
 				<?php endforeach ?>
 			</table>

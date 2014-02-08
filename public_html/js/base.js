@@ -29,9 +29,13 @@ $(function()
 
 window.onbeforeunload = function()
 {
+	var is_playing = false;
+
 	if ( $player.data().jPlayer.status.src !== '' )
 	{
 		var player_data = $player.data();
+
+		is_playing = (player_data.jPlayer.status.paused === false) ? 1 : 0;
 
 		var cookie_object =
 		{
@@ -42,7 +46,7 @@ window.onbeforeunload = function()
 			episode_link: current_episode_link,
 			progress: player_data.jPlayer.status.currentTime,
 			duration: player_data.jPlayer.status.duration,
-			is_playing: (player_data.jPlayer.status.paused === false) ? 1 : 0,
+			is_playing: is_playing,
 			percent: (player_data.jPlayer.status.currentTime / player_data.jPlayer.status.duration) * 100
 		};
 
@@ -59,7 +63,34 @@ window.onbeforeunload = function()
 		}
 	}
 
-	//$.cookie('player_state', is_player_open() ? 'open' : 'closed');
+	if ( is_playing )
+	{
+		$.ajax(
+		{
+			url: BASE_URL + 'save-listen',
+			type: 'POST',
+			data:
+			{
+				episode_id: current_episode_id
+			},
+			async: false
+		}).done(function()
+		{
+		});
+
+		var e = e || window.event;
+
+		var message = 'Any text will block the navigation and display a prompt';
+
+		// For IE6-8 and Firefox prior to version 4
+		if ( e )
+		{
+			e.returnValue = message;
+		}
+
+		// For Chrome, Safari, IE8+ and Opera 12+
+		return message;
+	}
 }
 
 function init_player()
@@ -245,7 +276,8 @@ function init_player()
 			url: BASE_URL + 'stop-listening',
 			data:
 			{
-				episode_id: current_episode_id
+				episode_id: current_episode_id,
+				position: $player.data().jPlayer.status.currentTime
 			}
 		});
 
