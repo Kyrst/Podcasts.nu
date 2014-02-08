@@ -1,3 +1,15 @@
+<style>
+	.cke_dialog_ui_input_file { height: 200px }
+	.cke_dialog_ui_fileButton { margin-top: 100px !important }
+</style>
+
+<ul class="breadcrumb">
+	<li><a href="<?= URL::route('home', array(), ''); ?>">Podcasts.nu</a></li>
+	<li><a href="<?= URL::route('min-sida', array(), ''); ?>">Administratör</a></li>
+	<li><a href="<?= URL::route('admin/nyheter', array(), ''); ?>">Nyheter</a></li>
+	<li><?= $edit_mode ? $news_item_to_edit->title : 'Lägg till'; ?></li>
+</ul>
+
 <h1><?= $edit_mode ? 'Ändra' : 'Lägg till'; ?></h1>
 
 <form class="form-horizontal" method="post" role="form">

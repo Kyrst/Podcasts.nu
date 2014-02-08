@@ -2,7 +2,7 @@ $(function()
 {
 	CKEDITOR.replace('body',
 	{
-		filebrowserUploadUrl: BASE_URL + '/admin/upload_blog_item_image',
+		filebrowserUploadUrl: BASE_URL + 'admin/upload_blog_item_image',
 		height: 345
 	});
 

@@ -380,6 +380,11 @@ Route::post('/admin/upload_news_item_image', array
 	'uses' => 'AdminController@upload_news_item_image'
 ));
 
+Route::post('/admin/upload_blog_item_image', array
+(
+	'uses' => 'AdminController@upload_blog_item_image'
+));
+
 Route::get('/bild/{type}/{id}/{size}', array
 (
 	'uses' => 'ImageController@init'

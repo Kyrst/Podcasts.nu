@@ -348,11 +348,46 @@ class AdminController extends BaseController
 
 		$dst_path = NEWS_IMAGES_DIR_ABSOLUTE;
 
-		$output_path = basename(Str::slug($input->getClientOriginalName()), $input->getClientOriginalExtension()) . '.' . $input->getClientOriginalExtension();
+		if ( !file_exists($dst_path) )
+		{
+			mkdir($dst_path, 0775, true);
+		}
+
+		$new_image_filename = Str::slug(date('Y-m-d-His'));
+
+		$output_path = basename($new_image_filename, $input->getClientOriginalExtension()) . '.' . $input->getClientOriginalExtension();
 
 		Input::file('upload')->move($dst_path, $output_path);
 
-		die(BASE_URL . 'images/news/' . $output_path);
+		$link_url = BASE_URL . NEWS_IMAGES_DIR . $output_path;
+
+		$return_html = $link_url . '<br><img src="' . $link_url . '" height="100" alt="">';
+
+		die($return_html);
+	}
+
+	public function upload_blog_item_image()
+	{
+		$input = Input::file('upload');
+
+		$dst_path = BLOG_IMAGES_DIR_ABSOLUTE;
+
+		if ( !file_exists($dst_path) )
+		{
+			mkdir($dst_path, 0775, true);
+		}
+
+		$new_image_filename = Str::slug(date('Y-m-d-His'));
+
+		$output_path = basename($new_image_filename, $input->getClientOriginalExtension()) . '.' . $input->getClientOriginalExtension();
+
+		Input::file('upload')->move($dst_path, $output_path);
+
+		$link_url = BASE_URL . BLOG_IMAGES_DIR . $output_path;
+
+		$return_html = $link_url . '<br><img src="' . $link_url . '" height="100" alt="">';
+
+		die($return_html);
 	}
 
 	public function view_podtalks()

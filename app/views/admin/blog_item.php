@@ -1,3 +1,8 @@
+<style>
+	.cke_dialog_ui_input_file { height: 200px }
+	.cke_dialog_ui_fileButton { margin-top: 100px !important }
+</style>
+
 <ul class="breadcrumb">
 	<li><a href="<?= URL::route('home', array(), ''); ?>">Podcasts.nu</a></li>
 	<li><a href="<?= URL::route('min-sida', array(), ''); ?>">Administratör</a></li>
