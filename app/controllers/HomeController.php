@@ -518,7 +518,7 @@ class HomeController extends BaseController
 			}
 			else if ( $type_id === 'most_comments' )
 			{
-				// Most comments (episodes)
+				// Most comments this week
 				$episodes_this_week = DB::table('podcasts')
 					->join('episodes', 'podcasts.id', '=', 'episodes.podcast_id')
 					->join('episode_comments', 'episodes.id', '=', 'episode_comments.episode_id')
@@ -535,8 +535,43 @@ class HomeController extends BaseController
 					->take(10)
 					->get();
 
+				// Most comments this month
+				$episodes_this_month = DB::table('podcasts')
+					->join('episodes', 'podcasts.id', '=', 'episodes.podcast_id')
+					->join('episode_comments', 'episodes.id', '=', 'episode_comments.episode_id')
+					->where('episode_comments.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 MONTH)'));
+
+				if ( $category_id )
+				{
+					$episodes_this_month = $episodes_this_month->where('podcasts.category_id', $category_id);
+				}
+
+				$episodes_this_month = $episodes_this_month->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('COUNT(episode_comments.id) AS num_comments'))
+					->orderBy('num_comments', 'DESC')
+					->groupBy('episodes.id')
+					->take(10)
+					->get();
+
+				// Most comments in total
+				$episodes_total = DB::table('podcasts')
+					->join('episodes', 'podcasts.id', '=', 'episodes.podcast_id')
+					->join('episode_comments', 'episodes.id', '=', 'episode_comments.episode_id');
+
+				if ( $category_id )
+				{
+					$episodes_total = $episodes_total->where('podcasts.category_id', $category_id);
+				}
+
+				$episodes_total = $episodes_total->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('COUNT(episode_comments.id) AS num_comments'))
+					->orderBy('num_comments', 'DESC')
+					->groupBy('episodes.id')
+					->take(10)
+					->get();
+
 				$most_comments_view = View::make('home/partials/stats/most_comments');
 				$most_comments_view->most_commented_this_week = $episodes_this_week;
+				$most_comments_view->most_commented_this_month = $episodes_this_month;
+				$most_comments_view->most_commented_total = $episodes_total;
 
 				$result['html'] = $most_comments_view->render();
 			}
