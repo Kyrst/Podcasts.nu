@@ -20,19 +20,19 @@
                 <!-- Podcast-bild -->
                 <div id="links">
                     <?php if ( $podcast->homepage ): ?>
-                        <h5><a href="<?= $podcast->homepage ?>">Hemsida</a></h5>
+                        <h6><a href="<?= $podcast->homepage ?>">Hemsida</a></h6>
                     <?php endif ?>
 
                     <?php if ( $podcast->facebook ): ?>
-                        <h5><a href="<?= $podcast->facebook ?>">Facebook</a></h5>
+                        <h6><a href="<?= $podcast->facebook ?>">Facebook</a></h6>
                     <?php endif ?>
 
                     <?php if ( $podcast->twitter ): ?>
-                        <h5><a href="<?= $podcast->twitter ?>">Twitter</a></h5>
+                        <h6><a href="<?= $podcast->twitter ?>">Twitter</a></h6>
                     <?php endif ?>
 
                     <?php if ( $podcast->itunes ): ?>
-                        <h5><a href="<?= $podcast->itunes ?>">Itunes</a></h5>
+                        <h6><a href="<?= $podcast->itunes ?>">Itunes</a></h6>
                     <?php endif ?>
                 </div>
                 <img class="media-object podcast-image" src="<?= $podcast->getImage('standard', false, true); ?>" width="250" height="" alt="...">
@@ -68,32 +68,20 @@
 
                                         <?= $episode->print_rater() ?>
                                     </div>
+                                <?php if ( $user !== NULL && $user->is_admin() ): ?>
+                                    <div class="btn-group" style="margin-top:8px">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                            Admin <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="<?= URL::to('admin/avsnitt/' . $episode->id) ?>">Ändra</a></li>
+                                            <li><a href="<?= URL::to('admin/avsnitt/ta-bort/' . $episode->id) ?>">Ta bort</a></li>
+                                        </ul>
+                                    </div>
+                                <?php endif ?>
                             </div>
 
-							<div class="episode clearfix">
-								<div class="right">
-									<h4 class="episode-head">
-										<?php if ( $episode->haveMedia() ): ?>
-											<?= $episode->printPlayButton(); ?>
-										<?php endif; ?>
 
-										<a href="<?= $episode->getLink('avsnitt'); ?>"><?=$episode->title; ?></a>
-									</h4>
-									<p class="created"><?=date('Y-m-d H:i:s', $episode->pub_date) ?></p>
-
-									<?php if ( $user !== NULL && $user->is_admin() ): ?>
-										<div class="btn-group" style="margin-top:8px">
-											<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-												Admin <span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="<?= URL::to('admin/avsnitt/' . $episode->id) ?>">Ändra</a></li>
-												<li><a href="<?= URL::to('admin/avsnitt/ta-bort/' . $episode->id) ?>">Ta bort</a></li>
-											</ul>
-										</div>
-									<?php endif ?>
-								</div>
-							</div>
 						<?php endforeach; ?>
 					</div>
 				<?php else: ?>
