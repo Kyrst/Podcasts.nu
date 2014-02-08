@@ -66,9 +66,9 @@ class ScriptController extends Controller
 				}
 
 				$episode->unique_id = $unique_id;
-				$episode->title = $this->fix_imported_str($item->get_title());
+				$episode->title = Str::limit($this->fix_imported_str($item->get_title()), 250);
 				$episode->slug = Str::slug($episode->title);
-				$episode->description =  $this->fix_imported_str($item->get_description());
+				$episode->description = preg_replace('/<(\s*)img[^<>]*>/i', '', $this->fix_imported_str($item->get_description()));
 				$episode->media_link = $media_link;
 				$episode->pub_date = $date->getTimestamp();
 

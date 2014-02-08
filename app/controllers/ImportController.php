@@ -18,7 +18,8 @@ class ImportController extends BaseController
 		$this->import_songs();
 		$this->import_song_comments();
 		$this->import_song_votes();
-		//$this->import_song_listens();
+
+		//$this->import_song_listens(); Laggar for mycket live
 
 		die('Done!');
 	}
@@ -184,7 +185,8 @@ class ImportController extends BaseController
 			$podcast = new Podcast();
 			$podcast->id = $artist['id'];
 			$podcast->name = trim($artist['name']);
-			$podcast->slug = Str::slug($podcast->name);
+			$podcast->slug = trim($artist['slug']);
+			//$podcast->slug = Str::slug($podcast->name);
 			$podcast->description = trim($artist['description']);
 			$podcast->rss = trim($artist['rss']);
 			$podcast->category_id = $artist['category_id'] ? $artist['category_id'] : NULL;

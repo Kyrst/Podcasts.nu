@@ -20,14 +20,14 @@
 	<div class="form-group">
 		<label for="title" class="col-lg-2 control-label">Titel</label>
 		<div class="col-lg-10">
-			<input type="text" name="title" id="title" class="form-control"<?php if ($edit_mode): ?> value="<?= $blog_item_to_edit->title; ?>"<?php endif; ?>>
+			<input type="text" name="title" id="title" class="form-control"<?php if ($edit_mode): ?> value="<?= e($blog_item_to_edit->title); ?>"<?php endif; ?>>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="slug" class="col-lg-2 control-label">Slug</label>
 		<div class="col-lg-10">
-			<input type="text" name="slug" id="slug" class="form-control"<?php if ($edit_mode): ?> value="<?= $blog_item_to_edit->slug; ?>"<?php endif; ?>>
+			<input type="text" name="slug" id="slug" class="form-control"<?php if ($edit_mode): ?> value="<?= e($blog_item_to_edit->slug); ?>"<?php endif; ?>>
 		</div>
 	</div>
 
