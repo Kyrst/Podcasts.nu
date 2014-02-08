@@ -556,4 +556,9 @@ class AdminController extends BaseController
 
 		$this->display('admin.user', ($user !== NULL ? $user->getDisplayName() : 'Ny') . ' - Användare - Administratör');
 	}
+
+	public function uploaded_images()
+	{
+		$this->display('admin.uploaded_images', 'Upladdade Bilder - Administratör');
+	}
 }

@@ -196,6 +196,13 @@ Route::get('/bli-medlem', array
 	'as' => 'bli-medlem'
 ));
 
+// Admin: Upladdade Bilder
+Route::get('/admin/upladdade-bilder', array
+(
+	'uses' => 'AdminController@uploaded_images',
+	'as' => 'admin/upladdade-bilder'
+));
+
 // Admin: Blogg
 Route::get('/admin/blogg', array
 (
