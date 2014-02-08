@@ -9,6 +9,7 @@
       http://twitter.github.com/bootstrap/javascript.html#carousel -->
 <div id="panorama-front" class="carousel slide"><!-- class of slide for animation -->
     <div class="carousel-inner">
+
         <div class="item active"><!-- class of active since it's the first item -->
             <img src="images/carousel/panorama-front-1.jpg" alt="" />
             <div class="carousel-caption">
