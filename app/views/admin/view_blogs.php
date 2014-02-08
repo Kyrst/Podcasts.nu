@@ -21,7 +21,10 @@
 					<td><?= $blog_item->user->getDisplayName() ?></td>
 					<td><?= $blog_item->title ?></td>
 					<td><?= $blog_item->created_at ?></td>
-					<td><a href="<?= URL::to('admin/blogginlagg/' . $blog_item->id, array(), false); ?>" class="btn btn-primary">Ändra</a></td>
+					<td>
+						<a href="<?= URL::to('admin/blogginlagg/' . $blog_item->id, array(), false); ?>" class="btn btn-primary">Ändra</a>
+						<a href="<?= URL::to('admin/blogginlagg/ta-bort/' . $blog_item->id, array(), false); ?>" class="btn btn-primary delete-blog">Ta bort</a>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</table>

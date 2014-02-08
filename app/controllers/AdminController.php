@@ -79,6 +79,25 @@ class AdminController extends BaseController
 		$this->display('admin.blog_item');
 	}
 
+	// Ta bort blogginlägg
+	public function delete_blog_item($id)
+	{
+		$blog_item_to_delete = Blog_Item::find($id);
+
+		if ( $blog_item_to_delete !== NULL )
+		{
+			$blog_item_to_delete->delete();
+
+			$this->showAlert('Blogginlägget borttaget!');
+		}
+		else
+		{
+			$this->showAlert('Kunde inte hitta blogginlägget!');
+		}
+
+		return Redirect::route('admin/blogg');
+	}
+
 	public function view_news_items()
 	{
 		$news_items = News_Item::all();
@@ -559,6 +578,56 @@ class AdminController extends BaseController
 
 	public function uploaded_images()
 	{
+		$uploaded_images = array();
+
+		// Get news images
+		foreach ( glob(NEWS_IMAGES_DIR_ABSOLUTE . '*') as $filename )
+		{
+			$basename = basename($filename);
+
+			$uploaded_images[] = array
+			(
+				'type' => 'news',
+				'filename' => $filename,
+				'basename' => $basename,
+				'url' => BASE_URL . NEWS_IMAGES_DIR . $basename
+			);
+		}
+
+		// Get blog images
+		foreach ( glob(BLOG_IMAGES_DIR_ABSOLUTE . '*') as $filename )
+		{
+			$basename = basename($filename);
+
+			$uploaded_images[] = array
+			(
+				'type' => 'blog',
+				'filename' => $filename,
+				'basename' => $basename,
+				'url' => BASE_URL . BLOG_IMAGES_DIR . $basename
+			);
+		}
+
+		$this->assign('uploaded_images', $uploaded_images);
+
 		$this->display('admin.uploaded_images', 'Upladdade Bilder - Administratör');
+	}
+
+	public function delete_uploaded_image($image, $type)
+	{
+		$image_filename = ($type === 'news' ? NEWS_IMAGES_DIR_ABSOLUTE : BLOG_IMAGES_DIR_ABSOLUTE) . $image;
+
+		if ( file_exists($image_filename) )
+		{
+			$this->showAlert('Bild borttagen!');
+
+			unlink($image_filename);
+		}
+		else
+		{
+			$this->showAlert('Kunde inte hitta bilden!');
+		}
+
+		return Redirect::route('admin/uppladdade-bilder');
 	}
 }

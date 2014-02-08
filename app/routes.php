@@ -197,11 +197,16 @@ Route::get('/bli-medlem', array
 ));
 
 // Admin: Upladdade Bilder
-Route::get('/admin/upladdade-bilder', array
+Route::get('/admin/uppladdade-bilder', array
 (
 	'uses' => 'AdminController@uploaded_images',
-	'as' => 'admin/upladdade-bilder'
+	'as' => 'admin/uppladdade-bilder'
 ));
+
+Route::get('/admin/uppladdade-bilder/ta-bort/{image}/{type}', array
+(
+	'uses' => 'AdminController@delete_uploaded_image'
+))->where(array('image' => '[a-z0-9\-\.]+', 'type' => '(news|blog)'));
 
 // Admin: Blogg
 Route::get('/admin/blogg', array
@@ -223,6 +228,11 @@ Route::post('/admin/blogginlagg/{id?}', array
 	'uses' => 'AdminController@blog_item'
 ))->where('id', '[0-9]+');
 
+// Admin: Blogg: Ta bort
+Route::get('/admin/blogginlagg/ta-bort/{id?}', array
+(
+	'uses' => 'AdminController@delete_blog_item'
+))->where('id', '[0-9]+');
 
 // Admin: Nyheter
 Route::get('/admin/nyheter', array
