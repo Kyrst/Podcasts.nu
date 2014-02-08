@@ -216,13 +216,15 @@ class HomeController extends BaseController
 	{
 		$is_filtered = false;
 
+		$limit = 10;
+
 		if ( $podcast !== NULL )
 		{
 			try
 			{
 				$podcast = Podcast::where('slug', '=', $podcast)->firstOrFail();
 
-				$episodes = $podcast->episodes;
+				$episodes = $podcast->episodes->take($limit);
 
 				$is_filtered = true;
 			}
@@ -235,7 +237,7 @@ class HomeController extends BaseController
 		}
 		else
 		{
-			$episodes = Episode::all()->take(10);
+			$episodes = Episode::all()->take($limit);
 		}
 
 
@@ -541,5 +543,39 @@ class HomeController extends BaseController
 		$this->assign('sign_up_error', Session::get('sign_up_error'));
 
 		$this->display('home.sign_up', 'Bli medlem');
+	}
+
+	public function search()
+	{
+		$input = Input::all();
+
+		$search_term = isset($input['q']) ? trim($input['q']) : '';
+
+		$num_found = 0;
+
+		// Podcasts
+		$podcasts = Podcast::where('name', 'LIKE', '%' . $search_term . '%')->get();
+
+		if ( $podcasts->count() > 0 )
+		{
+			$num_found += $podcasts->count();
+		}
+
+		// Avsnitt
+		$episodes = Episode::where('title', 'LIKE', '%' . $search_term . '%')->get();
+
+		if ( $episodes->count() > 0 )
+		{
+			$num_found += $episodes->count();
+		}
+
+		$page_title = $search_term;
+
+		$this->assign('search_term', $search_term, array('content', 'layout'));
+		$this->assign('num_found', $num_found);
+		$this->assign('podcasts', $podcasts);
+		$this->assign('episodes', $episodes);
+
+		$this->display('home.search', $page_title);
 	}
 }

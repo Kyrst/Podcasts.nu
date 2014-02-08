@@ -107,6 +107,6 @@ class User extends VerifyUser
 
 	public function get_episode_listens()
 	{
-		return array();
+		return $this->episode_listens()->where('done', 'no')->get();
 	}
 }

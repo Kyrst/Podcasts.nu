@@ -29,7 +29,7 @@
 			<table class="table">
 				<?php foreach ( $user_listens as $user_listen ): ?>
 					<tr>
-						<td><?= var_dump($user_listen->title) ?></td>
+						<td><?= $user_listen->getTitle() ?></td>
 					</tr>
 				<?php endforeach ?>
 			</table>

@@ -60,8 +60,8 @@ class Episode extends Eloquent
 		return $decimals !== NULL ? number_format($result->avg_score, $decimals) : $result->avg_score;
 	}
 
-	public function print_rater()
+	public function print_rater($disabled = false)
 	{
-		return '<div data-rating="' . $this->get_score() . '" data-id="' . $this->id . '" data-type="episode" class="raty"></div>';
+		return '<div data-rating="' . $this->get_score() . '" data-id="' . $this->id . '" data-type="episode"' . ($disabled ? ' data-readOnly="1"' : '') . ' class="raty"></div>';
 	}
 }
