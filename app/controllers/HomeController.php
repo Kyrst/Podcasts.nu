@@ -29,8 +29,8 @@ class HomeController extends BaseController
 		$this->assign('latest_comments', $latest_comments);
 
 		// Senaste nyheter och blogginlägg
-		$latest_blog_items = Blog_Item::orderBy('created_at', 'DESC')->limit(5);
-		$latest_news_items = News_Item::orderBy('created_at', 'DESC')->limit(5);
+		$latest_blog_items = Blog_Item::orderBy('created_at', 'DESC')->limit(2);
+		$latest_news_items = News_Item::orderBy('created_at', 'DESC')->limit(3);
 
 		$latest_news_and_blog_items = array();
 

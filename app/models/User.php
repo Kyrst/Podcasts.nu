@@ -107,6 +107,8 @@ class User extends VerifyUser
 
 	public function get_episode_listens()
 	{
-		return $this->episode_listens()->where('done', 'no')->get();
+		$episode_listens = User_Listen::where('user_id', $this->id)->where('done', 'no')->get();
+
+		return $episode_listens;
 	}
 }

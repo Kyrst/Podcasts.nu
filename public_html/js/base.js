@@ -191,6 +191,8 @@ function init_player()
 		}
 		else // Play
 		{
+			var start_position = $this.data('position');
+
 			if ( !is_player_open() )
 			{
 				open_player();
@@ -214,7 +216,7 @@ function init_player()
 
 			show_player();
 
-			$player.jPlayer('play'/*, TIME */);
+			$player.jPlayer('play', start_position);
 
 			playing_url = url;
 

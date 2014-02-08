@@ -16,7 +16,7 @@
 
 	<!-- Avsnitt -->
 	<?php if ( count($episodes) > 0 ): ?>
-		<h2>Podcasts</h2>
+		<h2>Avsnitt</h2>
 
 		<?php foreach ( $episodes as $episode ): ?>
 			<h3><a href="<?= $episode->getLink() ?>"><?= $episode->getTitle() ?></a></h3>

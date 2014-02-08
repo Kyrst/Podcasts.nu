@@ -27,9 +27,21 @@
 			<h2>Ej lyssnat klart</h2>
 
 			<table class="table">
+				<tr>
+					<th></th>
+					<th>Avsnitt</th>
+					<th>Position</th>
+				</tr>
+
 				<?php foreach ( $user_listens as $user_listen ): ?>
 					<tr>
-						<td><?= $user_listen->getTitle() ?></td>
+						<td>
+							<?php if ( $user_listen->episode->haveMedia() ): ?>
+								<?= $user_listen->episode->printPlayButton() ?>
+							<?php endif ?>
+						</td>
+						<td><a href="<?= $user_listen->episode->getLink() ?>"><?= $user_listen->episode->getTitle() ?></a></td>
+						<td><?= User_Listen::format_seconds($user_listen->current_position) ?> / <?= User_Listen::format_seconds($user_listen->episode->duration) ?></td>
 					</tr>
 				<?php endforeach ?>
 			</table>
