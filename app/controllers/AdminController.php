@@ -276,7 +276,7 @@ class AdminController extends BaseController
 
 	public function view_episodes()
 	{
-		$episodes = Episode::all();
+		$episodes = Episode::all()->take(10);
 
 		$this->assign('episodes', $episodes);
 

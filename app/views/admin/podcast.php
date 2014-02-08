@@ -8,14 +8,14 @@
 	<div class="form-group">
 		<label for="name" class="col-lg-2 control-label">Namn</label>
 		<div class="col-lg-10">
-			<input type="text" name="name" id="name" class="form-control"<?php if ($edit_mode): ?> value="<?= $podcast_to_edit->name; ?>"<?php endif; ?>>
+			<input type="text" name="name" id="name" class="form-control"<?php if ($edit_mode): ?> value="<?= e($podcast_to_edit->name); ?>"<?php endif; ?>>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="slug" class="col-lg-2 control-label">Slug</label>
 		<div class="col-lg-10">
-			<input type="text" name="slug" id="slug" class="form-control"<?php if ($edit_mode): ?> value="<?= $podcast_to_edit->slug; ?>"<?php endif; ?>>
+			<input type="text" name="slug" id="slug" class="form-control"<?php if ($edit_mode): ?> value="<?= e($podcast_to_edit->slug); ?>"<?php endif; ?>>
 		</div>
 	</div>
 
@@ -42,42 +42,42 @@
 	<div class="form-group">
 		<label for="name" class="col-lg-2 control-label">RSS</label>
 		<div class="col-lg-10">
-			<input type="text" name="rss" id="rss" class="form-control"<?php if ($edit_mode): ?> value="<?= $podcast_to_edit->rss; ?>"<?php endif; ?>>
+			<input type="text" name="rss" id="rss" class="form-control"<?php if ($edit_mode): ?> value="<?= e($podcast_to_edit->rss); ?>"<?php endif; ?>>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="name" class="col-lg-2 control-label">Webbplats</label>
 		<div class="col-lg-10">
-			<input type="text" name="homepage" id="homepage" class="form-control"<?php if ($edit_mode): ?> value="<?= $podcast_to_edit->homepage; ?>"<?php endif; ?>>
+			<input type="text" name="homepage" id="homepage" class="form-control"<?php if ($edit_mode): ?> value="<?= e($podcast_to_edit->homepage); ?>"<?php endif; ?>>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="facebook" class="col-lg-2 control-label">Facebook-URL</label>
 		<div class="col-lg-10">
-			<input type="text" name="facebook" id="facebook" class="form-control"<?php if ($edit_mode): ?> value="<?= $podcast_to_edit->facebook; ?>"<?php endif; ?>>
+			<input type="text" name="facebook" id="facebook" class="form-control"<?php if ($edit_mode): ?> value="<?= e($podcast_to_edit->facebook); ?>"<?php endif; ?>>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="twitter" class="col-lg-2 control-label">Twitter-URL</label>
 		<div class="col-lg-10">
-			<input type="text" name="twitter" id="twitter" class="form-control"<?php if ($edit_mode): ?> value="<?= $podcast_to_edit->twitter; ?>"<?php endif; ?>>
+			<input type="text" name="twitter" id="twitter" class="form-control"<?php if ($edit_mode): ?> value="<?= e($podcast_to_edit->twitter); ?>"<?php endif; ?>>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="itunes" class="col-lg-2 control-label">iTunes</label>
 		<div class="col-lg-10">
-			<input type="text" name="itunes" id="itunes" class="form-control"<?php if ($edit_mode): ?> value="<?= $podcast_to_edit->itunes; ?>"<?php endif; ?>>
+			<input type="text" name="itunes" id="itunes" class="form-control"<?php if ($edit_mode): ?> value="<?= e($podcast_to_edit->itunes); ?>"<?php endif; ?>>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="itunes" class="col-lg-2 control-label">E-mail</label>
 		<div class="col-lg-10">
-			<input type="text" name="email" id="email" class="form-control"<?php if ($edit_mode): ?> value="<?= $podcast_to_edit->email; ?>"<?php endif; ?>>
+			<input type="text" name="email" id="email" class="form-control"<?php if ($edit_mode): ?> value="<?= e($podcast_to_edit->email); ?>"<?php endif; ?>>
 		</div>
 	</div>
 
