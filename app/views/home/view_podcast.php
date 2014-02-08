@@ -14,7 +14,7 @@
     <h1 class="podcast-head"><?= $podcast->name; ?></h1><p class="podcast-category"><?= $podcast->category->title ?></p>
 
     <div class="row">
-        <div class="container col-lg-4 col-md-4 col-sm-5 col-xs-12">
+        <div class="container col-lg-3 col-md-3 col-sm-5 col-xs-12">
 
             <div class="container col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- Podcast-bild -->
@@ -62,8 +62,9 @@
 
 
                                     <div class="media-body">
-                                        <h3 class="episode-head"><?php endif ?><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a> </h3>
-                                        <p class="pub-date"><?=date('Y-m-d H:i:s', $episode->pub_date) ?></p>
+                                        <h3 class="episode-head"><?php endif ?><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a></h3>
+                                        <p class="pub-date">(<?=date('Y-m-d H:i:s', $episode->pub_date) ?>)</p>
+                                        <div class="clear"></div>
 
                                         <?= $episode->print_rater() ?>
                                     </div>
