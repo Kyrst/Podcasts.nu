@@ -8,62 +8,70 @@
     <div class="container">
         <!--IF Panorama-bild-->
     </div>
+    <div style="margin-bottom:10px">
+        <?= $podcast->get_subscription_link('Prenumerera', 'Prenumererar', $user, 'btn btn-default btn-sm') ?>
+    </div>
+    <h1 class="podcast-head"><?= $podcast->name; ?></h1><p class="podcast-category"><?= $podcast->category->title ?></p>
+
     <div class="row">
-        <div class="container col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="container col-lg-4 col-md-4 col-sm-5 col-xs-12">
 
             <div class="container col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- Podcast-bild -->
-                <img class="media-object" src="<?= $podcast->getImage('standard', false, true); ?>" width="200" height="" alt="...">
+                <div id="links">
+                    <?php if ( $podcast->homepage ): ?>
+                        <h5><a href="<?= $podcast->homepage ?>">Hemsida</a></h5>
+                    <?php endif ?>
+
+                    <?php if ( $podcast->facebook ): ?>
+                        <h5><a href="<?= $podcast->facebook ?>">Facebook</a></h5>
+                    <?php endif ?>
+
+                    <?php if ( $podcast->twitter ): ?>
+                        <h5><a href="<?= $podcast->twitter ?>">Twitter</a></h5>
+                    <?php endif ?>
+
+                    <?php if ( $podcast->itunes ): ?>
+                        <h5><a href="<?= $podcast->itunes ?>">Itunes</a></h5>
+                    <?php endif ?>
+                </div>
+                <img class="media-object podcast-image" src="<?= $podcast->getImage('standard', false, true); ?>" width="250" height="" alt="...">
             </div>
             <div class="content col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- Podcast-information -->
-                <h3><?= $podcast->name; ?></h3>
-
-				<div style="margin-bottom:10px">
-					<?= $podcast->get_subscription_link('Följ', 'Följer', $user, 'btn btn-default btn-sm') ?>
-				</div>
 
 				<?php if ( strlen($podcast) > 50 ): ?>
-					<div id="description"><?= Str::limit($podcast->description, 50) ?> <a href="javascript:" id="show_more_description" class="btn btn-xs btn-primary">Visa mer</a></div>
+					<div id="description"><?= Str::limit($podcast->description, 100) ?> <a href="javascript:" id="show_more_description" class="btn btn-xs btn-primary">Visa mer</a></div>
 					<div id="full_description" style="display:none"><?= $podcast->description ?></div>
                 <?php else: ?>
 					<?= $podcast->description ?>
                 <?php endif ?>
 
-				<h4>Kategori</h4>
-                <?= $podcast->category->title ?>
-
-				<?php if ( $podcast->homepage ): ?>
-					<h4>Webbplats</h4>
-					<a href="<?= $podcast->homepage ?>"><?= $podcast->homepage ?></a>
-                <?php endif ?>
-
-				<?php if ( $podcast->facebook ): ?>
-					<h4>Facebook</h4>
-					<a href="<?= $podcast->facebook ?>"><?= $podcast->facebook ?></a>
-				<?php endif ?>
-
-				<?php if ( $podcast->twitter ): ?>
-					<h4>Twitter</h4>
-					<a href="<?= $podcast->twitter ?>"><?= $podcast->twitter ?></a>
-				<?php endif ?>
-
-				<?php if ( $podcast->itunes ): ?>
-					<h4>iTunes</h4>
-					<a href="<?= $podcast->itunes ?>"><?= $podcast->itunes ?></a>
-				<?php endif ?>
             </div>
         </div>
-        <div class ="content col-lg-8 col-md-8 col-sm-12 col-xs-12">
-            <div class="container">
+        <div class ="content col-lg-8 col-md-8 col-sm-7 col-xs-12">
+            <div class="container episode-container">
                 <!-- Avsnitt -->
-
+                <h2>Avsnitt</h2>
 				<?php if ( $num_episodes > 0 ): ?>
 					<div id="episodes">
 						<?php foreach ( $episodes as $episode ): ?>
+
+                            <div class="media">
+                                <?php if ( $episode->podcast !== NULL ): ?>
+
+
+                                    <div class="media-body">
+                                        <h3 class="episode-head"><?php endif ?><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a> </h3>
+                                        <p class="pub-date"><?=date('Y-m-d H:i:s', $episode->pub_date) ?></p>
+
+                                        <?= $episode->print_rater() ?>
+                                    </div>
+                            </div>
+
 							<div class="episode clearfix">
 								<div class="right">
-									<h4>
+									<h4 class="episode-head">
 										<?php if ( $episode->haveMedia() ): ?>
 											<?= $episode->printPlayButton(); ?>
 										<?php endif; ?>
