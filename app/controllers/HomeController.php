@@ -389,67 +389,142 @@ class HomeController extends BaseController
 
     public function view_toplist()
     {
-    	$stats = array
+		$types = array
 		(
-			'highest_score_episodes' => array(),
-			'highest_score_podcasts' => array(),
-			'most_played' => array
-			(
-				'this_week' => array(),
-				'this_month' => array(),
-				'total' => array()
-			)
+			'most_played' => 'Mest spelat',
+			'highest_score' => 'Högst betyg',
+			'most_comments' => 'Mest kommenterat'
 		);
 
-		// Higest score (episodes)
-		$stats['highest_score_episodes'] = DB::table('episodes')
-			->join('episode_votes', 'episodes.id', '=', 'episode_votes.episode_id')
-			->select('episodes.title', DB::raw('AVG(episode_votes.score) AS avg_score'))
-			->orderBy('avg_score', 'DESC')
-			->groupBy('episodes.id')
-			->take(10)
-			->get();
+    	$input = Input::all();
 
-		// Higest score (podcasts)
-		$stats['highest_score_podcasts'] = DB::table('podcasts')
-			->join('episodes', 'podcasts.id', '=', 'episodes.podcast_id')
-			->join('episode_votes', 'episodes.id', '=', 'episode_votes.episode_id')
-			->select('podcasts.name', DB::raw('AVG(episode_votes.score) AS avg_score'))
-			->orderBy('avg_score', 'DESC')
-			->groupBy('podcasts.id')
-			->take(10)
-			->get();
+    	if ( $input/* && Request::ajax()*/ )
+		{
+			$result = array
+			(
+				'html' => ''
+			);
 
-		// Most played episodes (this week)
-		$stats['most_played']['this_week'] = DB::table('user_listens')
-			->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
-			->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
-			->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'))
-			->orderBy('num_listens', 'DESC')
-			->groupBy('episodes.id')
-			->take(10)
-			->get();
+			$type_id = $input['type'];
+			$category_id = $input['category_id'];
 
-		// Most played episodes (this month)
-		$stats['most_played']['this_month'] = DB::table('user_listens')
-			->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
-			->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
-			->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 MONTH)'))
-			->orderBy('num_listens', 'DESC')
-			->groupBy('episodes.id')
-			->take(10)
-			->get();
+			if ( !isset($types[$type_id]) )
+			{
+				return Response::json(array('html' => 'Det gick inte att hamta statisiken just nu.'));
+			}
 
-		// Most played episodes (total)
-		$stats['most_played']['total'] = DB::table('user_listens')
-			->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
-			->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
-			->orderBy('num_listens', 'DESC')
-			->groupBy('episodes.id')
-			->take(10)
-			->get();
+			if ( $type_id === 'most_played' )
+			{
+				// Most played episodes (this week)
+				$most_played_this_week = DB::table('user_listens')
+					->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
+					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
+					->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
+					->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'));
 
-		$this->assign('stats', $stats);
+				if ( $category_id )
+				{
+					$most_played_this_week = $most_played_this_week->where('podcasts.category_id', $category_id);
+				}
+
+				$most_played_this_week = $most_played_this_week
+					->orderBy('num_listens', 'DESC')
+					->groupBy('episodes.id')
+					->take(10)
+					->get();
+
+				// Most played episodes (this month)
+				$most_played_this_month = DB::table('user_listens')
+					->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
+					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
+					->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
+					->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 MONTH)'));
+
+				if ( $category_id )
+				{
+					$most_played_this_month = $most_played_this_month->where('podcasts.category_id', $category_id);
+				}
+
+				$most_played_this_month = $most_played_this_month
+					->orderBy('num_listens', 'DESC')
+					->groupBy('episodes.id')
+					->take(10)
+					->get();
+
+				// Most played episodes (total)
+				$most_played_total = DB::table('user_listens')
+					->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
+					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
+					->select('episodes.title', DB::raw('COUNT(user_listens.episode_id) AS num_listens'));
+
+				if ( $category_id )
+				{
+					$most_played_total = $most_played_total->where('podcasts.category_id', $category_id);
+				}
+
+				$most_played_total = $most_played_total
+					->orderBy('num_listens', 'DESC')
+					->groupBy('episodes.id')
+					->take(10)
+					->get();
+
+				$most_played_view = View::make('home/partials/stats/most_played');
+				$most_played_view->most_played_this_week = $most_played_this_week;
+				$most_played_view->most_played_this_month = $most_played_this_month;
+				$most_played_view->most_played_total = $most_played_total;
+
+				$result['html'] = $most_played_view->render();
+			}
+			else if ( $type_id === 'highest_score' )
+			{
+				// Higest score (podcasts)
+				$podcasts = DB::table('podcasts')
+					->join('episodes', 'podcasts.id', '=', 'episodes.podcast_id')
+					->join('episode_votes', 'episodes.id', '=', 'episode_votes.episode_id');
+
+				if ( $category_id )
+				{
+					$podcasts = $podcasts->where('podcasts.category_id', $category_id);
+				}
+
+				$podcasts = $podcasts->select('podcasts.name', DB::raw('AVG(episode_votes.score) AS avg_score'))
+					->orderBy('avg_score', 'DESC')
+					->groupBy('podcasts.id')
+					->take(10)
+					->get();
+
+				// Higest score (episodes)
+				$episodes = DB::table('episodes')
+					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
+					->join('episode_votes', 'episodes.id', '=', 'episode_votes.episode_id')
+					->select('episodes.title', DB::raw('AVG(episode_votes.score) AS avg_score'));
+
+				if ( $category_id )
+				{
+					$episodes = $episodes->where('podcasts.category_id', $category_id);
+				}
+
+				$episodes = $episodes
+					->orderBy('avg_score', 'DESC')
+					->groupBy('episodes.id')
+					->take(10)
+					->get();
+
+				$highest_score_view = View::make('home/partials/stats/highest_score');
+				$highest_score_view->podcasts = $podcasts;
+				$highest_score_view->episodes = $episodes;
+
+				$result['html'] = $highest_score_view->render();
+			}
+			else if ( $type_id === 'most_comments' )
+			{
+			}
+
+			return Response::json($result);
+		}
+
+		$this->assign('categories', Category::all());
+		$this->assign('types', $types);
 
         $this->display('home.view_toplist', 'topplista');
     }

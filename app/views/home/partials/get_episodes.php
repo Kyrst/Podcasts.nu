@@ -6,13 +6,13 @@
 			</a>
 
 			<div class="media-body">
-				<h4 class="media-heading"><?= $episode->printPlayButton() ?> <?php if ( $_podcast === NULL ): ?><a href="<?= $episode->podcast->getLink('avsnitt') ?>"><?= $episode->podcast->name ?></a> - <?php endif ?><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a> </h4>
+				<h4 class="media-heading"><?= $episode->printPlayButton() ?> <?php if ( $_podcast === NULL ): ?><a href="<?= $episode->podcast->getLink('poddar') ?>"><?= $episode->podcast->name ?></a> - <?php endif ?><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a> </h4>
 				<p><?=date('Y-m-d H:i:s', $episode->pub_date) ?></p>
 
 				<?= $episode->print_rater() ?>
 			</div>
 		<?php else: ?>
-			yoyo
+			Avsnittet saknar podcast.
 		<?php endif ?>
 	</div>
 <?php endforeach; ?>

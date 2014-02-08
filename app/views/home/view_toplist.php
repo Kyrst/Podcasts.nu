@@ -1,48 +1,33 @@
-<h1>Topplista</h1>
+ <h1>Topplista</h1>
 
-<div>
-	<div class="col-lg-8">
-		<h2>Mest spelade</h2>
+<!-- Alla kategorier -->
+<div class="btn-group">
+	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+		<span id="selected_category_text">Alla kategorier</span>
+		<span class="caret"></span>
+	</button>
 
-		<h3>Denna vecka</h3>
-		<ol>
-			<?php foreach ( $stats['most_played']['this_week'] as $episode ): ?>
-				<li><?= $episode->title ?> (<?= $episode->num_listens ?>)</li>
-			<?php endforeach ?>
-		</ol>
+	<ul id="category_select" class="dropdown-menu">
+		<li><a href="javascript:" data-id="" data-title="Alla kategorier" class="category">Alla kategorier</a></li>
 
-		<h3>Denna månad</h3>
-		<ol>
-			<?php foreach ( $stats['most_played']['this_month'] as $episode ): ?>
-				<li><?= $episode->title ?> (<?= $episode->num_listens ?>)</li>
-			<?php endforeach ?>
-		</ol>
-
-		<h3>Totalt</h3>
-		<ol>
-			<?php foreach ( $stats['most_played']['total'] as $episode ): ?>
-				<li><?= $episode->title ?> (<?= $episode->num_listens ?>)</li>
-			<?php endforeach ?>
-		</ol>
-	</div>
-
-	<div class="col-lg-4">
-		<h2>Högst Betyg</h2>
-
-		<h3>Avsnitt</h3>
-
-		<ol>
-			<?php foreach ( $stats['highest_score_episodes'] as $episode ): ?>
-				<li><?= $episode->title ?> (<?= number_format($episode->avg_score, 1) ?>)</li>
-			<?php endforeach ?>
-		</ol>
-
-		<h3>Poddar</h3>
-
-		<ol>
-			<?php foreach ( $stats['highest_score_podcasts'] as $podcast ): ?>
-				<li><?= $podcast->name ?> (<?= number_format($podcast->avg_score, 1) ?>)</li>
-			<?php endforeach ?>
-		</ol>
-	</div>
+		<?php foreach ( $categories as $category ): ?>
+			<li><a href="javascript:" data-id="<?= $category->id; ?>" data-title="<?= $category->title; ?>" class="category"><?= $category->title; ?></a></li>
+		<?php endforeach ?>
+	</ul>
 </div>
+
+<!-- Vad -->
+<div class="btn-group">
+	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+		<span id="selected_type_text">Mest spelat</span>
+		<span class="caret"></span>
+	</button>
+
+	<ul id="category_select" class="dropdown-menu">
+		<?php foreach ( $types as $type_id => $type_name ): ?>
+			<li><a href="javascript:" data-id="<?= $type_id ?>" data-title="<?= $type_name ?>" class="type"><?= $type_name; ?></a></li>
+		<?php endforeach ?>
+	</ul>
+</div>
+
+<div id="stats_container"></div>

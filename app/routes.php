@@ -476,6 +476,12 @@ Route::get('/sok', array
 	'as' => 'sok'
 ));
 
+Route::get('/topplista/hamta', array
+(
+	'uses' => 'HomeController@view_toplist',
+	'as' => 'topplista/hamta'
+));
+
 /*Event::listen('illuminate.query', function($query)
 {
 	echo $query, '<hr>';
