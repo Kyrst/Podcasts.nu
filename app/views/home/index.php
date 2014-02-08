@@ -7,6 +7,7 @@
 </div>-->
 <!--  Carousel - consult the Twitter Bootstrap docs at
       http://twitter.github.com/bootstrap/javascript.html#carousel -->
+<p>Hejsan</p>
 <div id="panorama-front" class="carousel slide"><!-- class of slide for animation -->
     <div class="carousel-inner">
 
