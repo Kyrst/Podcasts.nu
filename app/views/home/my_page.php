@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-lg-2">
+	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 		<h1><?= $user->first_name; ?></h1>
 
 		<?= $user->get_avatar_image('installningar') ?>
@@ -9,7 +9,7 @@
 		<a href="<?= URL::route('installningar') ?>" class="btn btn-primary btn-xs" style="margin-top:4px">Inställningar</a>
 	</div>
 
-	<div class="col-md-10">
+	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 		<!-- Historik -->
 		<h2>Historik</h2>
 
@@ -28,7 +28,7 @@
 
 		<!-- Ej lyssnat klart -->
 		<?php if ( $num_user_listens > 0 ): ?>
-			<div id="not_done_container">
+			<div id="not_done_container" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<h2>Ej lyssnat klart</h2>
 
 				<table id="not_done_table" class="table">
@@ -61,7 +61,7 @@
 		<h2>Prenumerationer</h2>
 
 		<?php if ( $user->podcasts->count() > 0 ): ?>
-			<table id="my_subscriptions" class="table">
+			<table id="my_subscriptions" class="table col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<tr>
 					<th>Podcast</th>
 					<th>Senaste avsnittet</th>
