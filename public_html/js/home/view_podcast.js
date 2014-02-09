@@ -34,6 +34,11 @@ function bind_pagination_click()
 {
 	$('#pagination_container').find('a').on('click', function()
 	{
+		if ( $(this).parents('li').hasClass('disabled') )
+		{
+			return;
+		}
+
 		current_page = $(this).data('page');
 
 		get_episodes();
