@@ -9,11 +9,13 @@
 				<div class="caption">
 					<h3><a href="<?= $podcast->getLink('poddar'); ?>"><?= $podcast->name; ?></a></h3>
 
-					<div class="btn-group">
+					<div class="btn-group" style="float:left">
 						<button type="button" class="btn btn-default"><?= $podcast->get_subscription_link('Följ', 'Följer', $user) ?></button>
-						<button type="button" class="btn btn-default">0</button>
-						<button type="button" class="btn btn-default">0</button>
+						<?php /*<button type="button" class="btn btn-default">0</button>
+						<button type="button" class="btn btn-default">0</button>*/ ?>
 					</div>
+
+					<div style="float:left"><?= $podcast->print_rater() ?></div>
 				</div>
 			</div>
 		</div>
