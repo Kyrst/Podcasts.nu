@@ -204,7 +204,7 @@ class HomeController extends BaseController
 			$num_total_episodes = Episode::count();
 		}
 
-		$paginator = Paginator::make($episodes ? $episodes->toArray() : array(), $num_total_episodes, self::NUM_EPISODES_PER_PAGE);
+		$paginator = Paginator::make($episodes->toArray(), $num_total_episodes, self::NUM_EPISODES_PER_PAGE);
 		$pagination_view = View::make('home/partials/pagination');
 		$pagination_view->paginator = $paginator;
 		$pagination_view->total_pages = ceil($paginator->getTotal() / self::NUM_EPISODES_PER_PAGE);
@@ -271,9 +271,7 @@ class HomeController extends BaseController
 			$num_total_episodes = Episode::count();
 		}
 
-		die(var_dump($episodes));
-
-		$paginator = Paginator::make($episodes ? $episodes->toArray() : array(), $num_total_episodes, self::NUM_EPISODES_PER_PAGE);
+		$paginator = Paginator::make($episodes->toArray(), $num_total_episodes, self::NUM_EPISODES_PER_PAGE);
 
 		$pagination_view = View::make('home/partials/pagination');
 		$pagination_view->paginator = $paginator;
