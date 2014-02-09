@@ -2,7 +2,11 @@
 	<div class="col-lg-2">
 		<h1><?= $user->first_name; ?></h1>
 
-		<img src="<?= $user->getAvatar(); ?>" alt="" class="img-rounded">
+		<?= $user->get_avatar_image('installningar') ?>
+
+		<div class="clear"></div>
+
+		<a href="<?= URL::route('installningar') ?>" class="btn btn-primary btn-xs" style="margin-top:4px">Inställningar</a>
 	</div>
 
 	<div class="col-md-10">

@@ -38,7 +38,7 @@
 			<div class="comment-author">
 				<?= $comment->user->getDisplayName() ?>
 
-				<img src="<?= $comment->user->getAvatar() ?>" width="80" height="80" alt="">
+				<?= $comment->user->get_avatar_image('avsnitt_kommentar') ?>
 			</div>
 
 			<div class="comment-content">

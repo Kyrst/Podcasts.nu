@@ -1,5 +1,6 @@
 <?php
 use Toddish\Verify\Models\User as VerifyUser;
+use Intervention\Image\Image;
 
 class User extends VerifyUser
 {
@@ -9,14 +10,41 @@ class User extends VerifyUser
 
 	protected $hidden = array('password');
 
+	public static $avatar_sizes = array
+	(
+		'installningar' => array
+		(
+			'width' => NULL,
+			'height' => 124,
+			'proportional' => true,
+			'canvas' => array
+			(
+				'width' => 124,
+				'height' => 124
+			)
+		),
+		'index_kommentar' => array
+		(
+			'width' => NULL,
+			'height' => 32,
+			'proportional' => true
+		),
+		'avsnitt_kommentar' => array
+		(
+			'width' => NULL,
+			'height' => 80,
+			'proportional' => true,
+			'canvas' => array
+			(
+				'width' => 80,
+				'height' => 80
+			)
+		)
+	);
+
 	public function episode_listens()
 	{
 		return $this->belongsToMany('Episode', 'user_listens');
-	}
-
-	public function getAvatar()
-	{
-		return URL::to('images/avatars/default.png', array(), false);
 	}
 
 	public function is_admin()
@@ -110,5 +138,77 @@ class User extends VerifyUser
 		$episode_listens = User_Listen::where('user_id', $this->id)->where('done', 'no')->get();
 
 		return $episode_listens;
+	}
+
+	public function have_avatar()
+	{
+		return ($this->avatar === 'yes');
+	}
+
+	public static function get_avatar_dir($user_id, $create_if_not_exists = false)
+	{
+		$dir = base_path() . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $user_id . DIRECTORY_SEPARATOR . 'avatar' . DIRECTORY_SEPARATOR;
+
+		// Create dir if not exists
+		if ( !file_exists($dir) )
+		{
+			mkdir($dir, 0775, true);
+		}
+
+		return $dir;
+	}
+
+	public static function get_avatar_filename($user_id, $with_extension = true)
+	{
+		return 'original' . ($with_extension ? '.jpg' : '');
+	}
+
+	public static function get_avatar_path($user_id, $create_dir_if_not_exists = true)
+	{
+		$dir = self::get_avatar_dir($user_id, $create_dir_if_not_exists);
+		$filename = self::get_avatar_filename($user_id);
+		$path = $dir . $filename;
+
+		return $path;
+	}
+
+	public static function upload_avatar($image, $user_id)
+	{
+		$path = self::get_avatar_path($user_id, true);
+
+		$img = Image::make($image->getRealPath())
+			->resize(800, 600, false, false)
+			->save($path);
+
+		return $img;
+	}
+
+	public function get_avatar_image($size_name, $id = NULL, $rounded = true)
+	{
+		if ( !array_key_exists($size_name, self::$avatar_sizes) )
+		{
+			throw new Exception('Size "' . $size_name . '" does not exist.');
+		}
+
+		$size = self::$avatar_sizes[$size_name];
+
+		//$img_src = URL::to('profile-picture/' . $this->id . '/' . ($size['width'] !== NULL ? $size['width'] : '0') . '/' . ($size['height'] !== NULL ? $size['height'] : '0') . ($size['proportional'] === false ? '/1' : '')) . '"';
+		$img_src = URL::to('avatar/' . $this->id . '/' . $size_name);
+
+		$img_width = isset($size['canvas']) && $size['canvas']['width'] !== NULL ? $size['canvas']['width'] : ($size['width'] !== NULL ? ' width="' . $size['width'] . '"' : '');
+		$img_height = isset($size['canvas']) && $size['canvas']['height'] !== NULL ? $size['canvas']['height'] : ($size['height'] !== NULL ? ' height="' . $size['height'] . '"' : '');
+		$img_id = ($id !== NULL ? ' id="' . $id . '"' : '');
+
+		return '<img src="' . $img_src . '"' . $img_id . $img_width . $img_height . ' alt="' . $this->getDisplayName() . '"' . ($rounded ? ' class="img-rounded"' : '') . '>';
+	}
+
+	public static function get_avatar_size($size_name)
+	{
+		if ( !array_key_exists($size_name, self::$avatar_sizes) )
+		{
+			throw new Exception('Size "' . $size_name . '" does not exist.');
+		}
+
+		return self::$avatar_sizes[$size_name];
 	}
 }

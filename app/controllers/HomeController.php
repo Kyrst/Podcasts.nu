@@ -12,7 +12,7 @@ class HomeController extends BaseController
 		{
 			$latest_comments[] = array
 			(
-				'avatar' => '<img src="' . $user->getAvatar() . '" width="32" height="32" alt="">',
+				'avatar' => $user->get_avatar_image('index_kommentar'),
 				'comment' => $user->getDisplayName() . ' kommenterade <a href="' . $episode->getLink() . '">' . $episode->getTitle() . '</a>.'
 			);
 		};
@@ -726,5 +726,40 @@ class HomeController extends BaseController
 		$this->assign('episodes', $episodes);
 
 		$this->display('home.search', $page_title);
+	}
+
+	public function settings()
+	{
+		$default_tab = Session::get('default_tab', 'general');
+
+		$input = Input::all();
+
+		if ( isset($input['save_general']) )
+		{
+			$this->user->first_name = trim($input['first_name']);
+			$this->user->last_name = trim($input['last_name']);
+			$this->user->email = trim($input['email']);
+			$this->user->city = trim($input['city']);
+			$this->user->birthdate = trim($input['birthdate']);
+			$this->user->save();
+
+			$this->showAlert('Inställningar sparade!');
+
+			return Redirect::route('installningar')->with('default_tab', 'general');
+		}
+		else if ( isset($input['save_avatar']) )
+		{
+			User::upload_avatar(Input::file('avatar'), $this->user->id);
+
+			$this->user->avatar = 'yes';
+			$this->user->save();
+
+			return Redirect::route('installningar')
+				->with('default_tab', 'avatar');
+		}
+
+		$this->assign('default_tab', $default_tab);
+
+		$this->display('home.settings', 'Inställningar');
 	}
 }

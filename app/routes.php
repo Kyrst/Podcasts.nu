@@ -189,6 +189,18 @@ Route::get('/min-sida', array
 	'as' => 'min-sida'
 ));
 
+// Min sida
+Route::get('/installningar', array
+(
+	'uses' => 'HomeController@settings',
+	'as' => 'installningar'
+));
+
+Route::post('/installningar', array
+(
+	'uses' => 'HomeController@settings'
+));
+
 // Bli medlem
 Route::get('/bli-medlem', array
 (
@@ -486,3 +498,9 @@ Route::get('/topplista/hamta', array
 {
 	echo $query, '<hr>';
 });*/
+
+// User profile picture
+Route::get('/avatar/{id}/{size_name}', array
+(
+	'uses' => 'AvatarController@init'
+))->where(array('id', '\d+'), array('size_name', '[a-z0-9_\-]+'));
