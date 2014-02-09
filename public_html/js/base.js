@@ -198,12 +198,20 @@ function init_player()
 		},
 		progress: function(e)
 		{
+			/*if ( e.jPlayer.status.seekPercent === 100 )
+			{
+				mark_as_done();
+			}*/
 		},
 		pause: function(e)
 		{
 			save_current_position();
 
 			refresh_player_controls();
+		},
+		ended: function()
+		{
+			mark_as_done();
 		}
 	});
 
@@ -506,5 +514,24 @@ function save_current_position(async)
 			position: $player.data().jPlayer.status.currentTime
 		},
 		async: async
+	});
+}
+
+function mark_as_done()
+{
+	if ( current_episode_id === null || user_id === 0 )
+	{
+		return;
+	}
+
+	$.ajax(
+	{
+		type: 'POST',
+		url: BASE_URL + 'markera-som-fardig',
+		data:
+		{
+			episode_id: current_episode_id,
+			position: $player.data().jPlayer.status.currentTime
+		}
 	});
 }

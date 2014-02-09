@@ -77,7 +77,12 @@ class AjaxController extends BaseController
 			try
 			{
 				$user_listen = User_Listen::where('episode_id', $input['episode_id'])->where('user_id', $this->user->id)->firstOrFail();
-				$user_listen->current_position = $input['position'];
+
+				if ( $user_listen->done === 'no' )
+				{
+					$user_listen->current_position = $input['position'];
+				}
+
 				$user_listen->is_listening = 'no';
 				$user_listen->save();
 			}
@@ -399,6 +404,33 @@ class AjaxController extends BaseController
 				{
 					$result['error'] = 'EMAIL_EXISTS';
 				}
+			}
+		}
+
+		return Response::json($result);
+	}
+
+	public function mark_as_done()
+	{
+		$result = array
+		(
+			'error' => ''
+		);
+
+		$input = Input::all();
+
+		if ( $this->user !== NULL )
+		{
+			try
+			{
+				$user_listen = User_Listen::where('episode_id', $input['episode_id'])->where('user_id', $this->user->id)->firstOrFail();
+				$user_listen->done = 'yes';
+				$user_listen->is_listening = 'no';
+				$user_listen->current_position = $input['position'];
+				$user_listen->save();
+			}
+			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+			{
 			}
 		}
 

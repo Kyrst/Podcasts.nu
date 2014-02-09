@@ -510,3 +510,9 @@ Route::get('/sidan-kunde-inte-hittas', array
 	'uses' => 'ErrorController@missing',
 	'as' => 'sidan-kunde-inte-hittas'
 ));
+
+Route::post('/markera-som-fardig', array
+(
+	'uses' => 'AjaxController@mark_as_done',
+	'as' => 'markera-som-fardig'
+));
