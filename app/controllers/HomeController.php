@@ -90,6 +90,7 @@ class HomeController extends BaseController
 				->get();
 
 			$latest_user_episodes_view = View::make('home/partials/get_episodes');
+			$latest_user_episodes_view->user = $this->user;
 			$latest_user_episodes_view->episodes = $latest_user_episodes;
 			$latest_user_episodes_view->_podcast = NULL;
 
@@ -264,6 +265,7 @@ class HomeController extends BaseController
 		$this->assign('categories', Category::orderBy('position')->get());
 
 		$episodes_view = View::make('home/partials/get_episodes');
+		$episodes_view->user = $this->user;
 		$episodes_view->_podcast = $podcast;
 		$episodes_view->episodes = $episodes;
 		$episodes_view->current_route = $this->current_route_action;

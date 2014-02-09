@@ -69,6 +69,11 @@ App::down(function()
 	return Response::make("Be right back!", 503);
 });
 
+App::missing(function($exception)
+{
+	return Redirect::route('sidan-kunde-inte-hittas');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File

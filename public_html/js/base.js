@@ -65,7 +65,7 @@ window.onbeforeunload = function()
 
 	if ( is_playing )
 	{
-		$.ajax(
+		/*$.ajax(
 		{
 			url: BASE_URL + 'save-listen',
 			type: 'POST',
@@ -76,7 +76,9 @@ window.onbeforeunload = function()
 			async: false
 		}).done(function()
 		{
-		});
+		});*/
+
+		save_current_position(false);
 
 		var e = e || window.event;
 
@@ -252,19 +254,10 @@ function init_player()
 			playing_url = url;
 
 			// Save listen
-			if ( user_id > 0 )
+			/*if ( user_id > 0 )
 			{
-				$.ajax(
-				{
-					type: 'POST',
-					url: BASE_URL + 'save-listen',
-					async: false,
-					data:
-					{
-						episode_id: current_episode_id
-					}
-				});
-			}
+				save_current_position(false);
+			}*/
 		}
 	});
 
@@ -494,21 +487,24 @@ function unsubscribe_podcast_bind($this)
 	});
 }
 
-function save_current_position()
+function save_current_position(async)
 {
 	if ( current_episode_id === null || user_id === 0 )
 	{
 		return;
 	}
 
+	async = async || true;
+
 	$.ajax(
 	{
 		type: 'POST',
-		url: BASE_URL + 'save-listen-position',
+		url: BASE_URL + 'save-listen',
 		data:
 		{
 			episode_id: current_episode_id,
 			position: $player.data().jPlayer.status.currentTime
-		}
+		},
+		async: async
 	});
 }

@@ -211,4 +211,30 @@ class User extends VerifyUser
 
 		return self::$avatar_sizes[$size_name];
 	}
+
+	public function get_episode_status($episode_id)
+	{
+		$result = '';
+
+		try
+		{
+			$user_listen = User_Listen::where('user_id', $this->id)
+				->where('episode_id', $episode_id)
+				->firstOrFail();
+
+			if ( $user_listen->done === 'yes' )
+			{
+				$result = 'Lyssnad';
+			}
+			else
+			{
+				$result = 'Påbörjad';
+			}
+		}
+		catch ( \Illuminate\Database\Eloquent\ModelNotFoundException $e )
+		{
+		}
+
+		return $result;
+	}
 }

@@ -504,3 +504,9 @@ Route::get('/avatar/{id}/{size_name}', array
 (
 	'uses' => 'AvatarController@init'
 ))->where(array('id', '\d+'), array('size_name', '[a-z0-9_\-]+'));
+
+Route::get('/sidan-kunde-inte-hittas', array
+(
+	'uses' => 'ErrorController@missing',
+	'as' => 'sidan-kunde-inte-hittas'
+));
