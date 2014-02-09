@@ -3,7 +3,7 @@ use Intervention\Image\Image;
 
 class HomeController extends BaseController
 {
-	const NUM_EPISODES_PER_PAGE = 10;
+	const NUM_PER_PAGE = 20;
 
 	public function index()
 	{
@@ -181,17 +181,18 @@ class HomeController extends BaseController
 
 	public function ajax_get_episodes()
 	{
+		$podcast_id = Input::get('podcast_id');
 		$category_id = Input::get('category_id');
 		$page = Input::get('page');
 
 		DB::getPaginator()->setCurrentPage($page);
 
-		if ( $category_id > 0 )
+		/*if ( $category_id > 0 )
 		{
 			$episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
 				->where('podcasts.category_id', $category_id)
 				->orderBy('episodes.created_at', 'DESC')
-				->paginate(self::NUM_EPISODES_PER_PAGE)
+				->paginate(self::NUM_PER_PAGE)
 				->get();
 
 			$num_total_episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
@@ -200,14 +201,34 @@ class HomeController extends BaseController
 		}
 		else
 		{
-			$episodes = Episode::orderBy('created_at', 'DESC')->paginate(self::NUM_EPISODES_PER_PAGE);
+			$episodes = Episode::orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
 			$num_total_episodes = Episode::count();
+		}*/
+
+		$episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
+			->orderBy('episodes.created_at', 'DESC');
+
+		$num_total_episodes_count = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id');
+
+		if ( $category_id > 0 )
+		{
+			$episodes = $episodes->where('podcasts.category_id', $category_id);
+			$num_total_episodes_count = $num_total_episodes_count->where('podcasts.category_id', $category_id);
 		}
 
-		$paginator = Paginator::make($episodes->getItems(), $num_total_episodes, self::NUM_EPISODES_PER_PAGE);
+		if ( $podcast_id > 0 )
+		{
+			$episodes = $episodes->where('podcasts.id', $podcast_id);
+			$num_total_episodes_count = $num_total_episodes_count->where('podcasts.id', $podcast_id);
+		}
+
+		$episodes = $episodes->paginate(self::NUM_PER_PAGE);
+		$num_total_episodes = $num_total_episodes_count->count();
+
+		$paginator = Paginator::make($episodes->getItems(), $num_total_episodes, self::NUM_PER_PAGE);
 		$pagination_view = View::make('home/partials/pagination');
 		$pagination_view->paginator = $paginator;
-		$pagination_view->total_pages = ceil($paginator->getTotal() / self::NUM_EPISODES_PER_PAGE);
+		$pagination_view->total_pages = ceil($paginator->getTotal() / self::NUM_PER_PAGE);
 
 		$episodes_html = View::make('home/partials/get_episodes');
 		$episodes_html->num_episodes = count($episodes);
@@ -230,7 +251,8 @@ class HomeController extends BaseController
 		{
 			$podcast = Podcast::where('slug', '=', $slug)->firstOrFail();
 
-			$episodes = $podcast->episodes()->orderBy('created_at', 'DESC')->get();
+			$episodes = $podcast->episodes()->orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
+			$num_total_episodes = $podcast->episodes()->count();
 		}
 		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
 		{
@@ -241,8 +263,17 @@ class HomeController extends BaseController
 
 		$this->assign('podcast', $podcast);
 
+		$paginator = Paginator::make($episodes->getItems(), $num_total_episodes, self::NUM_PER_PAGE);
+
 		$this->assign('num_episodes', count($episodes));
 		$this->assign('episodes', $episodes);
+
+		$pagination_view = View::make('home/partials/pagination');
+		$pagination_view->paginator = $paginator;
+		$pagination_view->total_pages = ceil($paginator->getTotal() / self::NUM_PER_PAGE);
+		$this->assign('pagination_html', $pagination_view->render());
+
+		$this->assign('podcast_id', $podcast->id, 'js');
 
 		$this->display('home.view_podcast');
 	}
@@ -255,7 +286,7 @@ class HomeController extends BaseController
 			{
 				$podcast = Podcast::where('slug', '=', $podcast)->firstOrFail();
 
-				$episodes = $podcast->episodes()->orderBy('created_at', 'DESC')->paginate(self::NUM_EPISODES_PER_PAGE);
+				$episodes = $podcast->episodes()->orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
 				$num_total_episodes = $podcast->episodes()->count();
 			}
 			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
@@ -267,15 +298,15 @@ class HomeController extends BaseController
 		}
 		else
 		{
-			$episodes = Episode::orderBy('created_at', 'DESC')->paginate(self::NUM_EPISODES_PER_PAGE);
+			$episodes = Episode::orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
 			$num_total_episodes = Episode::count();
 		}
 
-		$paginator = Paginator::make($episodes->getItems(), $num_total_episodes, self::NUM_EPISODES_PER_PAGE);
+		$paginator = Paginator::make($episodes->getItems(), $num_total_episodes, self::NUM_PER_PAGE);
 
 		$pagination_view = View::make('home/partials/pagination');
 		$pagination_view->paginator = $paginator;
-		$pagination_view->total_pages = ceil($paginator->getTotal() / self::NUM_EPISODES_PER_PAGE);
+		$pagination_view->total_pages = ceil($paginator->getTotal() / self::NUM_PER_PAGE);
 		$this->assign('pagination_html', $pagination_view->render());
 
 		$this->assign('podcast', $podcast);

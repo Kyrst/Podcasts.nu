@@ -9,5 +9,5 @@
 		<?php endif ?>
 	<?php endfor ?>
 
-	<li<?php if ( $paginator->getCurrentPage() === ($paginator->getTotal() - 1) ): ?> class="disabled"<?php endif ?>><a href="javascript:" data-page="<?= $page ?>">&raquo;</a></li>
+	<li<?php if ( $paginator->getCurrentPage() == $total_pages ): ?> class="disabled"<?php endif ?>><a href="javascript:" data-page="<?= $paginator->getCurrentPage() + 1 ?>">&raquo;</a></li>
 </ul>
