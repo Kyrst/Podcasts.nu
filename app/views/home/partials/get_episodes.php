@@ -9,9 +9,10 @@
 				<h3 class="episode-head"><?php if ( $_podcast === NULL ): ?><a href="<?= $episode->podcast->getLink('avsnitt') ?>"><?= $episode->podcast->name ?></a> - <?php endif ?><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a> </h3>
 				<p class="pub-date">(<?=date('Y-m-d H:i:s', $episode->pub_date) ?>)</p>
                 <div class="clear"></div>
+                <p class="episode-status">Påbörjad/Lyssnad</p>
+                <div class="rater"><?= $episode->print_rater() ?></div>
 
-				<?= $episode->print_rater() ?>
-			</div>
+            </div>
 		<?php else: ?>
 			yoyo
 		<?php endif ?>
