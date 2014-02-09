@@ -270,7 +270,7 @@ class HomeController extends BaseController
 			$episodes = Episode::orderBy('created_at', 'DESC')->paginate(self::NUM_EPISODES_PER_PAGE);
 			$num_total_episodes = Episode::count();
 		}
-
+die(var_dump($episodes));
 		$paginator = Paginator::make($episodes->toArray(), $num_total_episodes, self::NUM_EPISODES_PER_PAGE);
 
 		$pagination_view = View::make('home/partials/pagination');
