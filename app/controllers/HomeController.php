@@ -243,7 +243,7 @@ class HomeController extends BaseController
 			{
 				$podcast = Podcast::where('slug', '=', $podcast)->firstOrFail();
 
-				$episodes = $podcast->episodes->take($limit);
+				$episodes = $podcast->episodes()->orderBy('created_at', 'DESC')->take($limit)->get();
 
 				$is_filtered = true;
 			}
@@ -256,7 +256,7 @@ class HomeController extends BaseController
 		}
 		else
 		{
-			$episodes = Episode::all()->take($limit);
+			$episodes = Episode::orderBy('created_at', 'DESC')->take($limit)->get();
 		}
 
 
