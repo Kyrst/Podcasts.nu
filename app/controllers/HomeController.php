@@ -7,6 +7,7 @@ class HomeController extends BaseController
 
 	public function index()
 	{
+		die(var_dump(phpversion()));
 		// Senaste kommentarer
 		$latest_comments = array();
 
