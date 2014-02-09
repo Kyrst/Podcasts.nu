@@ -79,6 +79,24 @@ class HomeController extends BaseController
 
 		$this->assign('listens_right_now', $listens_right_now);
 
+		if ( $this->user !== NULL )
+		{
+			$latest_user_episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
+				->join('user_podcasts', 'user_podcasts.podcast_id', '=', 'podcasts.id')
+				->where('user_podcasts.user_id', $this->user->id)
+				->orderBy('episodes.created_at', 'DESC')
+				->take(10)
+				->select('episodes.*', 'podcasts.*', 'episodes.slug AS slug', 'podcasts.slug AS podcast_slug')
+				->get();
+
+			$latest_user_episodes_view = View::make('home/partials/get_episodes');
+			$latest_user_episodes_view->episodes = $latest_user_episodes;
+			$latest_user_episodes_view->_podcast = NULL;
+
+			$this->assign('num_latest_user_episodes', $latest_user_episodes->count());
+			$this->assign('latest_user_episodes_html', $latest_user_episodes_view->render());
+		}
+
 		$this->display('home.index');
 	}
 
