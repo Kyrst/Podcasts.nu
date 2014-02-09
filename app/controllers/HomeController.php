@@ -184,26 +184,9 @@ class HomeController extends BaseController
 		$podcast_id = Input::get('podcast_id');
 		$category_id = Input::get('category_id');
 		$page = Input::get('page');
+		$type = Input::get('type', 'episodes');
 
 		DB::getPaginator()->setCurrentPage($page);
-
-		/*if ( $category_id > 0 )
-		{
-			$episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
-				->where('podcasts.category_id', $category_id)
-				->orderBy('episodes.created_at', 'DESC')
-				->paginate(self::NUM_PER_PAGE)
-				->get();
-
-			$num_total_episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
-				->where('podcasts.category_id', $category_id)
-				->count();
-		}
-		else
-		{
-			$episodes = Episode::orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
-			$num_total_episodes = Episode::count();
-		}*/
 
 		$episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
 			->orderBy('episodes.created_at', 'DESC');
@@ -230,11 +213,21 @@ class HomeController extends BaseController
 		$pagination_view->paginator = $paginator;
 		$pagination_view->total_pages = ceil($paginator->getTotal() / self::NUM_PER_PAGE);
 
-		$episodes_html = View::make('home/partials/get_episodes');
-		$episodes_html->num_episodes = count($episodes);
-		$episodes_html->episodes = $episodes;
-		$episodes_html->user = $this->user;
-		$episodes_html->_podcast = NULL;
+		if ( $type === 'podcast_episodes' )
+		{
+			$episodes_html = View::make('home/partials/get_podcast_episodes');
+			$episodes_html->num_episodes = count($episodes);
+			$episodes_html->episodes = $episodes;
+			$episodes_html->user = $this->user;
+		}
+		else
+		{
+			$episodes_html = View::make('home/partials/get_episodes');
+			$episodes_html->num_episodes = count($episodes);
+			$episodes_html->episodes = $episodes;
+			$episodes_html->user = $this->user;
+			$episodes_html->_podcast = NULL;
+		}
 
 		die(json_encode(array
 		(
@@ -265,8 +258,11 @@ class HomeController extends BaseController
 
 		$paginator = Paginator::make($episodes->getItems(), $num_total_episodes, self::NUM_PER_PAGE);
 
-		$this->assign('num_episodes', count($episodes));
-		$this->assign('episodes', $episodes);
+		$podcast_episodes_view = View::make('home/partials/get_podcast_episodes');
+		$podcast_episodes_view->num_episodes = count($episodes);
+		$podcast_episodes_view->episodes = $episodes;
+		$podcast_episodes_view->user = $this->user;
+		$this->assign('podcast_episodes_html', $podcast_episodes_view->render());
 
 		$pagination_view = View::make('home/partials/pagination');
 		$pagination_view->paginator = $paginator;
