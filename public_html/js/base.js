@@ -22,7 +22,7 @@ $(function()
 	$.cookie.json = true;
 
 	$footer = $('#footer');
-	$toggle_footer_button = $('#toggle_footer_button');
+	$toggle_footer_button = $('#toogle-footer-button');
 
 	init_player();
 	init_raty();
@@ -394,7 +394,7 @@ function open_player()
 		show_player();
 	}
 
-	$toggle_footer_button.html('&hearts;');
+	$toggle_footer_button.html('<img src="images/player/minimize-footer-no-border.png" width="30px" height="30px">');
 
 	$footer.addClass('open');
 }
@@ -403,7 +403,7 @@ function close_player()
 {
 	hide_player();
 
-	$toggle_footer_button.html('&spades;');
+	$toggle_footer_button.html('<img src="images/player/maximize-footer-no-border.png" width="30px" height="30px">');
 
 	$footer.removeClass('open');
 }
