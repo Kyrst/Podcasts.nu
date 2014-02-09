@@ -426,7 +426,12 @@ class AjaxController extends BaseController
 				$user_listen = User_Listen::where('episode_id', $input['episode_id'])->where('user_id', $this->user->id)->firstOrFail();
 				$user_listen->done = 'yes';
 				$user_listen->is_listening = 'no';
-				$user_listen->current_position = $input['position'];
+
+				if ( isset($input['position']) )
+				{
+					$user_listen->current_position = $input['position'];
+				}
+
 				$user_listen->save();
 			}
 			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )

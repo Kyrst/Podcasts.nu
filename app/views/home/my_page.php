@@ -28,27 +28,33 @@
 
 		<!-- Ej lyssnat klart -->
 		<?php if ( $num_user_listens > 0 ): ?>
-			<h2>Ej lyssnat klart</h2>
+			<div id="not_done_container">
+				<h2>Ej lyssnat klart</h2>
 
-			<table class="table">
-				<tr>
-					<th></th>
-					<th>Avsnitt</th>
-					<th>Position</th>
-				</tr>
-
-				<?php foreach ( $user_listens as $user_listen ): ?>
+				<table id="not_done_table" class="table">
 					<tr>
-						<td>
-							<?php if ( $user_listen->episode->haveMedia() ): ?>
-								<?= $user_listen->episode->printPlayButton() ?>
-							<?php endif ?>
-						</td>
-						<td><a href="<?= $user_listen->episode->getLink() ?>"><?= $user_listen->episode->getTitle() ?></a></td>
-						<td><span class="current-position-<?= $user_listen->episode->id ?>"><?= User_Listen::format_seconds($user_listen->current_position) ?></span> / <?= User_Listen::format_seconds($user_listen->episode->duration) ?></td>
+						<th></th>
+						<th>Avsnitt</th>
+						<th>Position</th>
+						<th></th>
 					</tr>
-				<?php endforeach ?>
-			</table>
+
+					<?php foreach ( $user_listens as $user_listen ): ?>
+						<tr id="not_done_row_<?= $user_listen->episode_id ?>" class="not-done-row">
+							<td>
+								<?php if ( $user_listen->episode->haveMedia() ): ?>
+									<?= $user_listen->episode->printPlayButton() ?>
+								<?php endif ?>
+							</td>
+							<td><a href="<?= $user_listen->episode->getLink() ?>"><?= $user_listen->episode->getTitle() ?></a></td>
+							<td><span class="current-position-<?= $user_listen->episode->id ?>"><?= User_Listen::format_seconds($user_listen->current_position) ?></span> / <?= User_Listen::format_seconds($user_listen->episode->duration) ?></td>
+							<td>
+								<a href="javascript:" data-episode_id="<?= $user_listen->episode->id ?>" class="btn btn-xs btn-default mark-as-done">Markera som färdiglyssnad</a>
+							</td>
+						</tr>
+					<?php endforeach ?>
+				</table>
+			</div>
 		<?php endif ?>
 
 		<!-- Prenumerationer -->

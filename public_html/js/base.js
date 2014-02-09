@@ -9,6 +9,8 @@ var current_episode_id = null,
 	current_title = null,
 	current_episode_link = null;
 
+var on_load = true;
+
 $(function()
 {
 	//
@@ -166,14 +168,21 @@ function init_player()
 		},
 		durationchange: function(e)
 		{
-			$.ajax(
+			if ( !on_load )
 			{
-				url: BASE_URL + 'save-episode-duration',
-				type: 'POST',
-				data: { episode_id: current_episode_id, duration: $player.data().jPlayer.status.duration }
-			}).done(function()
+				$.ajax(
+				{
+					url: BASE_URL + 'save-episode-duration',
+					type: 'POST',
+					data: { episode_id: current_episode_id, duration: $player.data().jPlayer.status.duration }
+				}).done(function()
+				{
+				});
+			}
+			else
 			{
-			});
+				on_load = false;
+			}
 		},
 		loadstart: function()
 		{
