@@ -204,7 +204,7 @@ class HomeController extends BaseController
 			$num_total_episodes = Episode::count();
 		}
 
-		$paginator = Paginator::make($episodes->toArray(), $num_total_episodes, self::NUM_EPISODES_PER_PAGE);
+		$paginator = Paginator::make($episodes->getItems(), $num_total_episodes, self::NUM_EPISODES_PER_PAGE);
 		$pagination_view = View::make('home/partials/pagination');
 		$pagination_view->paginator = $paginator;
 		$pagination_view->total_pages = ceil($paginator->getTotal() / self::NUM_EPISODES_PER_PAGE);
@@ -271,7 +271,7 @@ class HomeController extends BaseController
 			$num_total_episodes = Episode::count();
 		}
 
-		$paginator = Paginator::make($episodes->toArray(), $num_total_episodes, self::NUM_EPISODES_PER_PAGE);
+		$paginator = Paginator::make($episodes->getItems(), $num_total_episodes, self::NUM_EPISODES_PER_PAGE);
 
 		$pagination_view = View::make('home/partials/pagination');
 		$pagination_view->paginator = $paginator;
@@ -457,7 +457,7 @@ class HomeController extends BaseController
 				$most_played_this_week = DB::table('user_listens')
 					->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
 					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
-					->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
+					->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('podcasts.name AS podcast_name'), DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
 					->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'));
 
 				if ( $category_id )
@@ -475,7 +475,7 @@ class HomeController extends BaseController
 				$most_played_this_month = DB::table('user_listens')
 					->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
 					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
-					->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
+					->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('podcasts.name AS podcast_name'), DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
 					->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 MONTH)'));
 
 				if ( $category_id )
@@ -493,7 +493,7 @@ class HomeController extends BaseController
 				$most_played_total = DB::table('user_listens')
 					->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
 					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
-					->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('COUNT(user_listens.episode_id) AS num_listens'));
+					->select('episodes.title', 'episodes.slug', DB::raw('podcasts.slug AS podcast_slug'), DB::raw('podcasts.name AS podcast_name'), DB::raw('COUNT(user_listens.episode_id) AS num_listens'));
 
 				if ( $category_id )
 				{
