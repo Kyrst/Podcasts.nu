@@ -1,4 +1,6 @@
-var $selected_category_text;
+var $selected_category_text,
+	selected_category_id,
+	current_page = 1;
 
 $(function()
 {
@@ -6,19 +8,39 @@ $(function()
 
 	$('#category_select').find('.category').on('click', function()
 	{
-		var category_id = $(this).attr('data-id'),
-			category_title = $(this).attr('data-title');
+		selected_category_id = $(this).attr('data-id');
+
+		var category_title = $(this).attr('data-title');
 
 		$selected_category_text.html(category_title);
 
-		get_episodes(category_id);
+		get_episodes();
 	});
+
+	bind_pagination_click();
 });
 
-function get_episodes(category_id)
+function bind_pagination_click()
 {
-	$.getJSON(BASE_URL + 'ajax/get-episodes', { category_id: category_id }, function(result)
+	$('#episodes').find('.pagination a').on('click', function()
 	{
-		$('#episodes_container').html(result.html);
+		current_page = $(this).data('page');
+
+		get_episodes();
+	});
+}
+
+function get_episodes()
+{
+	var episodes_container_height = $('#episodes_container').height();
+
+	$('#episodes_container').css('height', episodes_container_height).html('Laddar...');
+
+	$.getJSON(BASE_URL + 'ajax/get-episodes', { category_id: selected_category_id, page: current_page }, function(result)
+	{
+		$('#episodes_container').html(result.html).css('height', 'auto');
+		$('#pagination_container').html(result.pagination_html);
+
+		bind_pagination_click();
 	});
 }
