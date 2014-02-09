@@ -230,9 +230,12 @@ class User extends VerifyUser
 			{
 				$result = 'Påbörjad';
 			}
+
+			error_log($user_listen->done);
 		}
 		catch ( \Illuminate\Database\Eloquent\ModelNotFoundException $e )
 		{
+			error_log($e->getMessage());
 		}
 
 		return $result;

@@ -214,7 +214,7 @@ class HomeController extends BaseController
 		{
 			$podcast = Podcast::where('slug', '=', $slug)->firstOrFail();
 
-			$episodes = $podcast->episodes;
+			$episodes = $podcast->episodes()->orderBy('created_at', 'DESC')->get();
 		}
 		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
 		{

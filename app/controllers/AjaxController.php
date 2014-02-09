@@ -198,13 +198,10 @@ class AjaxController extends BaseController
 				{
 					$end = intval($matches[2]);
 				}
-
-				error_log('yes: ' . $begin . ' - ' . $end);
 			}
 		}
 		else
 		{
-			error_log('no: ' . $begin . ' - ' . $end);
 		}
 
 		curl_setopt($ch, CURLOPT_URL, $url);

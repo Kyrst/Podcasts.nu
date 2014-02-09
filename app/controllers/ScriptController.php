@@ -36,7 +36,7 @@ class ScriptController extends Controller
 
 		foreach ( $podcasts as $podcast )
 		{
-			error_log('Laddar podcast "' . $podcast->name . '"...');
+			//error_log('Laddar podcast "' . $podcast->name . '"...');
 
 			$simple_pie->set_feed_url($podcast->rss);
 			$simple_pie->init();

@@ -67,6 +67,10 @@
                                         <div class="clear"></div>
 
                                         <?= $episode->print_rater() ?>
+
+										<?php if ( $user !== NULL ): ?>
+											<p class="episode-status"><?= $user->get_episode_status($episode->id) ?></p>
+										<?php endif ?>
                                     </div>
                                 <?php if ( $user !== NULL && $user->is_admin() ): ?>
                                     <div class="btn-group" style="margin-top:8px">
