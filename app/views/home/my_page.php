@@ -17,13 +17,13 @@
 			<table class="table">
 				<?php foreach ( $history as $history_item ): ?>
 					<tr>
-						<td style="width:150px"><?= date('Y-m-d H:i', $history_item['timestamp']) ?></td>
-						<td><?= $history_item['message'] ?></td>
+						<td style="width:150px"><p class="table-p"><?= date('Y-m-d H:i', $history_item['timestamp']) ?></p></td>
+						<td><p class="table-p"><?= $history_item['message'] ?></p></td>
 					</tr>
 				<?php endforeach ?>
 			</table>
 		<?php else: ?>
-			<p>Ingen historik.</p>
+			<p class="table-p">Ingen historik.</p>
 		<?php endif ?>
 
 		<!-- Ej lyssnat klart -->
@@ -31,7 +31,7 @@
 			<div id="not_done_container" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<h2>Ej lyssnat klart</h2>
 
-				<table id="not_done_table" class="table">
+				<table id="not_done_table" class="table col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<tr>
 						<th></th>
 						<th>Avsnitt</th>
@@ -46,10 +46,10 @@
 									<?= $user_listen->episode->printPlayButton() ?>
 								<?php endif ?>
 							</td>
-							<td><a href="<?= $user_listen->episode->getLink() ?>"><?= $user_listen->episode->getTitle() ?></a></td>
-							<td><span class="current-position-<?= $user_listen->episode->id ?>"><?= User_Listen::format_seconds($user_listen->current_position) ?></span> / <?= User_Listen::format_seconds($user_listen->episode->duration) ?></td>
+							<td><p class="table-p"</p><a href="<?= $user_listen->episode->getLink() ?>"><?= $user_listen->episode->getTitle() ?></a></p></td>
+							<td><p class="table-p"><span class="current-position-<?= $user_listen->episode->id ?>"><?= User_Listen::format_seconds($user_listen->current_position) ?></span> / <?= User_Listen::format_seconds($user_listen->episode->duration) ?></p></td>
 							<td>
-								<a href="javascript:" data-episode_id="<?= $user_listen->episode->id ?>" class="btn btn-xs btn-default mark-as-done">Markera som färdiglyssnad</a>
+								<a href="javascript:" data-episode_id="<?= $user_listen->episode->id ?>" class="btn btn-default btn-sm mark-as-done">Markera som färdiglyssnad</a>
 							</td>
 						</tr>
 					<?php endforeach ?>
@@ -61,12 +61,12 @@
 		<h2>Prenumerationer</h2>
 
 		<?php if ( $user->podcasts->count() > 0 ): ?>
-			<table id="my_subscriptions" class="table col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<table id="my_subscriptions" class="panel panel-default">
 				<tr>
-					<th>Podcast</th>
-					<th>Senaste avsnittet</th>
-					<th>Senaste avsnittet du lyssnade på</th>
-					<th>Lyssnade avsnitt</th>
+					<th><p class="table-heading">Podcast</p></th>
+					<th><p class="table-heading">Senaste avsnittet</p></th>
+					<th><p class="table-heading">Senaste lyssnade avsnitt</p></th>
+					<th><p class="table-heading">Lyssnade avsnitt</p></th>
 					<th></th>
 				</tr>
 
@@ -77,11 +77,11 @@
 					?>
 
 					<tr>
-						<td><a href="<?= $podcast->getLink('avsnitt') ?>"><?= $podcast->name ?></a></td>
-						<td><?= $latest_episode !== NULL ? $latest_episode->title : '/' ?></td>
-						<td><?= '[kommer]' //$latest_listened_episode !== NULL ? $latest_listened_episode->title : '/' ?></td>
-						<td><?= $podcast->episodes->count() > 0 ? $podcast->get_num_listens($user->id) . ' av ' . $podcast->episodes->count() : '-' ?></td>
-						<td><a href="javascript:" data-id="<?= $podcast->id ?>" class="stop-subscribe btn btn-default btn-sm">Sluta prenumerera</a></td>
+						<td><p class="table-p"><a href="<?= $podcast->getLink('avsnitt') ?>"><?= $podcast->name ?></a></p></td>
+						<td><p class="table-p"><?= $latest_episode !== NULL ? $latest_episode->title : '/' ?></p></td>
+						<td><p class="table-p"><?= '[kommer]' //$latest_listened_episode !== NULL ? $latest_listened_episode->title : '/' ?></p></td>
+						<td><p class="table-p"><?= $podcast->episodes->count() > 0 ? $podcast->get_num_listens($user->id) . ' av ' . $podcast->episodes->count() : '-' ?></p></td>
+						<td><p class="table-p"><a href="javascript:" data-id="<?= $podcast->id ?>" class="stop-subscribe btn btn-default btn-sm">Sluta prenumerera</a></p></td>
 					</tr>
 				<?php endforeach ?>
 			</table>
