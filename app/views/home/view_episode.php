@@ -17,6 +17,10 @@
 	<?= $episode->printPlayButton(); ?>
 <?php endif; ?>
 
+<?php if ( $user !== NULL ): ?>
+	<p class="episode-status"><?= $user->get_episode_status($episode->id) ?></p>
+<?php endif ?>
+
 <div class="panel panel-danger" style="margin-top:20px">
 	<div class="panel-heading">
 		<h3 class="panel-title">Kommentarer</h3>
