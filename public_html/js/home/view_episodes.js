@@ -36,7 +36,7 @@ function get_episodes()
 
 	$('#episodes_container').css('height', episodes_container_height).html('Laddar...');
 
-	$.getJSON(BASE_URL + 'ajax/get-episodes', { category_id: selected_category_id, page: current_page }, function(result)
+	$.getJSON(BASE_URL + 'ajax/get-episodes', { category_id: selected_category_id, page: current_page, type: 'episodes' }, function(result)
 	{
 		$('#episodes_container').html(result.html).css('height', 'auto');
 		$('#pagination_container').html(result.pagination_html);
