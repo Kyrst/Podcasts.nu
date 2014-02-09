@@ -11,7 +11,6 @@
                 <div class="clear"></div>
                 <p class="episode-status">Påbörjad/Lyssnad</p>
                 <div class="rater"><?= $episode->print_rater() ?></div>
-
             </div>
 		<?php else: ?>
 			Avsnittet saknar podd.
