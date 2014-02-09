@@ -49,7 +49,7 @@
 							<td><p class="table-p"</p><a href="<?= $user_listen->episode->getLink() ?>"><?= $user_listen->episode->getTitle() ?></a></p></td>
 							<td><p class="table-p"><span class="current-position-<?= $user_listen->episode->id ?>"><?= User_Listen::format_seconds($user_listen->current_position) ?></span> / <?= User_Listen::format_seconds($user_listen->episode->duration) ?></p></td>
 							<td>
-								<a href="javascript:" data-episode_id="<?= $user_listen->episode->id ?>" class="btn btn-xs btn-default mark-as-done">Markera som färdiglyssnad</a>
+								<a href="javascript:" data-episode_id="<?= $user_listen->episode->id ?>" class="btn btn-default btn-sm mark-as-done">Markera som färdiglyssnad</a>
 							</td>
 						</tr>
 					<?php endforeach ?>
@@ -81,7 +81,7 @@
 						<td><p class="table-p"><?= $latest_episode !== NULL ? $latest_episode->title : '/' ?></p></td>
 						<td><p class="table-p"><?= '[kommer]' //$latest_listened_episode !== NULL ? $latest_listened_episode->title : '/' ?></p></td>
 						<td><p class="table-p"><?= $podcast->episodes->count() > 0 ? $podcast->get_num_listens($user->id) . ' av ' . $podcast->episodes->count() : '-' ?></p></td>
-						<td><a href="javascript:" data-id="<?= $podcast->id ?>" class="stop-subscribe btn btn-default btn-sm">Sluta prenumerera</a></td>
+						<td><p class="table-p"><a href="javascript:" data-id="<?= $podcast->id ?>" class="stop-subscribe btn btn-default btn-sm">Sluta prenumerera</a></p></td>
 					</tr>
 				<?php endforeach ?>
 			</table>
