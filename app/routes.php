@@ -494,11 +494,6 @@ Route::get('/topplista/hamta', array
 	'as' => 'topplista/hamta'
 ));
 
-/*Event::listen('illuminate.query', function($query)
-{
-	echo $query, '<hr>';
-});*/
-
 // User profile picture
 Route::get('/avatar/{id}/{size_name}', array
 (
@@ -515,4 +510,10 @@ Route::post('/markera-som-fardig', array
 (
 	'uses' => 'AjaxController@mark_as_done',
 	'as' => 'markera-som-fardig'
+));
+
+Route::get('/info', array
+(
+	'uses' => 'HomeController@info',
+	'as' => 'info'
 ));

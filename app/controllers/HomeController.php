@@ -191,7 +191,7 @@ class HomeController extends BaseController
 		$episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
 			->orderBy('episodes.created_at', 'DESC');
 
-		$num_total_episodes_count = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id');
+		$num_total_episodes_count = $num_total_episodes_count = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id');
 
 		if ( $category_id > 0 )
 		{
@@ -205,10 +205,16 @@ class HomeController extends BaseController
 			$num_total_episodes_count = $num_total_episodes_count->where('podcasts.id', $podcast_id);
 		}
 
-		$episodes = $episodes->paginate(self::NUM_PER_PAGE);
-		$num_total_episodes = $num_total_episodes_count->count();
+		//$episodes = $episodes->select(DB::raw('episodes.slug AS episode_slug'), DB::raw('podcasts.slug AS podcast_slug'))
 
-		$paginator = Paginator::make($episodes->getItems(), $num_total_episodes, self::NUM_PER_PAGE);
+		$episodes = $episodes->paginate(self::NUM_PER_PAGE);;
+
+		foreach ( $episodes as $episode )
+		{
+			die(var_dump($episode->id));
+		}
+
+		$paginator = Paginator::make($episodes->getItems(), $num_total_episodes_count->count(), self::NUM_PER_PAGE);
 		$pagination_view = View::make('home/partials/pagination');
 		$pagination_view->paginator = $paginator;
 		$pagination_view->total_pages = ceil($paginator->getTotal() / self::NUM_PER_PAGE);
@@ -808,5 +814,10 @@ class HomeController extends BaseController
 		$this->assign('default_tab', $default_tab);
 
 		$this->display('home.settings', 'Inställningar');
+	}
+
+	public function info()
+	{
+		$this->display('home.info', 'Info');
 	}
 }
