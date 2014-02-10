@@ -60,6 +60,8 @@ class HomeController extends BaseController
 			);
 		}
 
+		usort($latest_news_and_blog_items, array($this, 'sort_blog_and_news_items'));
+
 		$this->assign('latest_news_and_blog_items', $latest_news_and_blog_items);
 
 		// Lyssnas just nu
