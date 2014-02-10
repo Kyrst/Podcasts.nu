@@ -7,12 +7,20 @@
 </div>-->
 <!--  Carousel - consult the Twitter Bootstrap docs at
       http://twitter.github.com/bootstrap/javascript.html#carousel -->
-<div class="jumbotron">
-    <h1>Podcasts.Nu</h1>
-    <p>Svenska podcasts. Lyssna direkt i din dator, surfplatta eller mobil</p>
-    <p><a class="btn btn-primary btn-lg" role="button">Läs mer</a></p>
-</div>
-
+<?php if ( $user !== NULL ): ?>
+    <div class="jumbotron">
+        <h1>Välkommen tillbaka</h1>
+        <p>Nya sidan innehåller en del förbättringar med spelaren</p>
+        <p>Läs gärna vidare kring våra ny funktioner.</p>
+        <p><a href="/sign-up" class="btn btn-primary btn-lg" role="button">Läs mer</a></p>
+    </div>
+<?php else: ?>
+    <div class="jumbotron">
+        <h1>Podcasts.Nu</h1>
+        <p>Svenska podcasts. Lyssna direkt i din dator, surfplatta eller mobil</p>
+        <p><a class="btn btn-primary btn-lg" role="button">Bli medlem</a></p>
+    </div>
+<?php endif ?>
 <div class="container">
 	<div class="row">
 		<div class="content col-xs-12 col-sm-8 col-md-8 col-lg-8">
