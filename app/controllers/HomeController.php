@@ -245,7 +245,7 @@ class HomeController extends BaseController
 
 		try
 		{
-			$podcast = Podcast::where('slug', '=', $slug)->firstOrFail();
+			$podcast = Podcast::where('podcast_slug', '=', $slug)->firstOrFail();
 
 			$episodes = $podcast->episodes()->orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
 			$num_total_episodes = $podcast->episodes()->count();
@@ -283,7 +283,7 @@ class HomeController extends BaseController
 		{
 			try
 			{
-				$podcast = Podcast::where('slug', '=', $podcast)->firstOrFail();
+				$podcast = Podcast::where('podcast_slug', '=', $podcast)->firstOrFail();
 
 				$episodes = $podcast->episodes()->orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
 				$num_total_episodes = $podcast->episodes()->count();
@@ -327,7 +327,7 @@ class HomeController extends BaseController
 	{
 		try
 		{
-			$episode = Episode::where('slug', '=', $episode)->firstOrFail();
+			$episode = Episode::where('episode_slug', '=', $episode)->firstOrFail();
 		}
 		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
 		{
