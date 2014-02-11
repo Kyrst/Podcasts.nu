@@ -195,7 +195,7 @@ class AdminController extends BaseController
 				if ( $podcast_to_edit !== NULL )
 				{
 					$podcast_to_edit->name = trim(Input::get('name'));
-					$podcast_to_edit->slug = trim(Input::get('slug'));
+					$podcast_to_edit->podcast_slug = trim(Input::get('slug'));
 					$podcast_to_edit->description = trim(Input::get('description'));
 					$podcast_to_edit->category_id = Input::get('category');
 					$podcast_to_edit->rss = trim(Input::get('rss'));
@@ -223,7 +223,7 @@ class AdminController extends BaseController
 			{
 				$podcast = new Podcast();
 				$podcast->name = trim(Input::get('name'));
-				$podcast->slug = trim(Input::get('slug'));
+				$podcast->podcast_slug = trim(Input::get('slug'));
 				$podcast->description = trim(Input::get('description'));
 				$podcast->category_id = Input::get('category');
 				$podcast->rss = trim(Input::get('rss'));
@@ -298,7 +298,7 @@ class AdminController extends BaseController
 				{
 					$episode_to_edit->podcast_id = Input::get('podcast');
 					$episode_to_edit->title = trim(Input::get('title'));
-					$episode_to_edit->slug = trim(Input::get('slug'));
+					$episode_to_edit->episode_slug = trim(Input::get('slug'));
 					$episode_to_edit->description = trim(Input::get('description'));
 					$episode_to_edit->media_link = trim(Input::get('media_link'));
 					$episode_to_edit->save();
@@ -313,7 +313,7 @@ class AdminController extends BaseController
 				$episode = new Episode();
 				$episode->podcast_id = Input::get('podcast');
 				$episode->title = trim(Input::get('title'));
-				$episode->slug = trim(Input::get('slug'));
+				$episode->episode_slug = trim(Input::get('slug'));
 				$episode->description = trim(Input::get('description'));
 				$episode->media_link = trim(Input::get('media_link'));
 				$episode->save();

@@ -185,7 +185,7 @@ class ImportController extends BaseController
 			$podcast = new Podcast();
 			$podcast->id = $artist['id'];
 			$podcast->name = trim($artist['name']);
-			$podcast->slug = trim($artist['slug']);
+			$podcast->podcast_slug = trim($artist['slug']);
 			//$podcast->slug = Str::slug($podcast->name);
 			$podcast->description = trim($artist['description']);
 			$podcast->rss = trim($artist['rss']);
@@ -218,7 +218,7 @@ class ImportController extends BaseController
 			$episode->unique_id = $song['unique_id'];
 			$episode->podcast_id = $song['artist_id'];
 			$episode->title = trim($song['title']);
-			$episode->slug = Str::slug($episode->title);
+			$episode->episode_slug = Str::slug($episode->title);
 			$episode->description = trim($song['description']);
 			$episode->media_link = trim($song['media_link']);
 			$episode->pub_date = trim($song['pub_date']);

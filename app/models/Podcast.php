@@ -27,7 +27,7 @@ class Podcast extends Eloquent
 
 	public function getImageFilename($type)
 	{
-		return $this->slug . '-' . $type . '.jpg';
+		return $this->podcast_slug . '-' . $type . '.jpg';
 	}
 
 	public function hasImage($type)
@@ -48,7 +48,7 @@ class Podcast extends Eloquent
 		if ( !in_array($section, array('poddar', 'avsnitt')) )
 			throw new Exception();
 
-		return self::getLinkStatic($this->slug, $section);
+		return self::getLinkStatic($this->podcast_slug, $section);
 	}
 
 	public static function getLinkStatic($podcast_slug, $section)

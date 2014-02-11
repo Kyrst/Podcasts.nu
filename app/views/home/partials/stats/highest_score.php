@@ -4,7 +4,7 @@
 	<?php if ( count($episodes) ): ?>
 		<ol>
 			<?php foreach ( $episodes as $episode ): ?>
-				<li><a href="<?= Episode::getLinkStatic($episode->podcast_slug, $episode->slug, 'avsnitt') ?>"><?= $episode->title ?></a> (<?= number_format($episode->avg_score, 1) ?>)</li>
+				<li><a href="<?= Episode::getLinkStatic($episode->podcast_slug, $episode->episode_slug, 'avsnitt') ?>"><?= $episode->title ?></a> (<?= number_format($episode->avg_score, 1) ?>)</li>
 			<?php endforeach ?>
 		</ol>
 	<?php else: ?>
@@ -16,7 +16,7 @@
 	<?php if ( count($podcasts) ): ?>
 		<ol>
 			<?php foreach ( $podcasts as $podcast ): ?>
-				<li><a href="<?= Podcast::getLinkStatic($podcast->slug, 'poddar') ?>"><?= $podcast->name ?></a> (<?= number_format($podcast->avg_score, 1) ?>)</li>
+				<li><a href="<?= Podcast::getLinkStatic($podcast->podcast_slug, 'poddar') ?>"><?= $podcast->name ?></a> (<?= number_format($podcast->avg_score, 1) ?>)</li>
 			<?php endforeach ?>
 		</ol>
 	<?php else: ?>

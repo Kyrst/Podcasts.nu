@@ -15,7 +15,7 @@
 	<div class="form-group">
 		<label for="slug" class="col-lg-2 control-label">Slug</label>
 		<div class="col-lg-10">
-			<input type="text" name="slug" id="slug" class="form-control"<?php if ($edit_mode): ?> value="<?= e($podcast_to_edit->slug); ?>"<?php endif; ?>>
+			<input type="text" name="slug" id="slug" class="form-control"<?php if ($edit_mode): ?> value="<?= e($podcast_to_edit->podcast_slug); ?>"<?php endif; ?>>
 		</div>
 	</div>
 

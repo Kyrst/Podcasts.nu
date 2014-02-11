@@ -35,7 +35,7 @@ class Episode extends Eloquent
 
 		//error_log($this->podcast->slug . ' - ' . $this->slug);
 
-		return self::getLinkStatic($this->podcast->slug, $this->slug, $section);
+		return self::getLinkStatic($this->podcast->podcast_slug, $this->episode_slug, $section);
 
 		//return URL::to($section . '/' . $this->podcast->slug . '/' . $this->slug);
 	}

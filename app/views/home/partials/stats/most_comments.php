@@ -3,7 +3,7 @@
 <?php if ( count($most_commented_this_week) ): ?>
 	<ol>
 		<?php foreach ( $most_commented_this_week as $episode ): ?>
-			<li><a href="<?= Episode::getLinkStatic($episode->podcast_slug, $episode->slug, 'avsnitt') ?>"><?= $episode->title ?></a> (<?= $episode->num_comments ?>)</li>
+			<li><a href="<?= Episode::getLinkStatic($episode->podcast_slug, $episode->episode_slug, 'avsnitt') ?>"><?= $episode->title ?></a> (<?= $episode->num_comments ?>)</li>
 		<?php endforeach ?>
 	</ol>
 <?php else: ?>
