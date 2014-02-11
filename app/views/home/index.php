@@ -1,6 +1,6 @@
 <?php if ( $user !== NULL ): ?>
     <div class="jumbotron">
-        <img class="front-logo" src="images/logga1.jpg">
+        <img class="front-logo" src="images/logga1.png">
         <h1>Välkommen tillbaka</h1>
         <p>Nya sidan innehåller en del förbättringar med spelaren</p>
         <p>Läs gärna vidare kring våra ny funktioner.</p>
