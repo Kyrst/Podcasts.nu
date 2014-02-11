@@ -1,12 +1,3 @@
-<!--<div class="jumbotron">
-	<div class="container">
-		<h1>Podcasts.Nu!</h1>
-		<p>Svenska Podcasts. Lyssna direkt i din dator, surfplatta eller mobil!</p>
-		<p><a class="btn btn-primary btn-lg">Läs mer</a></p>
-	</div>
-</div>-->
-<!--  Carousel - consult the Twitter Bootstrap docs at
-      http://twitter.github.com/bootstrap/javascript.html#carousel -->
 <?php if ( $user !== NULL ): ?>
     <div class="jumbotron">
         <h1>Välkommen tillbaka</h1>
@@ -17,8 +8,9 @@
 <?php else: ?>
     <div class="jumbotron">
         <h1>Podcasts.Nu</h1>
-        <p>Svenska podcasts. Lyssna direkt i din dator, surfplatta eller mobil</p>
-        <p><a class="btn btn-primary btn-lg" role="button">Bli medlem</a></p>
+        <p>Svenska podcasts. Lyssna direkt i din dator, surfplatta eller mobil.</p>
+        <p>Häng med och upplev fördelarna som medlem, självklart är det gratis!</p>
+        <p><a class="btn btn-primary btn-sm" role="button">Bli medlem</a></p>
     </div>
 <?php endif ?>
 <div class="container">
