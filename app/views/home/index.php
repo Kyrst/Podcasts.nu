@@ -1,5 +1,6 @@
 <?php if ( $user !== NULL ): ?>
     <div class="jumbotron">
+        <img class="front-logo" src="images/logga.jpg">
         <h1>Välkommen tillbaka</h1>
         <p>Nya sidan innehåller en del förbättringar med spelaren</p>
         <p>Läs gärna vidare kring våra ny funktioner.</p>
@@ -7,6 +8,8 @@
     </div>
 <?php else: ?>
     <div class="jumbotron">
+        <img class="front-logo" src="images/logga1.png">
+
         <h1>Podcasts.Nu</h1>
         <p>Svenska podcasts. Lyssna direkt i din dator, surfplatta eller mobil.</p>
         <p>Häng med och upplev fördelarna som medlem, självklart är det gratis!</p>
