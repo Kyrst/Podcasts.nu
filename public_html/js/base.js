@@ -283,7 +283,7 @@ function init_player()
 		$.ajax(
 		{
 			type: 'POST',
-			url: BASE_URL + 'stop-listening',
+			url: BASE_URL + 'markera-som-fardig',
 			data:
 			{
 				episode_id: current_episode_id,
@@ -394,7 +394,7 @@ function open_player()
 		show_player();
 	}
 
-	$toggle_footer_button.html('<img src="images/player/minimize-footer-no-border.png" width="30px" height="30px">');
+	$toggle_footer_button.html('<img src="' + BASE_URL + 'images/player/minimize-footer-no-border.png" width="30px" height="30px">');
 
 	$footer.addClass('open');
 }
@@ -403,7 +403,7 @@ function close_player()
 {
 	hide_player();
 
-	$toggle_footer_button.html('<img src="images/player/maximize-footer-no-border.png" width="30px" height="30px">');
+	$toggle_footer_button.html('<img src="' + BASE_URL + 'images/player/maximize-footer-no-border.png" width="30px" height="30px">');
 
 	$footer.removeClass('open');
 }
