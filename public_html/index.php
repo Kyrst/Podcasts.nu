@@ -1,6 +1,4 @@
 <?php
-die('test');
-
 ini_set('memory_limit', '128M');
 
 require __DIR__ . '/../bootstrap/autoload.php';
