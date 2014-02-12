@@ -6,6 +6,8 @@ class AvatarController extends Controller
 	private $image_to_render;
 	private $size;
 
+	private $image_found = false;
+
 	public function init($user_id, $size_name)
 	{
 		try
@@ -19,7 +21,14 @@ class AvatarController extends Controller
 
 		$avatar_path = User::get_avatar_path($user_id);
 
-		$this->image_to_render = Image::make($avatar_path);
+		try
+		{
+			$this->image_to_render = Image::make($avatar_path);
+		}
+		catch ( \Intervention\Image\Exception\ImageNotFoundException $e )
+		{
+			$this->set_image_not_found();
+		}
 
 		$this->adjust_size();
 
@@ -38,13 +47,22 @@ class AvatarController extends Controller
 
 	private function set_image_not_found()
 	{
-		$this->image_to_render = Image::make(public_path() . '/images/avatars/default.png');
+		//$this->image_to_render = Image::make(public_path() . '/images/avatars/default.png');
+		$this->image_to_render = Image::make(public_path() . '/images/logga1_red.png');
 	}
 
 	private function render()
 	{
-		$response = Response::make($this->image_to_render->encode('jpg'));
-		$response->header('Content-Type', 'image/jpeg');
+		if ( $this->image_found )
+		{
+			$response = Response::make($this->image_to_render->encode('jpg'));
+			$response->header('Content-Type', 'image/jpeg');
+		}
+		else
+		{
+			$response = Response::make($this->image_to_render->encode('png'));
+			$response->header('Content-Type', 'image/png');
+		}
 
 		return $response;
 	}
