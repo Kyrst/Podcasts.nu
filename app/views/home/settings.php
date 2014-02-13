@@ -10,7 +10,7 @@
 	<ul class="nav nav-tabs">
 		<li<?php if ( $default_tab === 'general' ): ?> class="active"<?php endif ?>><a href="#general_tab" data-toggle="tab">Allmänt</a></li>
 		<li<?php if ( $default_tab === 'avatar' ): ?> class="active"<?php endif ?>><a href="#avatar_tab" data-toggle="tab">Profilbild</a></li>
-		<li<?php if ( $default_tab === 'password' ): ?> class="active"<?php endif ?>><a href="#password_tab" data-toggle="tab">Lösenord</a></li>
+		<?php /*<li<?php if ( $default_tab === 'password' ): ?> class="active"<?php endif ?>><a href="#password_tab" data-toggle="tab">Lösenord</a></li>*/ ?>
 	</ul>
 
 	<div class="tab-content">
@@ -89,8 +89,8 @@
 		</div>
 
 		<!-- Lösenord -->
-		<div id="password_tab" class="tab-pane<?php if ( $default_tab === 'password' ): ?> active<?php endif ?>">
+		<?php /*<div id="password_tab" class="tab-pane<?php if ( $default_tab === 'password' ): ?> active<?php endif ?>">
 			<p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
-		</div>
+		</div>*/ ?>
 	</div>
 </div>
