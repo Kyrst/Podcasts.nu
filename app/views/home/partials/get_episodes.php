@@ -11,7 +11,12 @@
                 <div class="clear"></div>
 
                 <?php if ( $user !== NULL ): ?>
-                	<p class="episode-status"><?= $user->get_episode_status($episode->id) ?></p>
+                    <?php if ($user->get_episode_status($episode->id) == "Lyssnad"): ?>
+                        <span class="label label-success">Lyssnad</span>
+                    <?php elseif ($user->get_episode_status($episode->id) == "Påbörjad"): ?>
+                        <span class="label label-warning">Påbörjad</span>
+                    <?php endif ?>
+                <p class="episode-status"><?= $user->get_episode_status($episode->id) ?></p>
                 <?php endif ?>
 
                 <div class="rater"><?= $episode->print_rater() ?></div>
