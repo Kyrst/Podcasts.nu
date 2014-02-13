@@ -46,7 +46,6 @@
                 <?php else: ?>
 					<?= $podcast->description ?>
                 <?php endif ?>
-
             </div>
         </div>
         <div class ="content col-lg-8 col-md-8 col-sm-7 col-xs-12">

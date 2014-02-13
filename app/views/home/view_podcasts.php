@@ -9,7 +9,6 @@
 		<span id="selected_category_text">Alla kategorier</span>
 		<span class="caret"></span>
 	</button>
-
 	<ul class="dropdown-menu">
 		<?php foreach ( $categories as $category ): ?>
 			<li><a href="javascript:" data-id="<?= $category->id; ?>" data-title="<?= $category->title; ?>" class="category"><?= $category->title; ?></a></li>
