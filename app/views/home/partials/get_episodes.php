@@ -16,7 +16,6 @@
                     <?php elseif ($user->get_episode_status($episode->id) == "Påbörjad"): ?>
                         <span class="label label-warning">Påbörjad</span>
                     <?php endif ?>
-                <p class="episode-status"><?= $user->get_episode_status($episode->id) ?></p>
                 <?php endif ?>
 
                 <div class="rater"><?= $episode->print_rater() ?></div>

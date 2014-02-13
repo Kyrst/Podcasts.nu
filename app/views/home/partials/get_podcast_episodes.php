@@ -12,9 +12,13 @@
 
 						<?= $episode->print_rater() ?>
 
-						<?php if ( $user !== NULL ): ?>
-							<p class="episode-status"><?= $user->get_episode_status($episode->id) ?></p>
-						<?php endif ?>
+                        <?php if ( $user !== NULL ): ?>
+                            <?php if ($user->get_episode_status($episode->id) == "Lyssnad"): ?>
+                                <span class="label label-success">Lyssnad</span>
+                            <?php elseif ($user->get_episode_status($episode->id) == "Påbörjad"): ?>
+                                <span class="label label-warning">Påbörjad</span>
+                            <?php endif ?>
+                        <?php endif ?>
 					</div>
 					<?php if ( $user !== NULL && $user->is_admin() ): ?>
 						<div class="btn-group" style="margin-top:8px">
