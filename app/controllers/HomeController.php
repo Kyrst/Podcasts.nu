@@ -88,6 +88,7 @@ class HomeController extends BaseController
 			$latest_user_episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
 				->join('user_podcasts', 'user_podcasts.podcast_id', '=', 'podcasts.id')
 				->where('user_podcasts.user_id', $this->user->id)
+				->where('episodes.hide', 'no')
 				->orderBy('episodes.created_at', 'DESC')
 				->take(10)
 				->select('episodes.*', 'podcasts.*', 'episodes.episode_slug', 'podcasts.podcast_slug')
@@ -191,6 +192,7 @@ class HomeController extends BaseController
 		DB::getPaginator()->setCurrentPage($page);
 
 		$episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
+			->where('episodes.hide', 'no')
 			->orderBy('episodes.created_at', 'DESC');
 
 		$num_total_episodes_count = $num_total_episodes_count = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id');
@@ -247,7 +249,7 @@ class HomeController extends BaseController
 		{
 			$podcast = Podcast::where('podcast_slug', '=', $slug)->firstOrFail();
 
-			$episodes = $podcast->episodes()->orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
+			$episodes = $podcast->episodes()->where('episodes.hide', 'no')->orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
 			$num_total_episodes = $podcast->episodes()->count();
 		}
 		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
@@ -285,7 +287,7 @@ class HomeController extends BaseController
 			{
 				$podcast = Podcast::where('podcast_slug', '=', $podcast)->firstOrFail();
 
-				$episodes = $podcast->episodes()->orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
+				$episodes = $podcast->episodes()->where('episodes.hide', 'no')->orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
 				$num_total_episodes = $podcast->episodes()->count();
 			}
 			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
@@ -297,7 +299,7 @@ class HomeController extends BaseController
 		}
 		else
 		{
-			$episodes = Episode::orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
+			$episodes = Episode::orderBy('created_at', 'DESC')->where('episodes.hide', 'no')->paginate(self::NUM_PER_PAGE);
 			$num_total_episodes = Episode::count();
 		}
 
@@ -327,7 +329,7 @@ class HomeController extends BaseController
 	{
 		try
 		{
-			$episode = Episode::where('episode_slug', '=', $episode)->firstOrFail();
+			$episode = Episode::where('episode_slug', '=', $episode)->where('hide', 'no')->firstOrFail();
 		}
 		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
 		{
@@ -488,7 +490,8 @@ class HomeController extends BaseController
 					->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
 					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
 					->select('episodes.title', 'episodes.episode_slug', 'podcasts.podcast_slug', DB::raw('podcasts.name AS podcast_name'), DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
-					->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'));
+					->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'))
+					->where('episodes.hide', 'no');
 
 				if ( $category_id )
 				{
@@ -506,7 +509,8 @@ class HomeController extends BaseController
 					->join('episodes', 'user_listens.episode_id', '=', 'episodes.id')
 					->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
 					->select('episodes.title', 'episodes.episode_slug', 'podcasts.podcast_slug', DB::raw('podcasts.name AS podcast_name'), DB::raw('COUNT(user_listens.episode_id) AS num_listens'))
-					->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 MONTH)'));
+					->where('user_listens.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 MONTH)'))
+					->where('episodes.hide', 'no');
 
 				if ( $category_id )
 				{
@@ -531,6 +535,7 @@ class HomeController extends BaseController
 				}
 
 				$most_played_total = $most_played_total
+					->where('episodes.hide', 'no')
 					->orderBy('num_listens', 'DESC')
 					->groupBy('episodes.id')
 					->take(10)
@@ -573,6 +578,7 @@ class HomeController extends BaseController
 				}
 
 				$episodes = $episodes
+					->where('episodes.hide', 'no')
 					->orderBy('avg_score', 'DESC')
 					->groupBy('episodes.id')
 					->take(10)
@@ -590,7 +596,8 @@ class HomeController extends BaseController
 				$episodes_this_week = DB::table('podcasts')
 					->join('episodes', 'podcasts.id', '=', 'episodes.podcast_id')
 					->join('episode_comments', 'episodes.id', '=', 'episode_comments.episode_id')
-					->where('episode_comments.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'));
+					->where('episode_comments.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 WEEK)'))
+					->where('episodes.hide', 'no');
 
 				if ( $category_id )
 				{
@@ -607,7 +614,8 @@ class HomeController extends BaseController
 				$episodes_this_month = DB::table('podcasts')
 					->join('episodes', 'podcasts.id', '=', 'episodes.podcast_id')
 					->join('episode_comments', 'episodes.id', '=', 'episode_comments.episode_id')
-					->where('episode_comments.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 MONTH)'));
+					->where('episode_comments.updated_at', '>', DB::raw('DATE_SUB(NOW(), INTERVAL 1 MONTH)'))
+					->where('episodes.hide', 'no');
 
 				if ( $category_id )
 				{
@@ -631,6 +639,7 @@ class HomeController extends BaseController
 				}
 
 				$episodes_total = $episodes_total->select('episodes.title', 'episodes.episode_slug', 'podcasts.podcast_slug', DB::raw('COUNT(episode_comments.id) AS num_comments'))
+					->where('episodes.hide', 'no')
 					->orderBy('num_comments', 'DESC')
 					->groupBy('episodes.id')
 					->take(10)
@@ -761,7 +770,7 @@ class HomeController extends BaseController
 		}
 
 		// Avsnitt
-		$episodes = Episode::where('title', 'LIKE', '%' . $search_term . '%')->get();
+		$episodes = Episode::where('title', 'LIKE', '%' . $search_term . '%')->where('episodes.hide', 'no')->get();
 
 		if ( $episodes->count() > 0 )
 		{

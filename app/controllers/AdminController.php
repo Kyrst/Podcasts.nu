@@ -630,4 +630,25 @@ class AdminController extends BaseController
 
 		return Redirect::route('admin/uppladdade-bilder');
 	}
+
+	public function hide_episode($episode_id)
+	{
+		try
+		{
+			$episode = Episode::where('id', '=', $episode_id)->firstOrFail();
+		}
+		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+		{
+			$this->showAlert('Kunde inte hitta avsnittet!');
+
+			return Redirect::route('admin/episodes');
+		}
+
+		$episode->hide = 'yes';
+		$episode->save();
+
+		$this->showAlert('Avsnittet dolt!');
+
+		return Redirect::route('admin/episodes');
+	}
 }

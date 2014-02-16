@@ -319,6 +319,12 @@ Route::get('/admin/episodes', array
 	'as' => 'admin/episodes'
 ));
 
+// Admin: Avsnitt: Dölj
+Route::get('/admin/hide-episode/{id?}', array
+(
+	'uses' => 'AdminController@hide_episode'
+))->where('id', '[0-9]+');
+
 // Admin: Avsnitt: Lägg till/Ändra
 Route::get('/admin/episode/{id?}', array
 (
