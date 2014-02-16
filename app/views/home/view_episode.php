@@ -4,21 +4,30 @@
 	<li><a href="<?= $episode->podcast->getLink('poddar'); ?>"><?= $episode->podcast->name; ?></a></li>
 	<li><?= $episode->title; ?></li>
 </ul>
-
+<?php if ( $episode->haveMedia() ): ?>
+    <?= $episode->printPlayButton(); ?>
+<?php endif; ?>
 <h1><?= $episode->title; ?> (<?= $episode->podcast->name ?>)</h1>
 
-<p class="created"><?= $episode->created_at; ?></p>
+<p class="pub-date">(<?=date('Y-m-d H:i:s', $episode->pub_date) ?>)</p>
 
 <div style="margin-bottom:15px">
 	<?= $episode->print_rater() ?>
 </div>
 
-<?php if ( $episode->haveMedia() ): ?>
-	<?= $episode->printPlayButton(); ?>
-<?php endif; ?>
 
 <?php if ( $user !== NULL ): ?>
-	<p class="episode-status"><?= $user->get_episode_status($episode->id) ?></p>
+    <?php $episode_status = $user->get_episode_status($episode->id) ?>
+
+    <?php if ( $episode_status === '' ): ?>
+        <a href="<?= $episode->getLink() ?>" class="label label-danger">Lyssna nu</a>
+    <?php else: ?>
+        <?php if ( $episode_status === 'Lyssnad' ): ?>
+            <span class="label label-success">Lyssnad</span>
+        <?php elseif ( $episode_status === 'Påbörjad' ): ?>
+            <span class="label label-warning">Påbörjad</span>
+        <?php endif ?>
+    <?php endif ?>
 <?php endif ?>
 
 <div class="panel panel-danger" style="margin-top:20px">
