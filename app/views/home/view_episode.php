@@ -10,7 +10,7 @@
 <p class="created"><?= $episode->created_at; ?></p>
 
 <div style="margin-bottom:15px">
-	<?= $episode->print_rater() ?> <?= $episode->get_score(1) ?>
+	<?= $episode->print_rater() ?>
 </div>
 
 <?php if ( $episode->haveMedia() ): ?>
