@@ -9,13 +9,13 @@ class ImportController extends BaseController
 {
 	public function import()
 	{
-		$this->clear_db_tables();
+		/*$this->clear_db_tables();
 		$this->import_users();
 		$this->import_categories();
 		$this->import_news();
 		$this->import_blogs();
 		$this->import_artists();
-		$this->import_songs();
+		$this->import_songs();*/
 		$this->import_song_comments();
 		$this->import_song_votes();
 
@@ -235,7 +235,7 @@ class ImportController extends BaseController
 
 	private function import_song_comments()
 	{
-		include public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'songs.php';
+		include public_path() . DIRECTORY_SEPARATOR . 'import/old' . DIRECTORY_SEPARATOR . 'songs.php';
 
 		// Comments
 		$num_total = 0;

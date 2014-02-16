@@ -37,6 +37,10 @@ class AjaxController extends BaseController
 
 		$input = Input::all();
 
+		$time = date('Y-m-d H:i:s');
+		$session_id = session_id();
+		$ip = ip2long($_SERVER['REMOTE_ADDR']);
+
 		if ( $this->user !== NULL )
 		{
 			try
@@ -44,18 +48,42 @@ class AjaxController extends BaseController
 				$user_listen = User_Listen::where('episode_id', $input['episode_id'])->where('user_id', $this->user->id)->firstOrFail();
 				$user_listen->is_listening = 'yes';
 				$user_listen->current_position = $input['position'];
+				$user_listen->ip_address = $ip;
+				$user_listen->session_id = $session_id;
 				$user_listen->save();
 			}
 			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
 			{
-				$time = date('Y-m-d H:i:s');
-
 				$user_listen = new User_Listen();
 				$user_listen->episode_id = $input['episode_id'];
 				$user_listen->user_id = $this->user->id;
 				$user_listen->is_listening = 'yes';
 				$user_listen->current_position = $input['position'];
 				$user_listen->first_time = $time;
+				$user_listen->ip_address = $ip;
+				$user_listen->session_id = $session_id;
+				$user_listen->save();
+			}
+		}
+		else
+		{
+			try
+			{
+				$user_listen = User_Listen::where('episode_id', $input['episode_id'])->where('ip_address', $ip)->where('session_id', $session_id)->firstOrFail();
+				$user_listen->is_listening = 'yes';
+				$user_listen->current_position = $input['position'];
+				$user_listen->save();
+			}
+			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+			{
+				$user_listen = new User_Listen();
+				$user_listen->episode_id = $input['episode_id'];
+				$user_listen->user_id = NULL;
+				$user_listen->is_listening = 'yes';
+				$user_listen->current_position = $input['position'];
+				$user_listen->first_time = $time;
+				$user_listen->ip_address = $ip;
+				$user_listen->session_id = $session_id;
 				$user_listen->save();
 			}
 		}
@@ -424,6 +452,28 @@ class AjaxController extends BaseController
 			try
 			{
 				$user_listen = User_Listen::where('episode_id', $input['episode_id'])->where('user_id', $this->user->id)->firstOrFail();
+				$user_listen->done = 'yes';
+				$user_listen->is_listening = 'no';
+
+				if ( isset($input['position']) )
+				{
+					$user_listen->current_position = $input['position'];
+				}
+
+				$user_listen->save();
+			}
+			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+			{
+			}
+		}
+		else
+		{
+			$session_id = session_id();
+			$ip = ip2long($_SERVER['REMOTE_ADDR']);
+
+			try
+			{
+				$user_listen = User_Listen::where('episode_id', $input['episode_id'])->where('ip_address', $ip)->where('session_id', $session_id)->firstOrFail();
 				$user_listen->done = 'yes';
 				$user_listen->is_listening = 'no';
 

@@ -151,22 +151,25 @@ class BaseController extends Controller
 
 	protected function assign($key, $value, $section = 'content')
 	{
-		$assign = function($section, $key, $value) {
-			if ( isset($this->data[$section][$key]) )
-				throw new Exception('Var "' . $key . '" already assiged.');
-
-			$this->data[$section][$key] = $value;
-		};
-
 		if ( is_array($section) )
 		{
 			$types = (array)$section;
 
 			foreach ( $types as $section )
-				$assign($section, $key, $value);
+			{
+				if ( isset($this->data[$section][$key]) )
+					throw new Exception('Var "' . $key . '" already assiged.');
+
+				$this->data[$section][$key] = $value;
+			}
 		}
 		else
-			$assign($section, $key, $value);
+		{
+			if ( isset($this->data[$section][$key]) )
+				throw new Exception('Var "' . $key . '" already assiged.');
+
+			$this->data[$section][$key] = $value;
+		}
 	}
 
 	public function addCSS($css)

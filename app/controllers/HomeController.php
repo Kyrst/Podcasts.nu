@@ -68,6 +68,7 @@ class HomeController extends BaseController
 		$listens_right_now = array();
 
 		$episode_listens_right_now = User_Listen::where('is_listening', 'yes')
+			->where('user_id', '!=', 'NULL')
 			->orderBy('created_at', 'DESC')
 			->limit(2)
 			->groupBy('user_listens.user_id')
@@ -77,7 +78,7 @@ class HomeController extends BaseController
 		{
 			$listens_right_now[] = array
 			(
-				'text' => $listen->user->getDisplayName() . ' lyssnar på <a href="' . $listen->episode->getLink() . '">' . $listen->episode->getTitle() . '</a>.'
+				'text' => $listen->user->first_time . ' lyssnar på <a href="' . $listen->episode->getLink() . '">' . $listen->episode->getTitle() . '</a>.'
 			);
 		}
 
