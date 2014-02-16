@@ -274,7 +274,7 @@ class HomeController extends BaseController
 
 		$this->assign('podcast_id', $podcast->id, 'js');
 
-		$this->display('home.view_podcast');
+		$this->display('home.view_podcast', $podcast->name );
 	}
 
 	public function view_episodes($podcast = NULL)
@@ -348,7 +348,7 @@ class HomeController extends BaseController
 
 		$this->assign('episode_id', $episode->id, array('js'));
 
-		$this->display('home.view_episode', $episode->title . ' - ' . $episode->podcast->title);
+		$this->display('home.view_episode', $episode->podcast->name . ' - ' . $episode->title );
 	}
 
 	public function login()
@@ -357,7 +357,7 @@ class HomeController extends BaseController
 
 		$this->assign('facebook_login_link', $facebook_login_link);
 
-		$this->display('home.login');
+		$this->display('home.login', 'Logga In');
 	}
 
 	public function register()
@@ -374,7 +374,7 @@ class HomeController extends BaseController
 		$this->assign('num_user_listens', $this->user->episode_listens()->where('done', 'no')->count());
 		$this->assign('user_listens', $this->user->get_episode_listens());
 
-		$this->display('home.my_page');
+		$this->display('home.my_page', 'Min Sida');
 	}
 
     public function view_blogs()
@@ -452,7 +452,7 @@ class HomeController extends BaseController
 
 		$this->assign('podtalk', $podtalk);
 
-        $this->display('home.view_poddsnack', 'poddsnack');
+        $this->display('home.view_poddsnack', 'Poddsnack');
     }
 
     public function view_toplist()
@@ -650,7 +650,7 @@ class HomeController extends BaseController
 		$this->assign('categories', Category::all());
 		$this->assign('types', $types);
 
-        $this->display('home.view_toplist', 'topplista');
+        $this->display('home.view_toplist', 'Topplista');
     }
 
 	public function set_password()
