@@ -323,5 +323,10 @@ $user_subscriptions = array(
   array('id' => '332','user_id' => '1075','artist_id' => '4'),
   array('id' => '333','user_id' => '1075','artist_id' => '6'),
   array('id' => '334','user_id' => '1075','artist_id' => '150'),
-  array('id' => '335','user_id' => '1076','artist_id' => '3')
+  array('id' => '335','user_id' => '1076','artist_id' => '3'),
+  array('id' => '336','user_id' => '1079','artist_id' => '222'),
+  array('id' => '337','user_id' => '1085','artist_id' => '14'),
+  array('id' => '338','user_id' => '1105','artist_id' => '4'),
+  array('id' => '339','user_id' => '80','artist_id' => '55'),
+  array('id' => '341','user_id' => '1109','artist_id' => '159')
 );

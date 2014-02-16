@@ -1571,5 +1571,12 @@ Men! Vi hade v&auml;ldigt kul!</p>','user_id' => '0','deleted' => 'no','added' =
 
 <p>Nu: SHADOW OF A MAN. L&aring;ten som jag inte kan sluta&nbsp;lyssna p&aring;. Enjoy.&nbsp;<a href="http://open.spotify.com/track/4S5fXkNv4UP9P63C0HVQa6">Neulore &ndash; Shadow Of A Man</a></p>
 
-<p>&nbsp;</p>','user_id' => '0','deleted' => 'no','added' => '1391463818','modified' => '1391463919')
+<p>&nbsp;</p>','user_id' => '0','deleted' => 'no','added' => '1391463818','modified' => '1391463919'),
+  array('id' => '206','blog_writer_id' => '357','title' => 'Svårt att sova.','slug' => 'svrt-att-sova','content' => '<p>Jeez. These nights allts&aring;, n&auml;r det k&auml;nns som att s&ouml;mnen &auml;r evighetsl&aring;ngt borta. Jobbigt! Imorgon &aring;ker jag iv&auml;g till KUWAIT p&aring; semester med min k&auml;ra far. Mentalt har jag f&ouml;rberett mig helt otroligt d&aring;ligt inf&ouml;r det. Menmen! 10 graders v&auml;rme v&auml;ntar. OCH SHAKE SHACK. Lovely!</p>
+
+<p>Nu ska jag bege mig in i en s&aring; fruktansv&auml;rt &auml;lskv&auml;rd bubbla, n&auml;mligen att lyssna p&aring; b&auml;sta&nbsp;V&Auml;RVET. Det &auml;r en ljuvlig bubbla att linda in sig i, vilket hum&ouml;r man &auml;n &auml;r p&aring;. Tycker s&aring; himla, himla mycket om V&Auml;RVET.</p>
+
+<p>Godnatt! Vi h&ouml;rs n&auml;r vi h&ouml;rs! Kuwait next!</p>
+
+<p><img alt="" src="/images/blog/uploads/jag.tiff" style="height:400px; width:400px" /></p>','user_id' => '0','deleted' => 'no','added' => '1391816260','modified' => '1391816363')
 );

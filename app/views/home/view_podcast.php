@@ -41,7 +41,10 @@
                 <!-- Podcast-information -->
 
 				<?php if ( strlen($podcast) > 50 ): ?>
-					<div id="description"><?= Str::limit($podcast->description, 100) ?> <a href="javascript:" id="show_more_description" class="btn btn-xs btn-primary">Visa mer</a></div>
+					<div id="description">
+						<?= Str::limit($podcast->description, 100) ?> <a href="javascript:" id="show_more_description" class="btn btn-xs btn-primary">Visa mer</a>
+					</div>
+
 					<div id="full_description" style="display:none"><?= $podcast->description ?></div>
                 <?php else: ?>
 					<?= $podcast->description ?>
