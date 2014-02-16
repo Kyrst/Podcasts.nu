@@ -14,12 +14,12 @@ class ImportController extends BaseController
 		$this->import_categories();
 		$this->import_news();
 		$this->import_blogs();
-		$this->import_artists();*/
-		//$this->import_songs();
+		$this->import_artists();
+		$this->import_songs();
 		$this->import_song_comments();
-		//$this->import_song_votes();
+		$this->import_song_votes();*/
 
-		//$this->import_song_listens(); // Laggar for mycket live
+		$this->import_song_listens(); // Laggar for mycket live
 
 		die('Done!');
 	}
@@ -287,7 +287,7 @@ class ImportController extends BaseController
 		// Listens
 		$num_total = 0;
 
-		if ( ($handle = fopen(public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'views.csv', 'r')) !== FALSE )
+		if ( ($handle = fopen(public_path() . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR . 'views_1.csv', 'r')) !== FALSE )
 		{
 			while ( ($data = fgetcsv($handle, 0, ',')) !== FALSE )
 			{
