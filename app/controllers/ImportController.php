@@ -15,11 +15,11 @@ class ImportController extends BaseController
 		$this->import_news();
 		$this->import_blogs();
 		$this->import_artists();
-		$this->import_songs();*/
+		$this->import_songs();
 		$this->import_song_comments();
-		$this->import_song_votes();
+		$this->import_song_votes();*/
 
-		//$this->import_song_listens(); Laggar for mycket live
+		$this->import_song_listens();// Laggar for mycket live
 
 		die('Done!');
 	}
