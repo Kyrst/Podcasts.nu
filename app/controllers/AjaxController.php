@@ -420,7 +420,7 @@ class AjaxController extends BaseController
 			$email = trim($input['email']);
 
 			// Check if user with username exists
-			if ( User::where('username', $username)->count() === 1 )
+			if ( User::where('username', $username)->count() == 1 )
 			{
 				$result['error'] = 'USERNAME_EXISTS';
 			}
@@ -428,7 +428,7 @@ class AjaxController extends BaseController
 			// Username ok, check e-mail
 			if ( $result['error'] === '' )
 			{
-				if ( User::where('email', $email)->count() === 1 )
+				if ( User::where('email', $email)->count() == 1 )
 				{
 					$result['error'] = 'EMAIL_EXISTS';
 				}
