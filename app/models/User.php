@@ -80,14 +80,14 @@ class User extends VerifyUser
 		);
 
 		// Hämta lyssningar
-		$user_listens = User_Listen::all();
+		$user_listens = User_Listen::where('user_id', $this->id);
 
 		if ( $num !== NULL )
 		{
 			$user_listens = $user_listens->take($num);
 		}
 
-		foreach ( $user_listens as $user_listen )
+		foreach ( $user_listens->get() as $user_listen )
 		{
 			$history[] = array
 			(

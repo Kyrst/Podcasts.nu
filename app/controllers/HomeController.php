@@ -745,6 +745,7 @@ class HomeController extends BaseController
 			}
 			catch ( Exception $e )
 			{
+				die(var_dump($e->getMessage()));
 				return Redirect::route('sign-up')->with('sign_up_error', 'Det gick inte att bli medlem just nu.');
 			}
 		}
