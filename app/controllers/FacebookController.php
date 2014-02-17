@@ -20,8 +20,6 @@ class FacebookController extends BaseController
 
 		parse_str($response, $params);
 
-		die(print_r('<pre>' . print_r($params, TRUE) . '</pre>'));
-
 		$user = json_decode(file_get_contents('https://graph.facebook.com/me?access_token=' . $params['access_token']));
 
 		die(print_r('<pre>' . print_r($user, TRUE) . '</pre>'));
