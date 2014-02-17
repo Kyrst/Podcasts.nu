@@ -28,12 +28,25 @@
 					</div>
 					<?php if ( $user !== NULL && $user->is_admin() ): ?>
 						<div class="btn-group" style="margin-top:8px">
-							<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 								Admin <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="<?= URL::to('admin/avsnitt/' . $episode->id) ?>">Ändra</a></li>
 								<li><a href="<?= URL::to('admin/avsnitt/ta-bort/' . $episode->id) ?>">Ta bort</a></li>
+							</ul>
+						</div>
+
+						<div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+								Action <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Separated link</a></li>
 							</ul>
 						</div>
 					<?php endif ?>
