@@ -32,12 +32,10 @@ class FacebookController extends BaseController
 			$new_user->email = '';
 			$new_user->first_name = $user->first_name;
 			$new_user->last_name = $user->last_name;
-			$new_user->city = $user->hometown->name;
+			$new_user->city = isset($user->hometown, $user->hometown->name) ? $user->hometown->name : '';
 			$new_user->verified = 1;
 			$new_user->facebook_id = $user->id;
 			$new_user->save();
-
-			//$this->register($user->username, '', '', $user->first_name, $user->last_name, $user->id);
 
 			Auth::login($new_user);
 		}
