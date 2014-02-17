@@ -19,9 +19,7 @@
 <?php if ( $user !== NULL ): ?>
     <?php $episode_status = $user->get_episode_status($episode->id) ?>
 
-    <?php if ( $episode_status === '' ): ?>
-        <a href="<?= $episode->getLink() ?>" class="label label-danger">Lyssna nu</a>
-    <?php else: ?>
+    <?php if ( $episode_status !== '' ): ?>
         <?php if ( $episode_status === 'Lyssnad' ): ?>
             <span class="label label-success">Lyssnad</span>
         <?php elseif ( $episode_status === 'Påbörjad' ): ?>
