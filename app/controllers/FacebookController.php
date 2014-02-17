@@ -12,10 +12,10 @@ class FacebookController extends BaseController
 
 		$code = $input['code'];
 
-		$convert = file_get_contents('https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=' . Config::get('facebook.FACEBOOK_APP_ID') . '&client_secret=' . Config::get('facebook.FACEBOOK_APP_SECRET_KEY') . '&fb_exchange_token=' . $code);
-die(print_r('<pre>' . print_r($convert, TRUE) . '</pre>'));
-		$response = file_get_contents('https://graph.facebook.com/oauth/access_token?client_id=' . Config::get('facebook.FACEBOOK_APP_ID') . '&redirect_uri=' . Config::get('facebook.FACEBOOK_REDIRECT_URL') . '&client_secret=' . Config::get('facebook.FACEBOOK_APP_SECRET_KEY') . '&code=' . $code);
+		//$convert = file_get_contents('https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=' . Config::get('facebook.FACEBOOK_APP_ID') . '&client_secret=' . Config::get('facebook.FACEBOOK_APP_SECRET_KEY') . '&fb_exchange_token=' . $code);
 
+		$response = file_get_contents('https://graph.facebook.com/oauth/access_token?client_id=' . Config::get('facebook.FACEBOOK_APP_ID') . '&redirect_uri=' . Config::get('facebook.FACEBOOK_REDIRECT_URL') . '&client_secret=' . Config::get('facebook.FACEBOOK_APP_SECRET_KEY') . '&code=' . $code);
+die(var_dump($response));
 		$params = NULL;
 
 		parse_str($response, $params);
