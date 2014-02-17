@@ -6,7 +6,7 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^ index.php [L]
 
-	RewriteRule ^poddar/co-hannah-och-amanda$ /poddar/fredagspodden-med-hannah-och-amanda [L,R=301]
-	RewriteRule ^avsnitt/co-hannah-och-amanda$ /avsnitt/fredagspodden-med-hannah-och-amanda [L,R=301]
-	RewriteRule ^avsnitt/co-hannah-och-amanda/(.*).htm$ /avsnitt/fredagspodden-med-hannah-och-amanda/$1 [L,R=301]
+	RewriteRule ^poddar/co-hannah-och-amanda$ poddar/fredagspodden-med-hannah-och-amanda [L,R=301]
+	RewriteRule ^avsnitt/co-hannah-och-amanda$ avsnitt/fredagspodden-med-hannah-och-amanda [L,R=301]
+	RewriteRule ^avsnitt/co-hannah-och-amanda/(.*).htm$ avsnitt/fredagspodden-med-hannah-och-amanda/$1 [L,R=301]
 </IfModule>
