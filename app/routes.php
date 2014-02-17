@@ -483,10 +483,10 @@ Route::post('/user-exists', array
 	'uses' => 'AjaxController@user_exists'
 ));
 
-Route::get('/facebook-login/{code}', array
+Route::get('/facebook-login', array
 (
 	'uses' => 'FacebookController@login'
-))->where('code', '.*');
+));
 
 Route::get('/sok', array
 (

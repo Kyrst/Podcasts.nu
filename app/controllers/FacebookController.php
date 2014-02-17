@@ -1,8 +1,17 @@
 <?php
 class FacebookController extends BaseController
 {
-	public function login($code)
+	public function login()
 	{
+		$input = Input::all();
+
+		if ( !isset($input['code']) )
+		{
+			return Redirect::route('home');
+		}
+
+		$code = $input['code'];
+
 		die(var_dump($code));
 
 		$response = file_get_contents('https://graph.facebook.com/oauth/access_token?client_id=' . Config::get('facebook.FACEBOOK_APP_ID') . '&redirect_uri=' . Config::get('facebook.FACEBOOK_REDIRECT_URL') . '&client_secret=' . Config::get('facebook.FACEBOOK_APP_SECRET_KEY') . '&code=' . $code);
