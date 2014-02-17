@@ -486,7 +486,7 @@ Route::post('/user-exists', array
 Route::get('/facebook-login/{code}', array
 (
 	'uses' => 'FacebookController@login'
-))->where('code', '(.*?)');
+))->where('code', '.*');
 
 Route::get('/sok', array
 (
