@@ -19,8 +19,7 @@
 			<h3 class="panel-title"><a href="<?= $blog_item->getLink() ?>"><?= $blog_item->title ?></a></h3>
 		</div>
 		<div class="panel-body">
-			<div id="comments_container">
-			</div>
+			<span><?= date('Y-m-d H:i', $blog_item->created_at) ?></span>
 
 			<p><?= nl2br($blog_item->body) ?></p>
 		</div>
