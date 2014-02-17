@@ -93,7 +93,7 @@ Route::get('/avsnitt/{podcast}/{episode}', array
 ))->where(array('podcast' => '[a-z0-9\-]+', 'episode' => '[a-z0-9\-]+'));
 
 //Topplista
-Route::get('/topplista', array
+Route::get('/topplistan', array
 (
    'uses' => 'HomeController@view_toplist',
    'as' => 'topplista'
