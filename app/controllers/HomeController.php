@@ -15,7 +15,7 @@ class HomeController extends BaseController
 			$latest_comments[] = array
 			(
 				'avatar' => $user->get_avatar_image('index_kommentar'),
-				'comment' => $user->first_name . ' kommenterade <a href="' . $episode->getLink() . '">' . $episode->getTitle() . '</a>.'
+				'comment' => ucfirst($user->first_name) . ' kommenterade <a href="' . $episode->getLink() . '">' . $episode->getTitle() . '</a>.'
 			);
 		};
 
@@ -78,7 +78,7 @@ class HomeController extends BaseController
 		{
 			$listens_right_now[] = array
 			(
-				'text' => $listen->user->first_name . ' lyssnar på <a href="' . $listen->episode->getLink() . '">' . $listen->episode->getTitle() . '</a>.'
+				'text' => ucfirst($listen->user->first_name) . ' lyssnar på <a href="' . $listen->episode->getLink() . '">' . $listen->episode->getTitle() . '</a>.'
 			);
 		}
 
