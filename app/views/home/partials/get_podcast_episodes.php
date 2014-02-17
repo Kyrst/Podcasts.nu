@@ -6,7 +6,7 @@
 				<?php if ( $episode->podcast !== NULL ): ?>
 
 					<div class="media-body">
-						<h3 class="episode-head"><?php endif ?><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a></h3>
+						<h3 class="episode-head"><a href="<?= $episode->getLink('avsnitt'); ?>"><?= $episode->title; ?></a></h3>
 						<p class="pub-date">(<?=date('Y-m-d H:i:s', $episode->pub_date) ?>)</p>
 						<div class="clear"></div>
 
@@ -26,30 +26,15 @@
 							<?php endif ?>
 						<?php endif ?>
 					</div>
-					<?php if ( $user !== NULL && $user->is_admin() ): ?>
-						<div class="btn-group" style="margin-top:8px">
-							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-								Admin <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="<?= URL::to('admin/avsnitt/' . $episode->id) ?>">Ändra</a></li>
-								<li><a href="<?= URL::to('admin/avsnitt/ta-bort/' . $episode->id) ?>">Ta bort</a></li>
-							</ul>
-						</div>
 
+					<?php if ( $user !== NULL && $user->is_admin() ): ?>
 						<div class="btn-group">
-							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-								Action <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Action</a></li>
-								<li><a href="#">Another action</a></li>
-								<li><a href="#">Something else here</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Separated link</a></li>
-							</ul>
+							<a href="<?= URL::to('admin/episode/' . $episode->id) ?>" class="btn btn-xs btn-default">Ändra</a>
+							<a href="<?= URL::to('admin/hide-episode/' . $episode->id) ?>" class="btn btn-xs btn-default">Dölj</a>
 						</div>
 					<?php endif ?>
+
+				<?php endif ?>
 			</div>
 
 		<?php endforeach; ?>

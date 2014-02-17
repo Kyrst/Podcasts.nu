@@ -649,6 +649,6 @@ class AdminController extends BaseController
 
 		$this->showAlert('Avsnittet dolt!');
 
-		return Redirect::route('admin/episodes');
+		return Redirect::back();
 	}
 }
