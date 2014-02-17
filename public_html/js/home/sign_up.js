@@ -16,7 +16,7 @@ $(function()
 		{
 			error = 'Ett eller flera obligatoriska fält är tomma.';
 		}
-		else if ( !validate_email(email) )// Check email
+		else if ( !validate_email(email) ) // Check email
 		{
 			error = 'Ange en giltig e-mailadress.';
 		}
@@ -40,7 +40,7 @@ $(function()
 			{
 				if ( result.error === 'USERNAME_EXISTS' )
 				{
-					error = 'Det finns redan en användare med det användarnamnet';
+					error = 'Det finns redan en användare med det användarnamnet.';
 				}
 				else if ( result.error === 'EMAIL_EXISTS' )
 				{
