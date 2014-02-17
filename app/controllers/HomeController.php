@@ -90,7 +90,7 @@ class HomeController extends BaseController
 				->join('user_podcasts', 'user_podcasts.podcast_id', '=', 'podcasts.id')
 				->where('user_podcasts.user_id', $this->user->id)
 				->where('episodes.hide', 'no')
-				->orderBy('episodes.created_at', 'DESC')
+				->orderBy('episodes.pub_date', 'DESC')
 				->take(10)
 				->select('episodes.*', 'podcasts.*', 'episodes.episode_slug', 'podcasts.podcast_slug')
 				->get();
@@ -194,7 +194,7 @@ class HomeController extends BaseController
 
 		$episodes = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id')
 			->where('episodes.hide', 'no')
-			->orderBy('episodes.created_at', 'DESC');
+			->orderBy('episodes.pub_date', 'DESC');
 
 		$num_total_episodes_count = $num_total_episodes_count = Episode::join('podcasts', 'podcasts.id', '=', 'episodes.podcast_id');
 
@@ -250,7 +250,7 @@ class HomeController extends BaseController
 		{
 			$podcast = Podcast::where('podcast_slug', '=', $slug)->firstOrFail();
 
-			$episodes = $podcast->episodes()->where('episodes.hide', 'no')->orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
+			$episodes = $podcast->episodes()->where('episodes.hide', 'no')->orderBy('pub_date', 'DESC')->paginate(self::NUM_PER_PAGE);
 			$num_total_episodes = $podcast->episodes()->count();
 		}
 		catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
@@ -288,7 +288,7 @@ class HomeController extends BaseController
 			{
 				$podcast = Podcast::where('podcast_slug', '=', $podcast)->firstOrFail();
 
-				$episodes = $podcast->episodes()->where('episodes.hide', 'no')->orderBy('created_at', 'DESC')->paginate(self::NUM_PER_PAGE);
+				$episodes = $podcast->episodes()->where('episodes.hide', 'no')->orderBy('pub_date', 'DESC')->paginate(self::NUM_PER_PAGE);
 				$num_total_episodes = $podcast->episodes()->count();
 			}
 			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
@@ -300,7 +300,7 @@ class HomeController extends BaseController
 		}
 		else
 		{
-			$episodes = Episode::orderBy('created_at', 'DESC')->where('episodes.hide', 'no')->paginate(self::NUM_PER_PAGE);
+			$episodes = Episode::orderBy('pub_date', 'DESC')->where('episodes.hide', 'no')->paginate(self::NUM_PER_PAGE);
 			$num_total_episodes = Episode::count();
 		}
 
