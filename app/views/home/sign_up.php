@@ -6,7 +6,7 @@
 	</p>
 <?php endif; ?>
 
-<form action="<?php echo URL::route('sign-up'); ?>" method="post" class="form-horizontal" role="form" id="sign_up_form">
+<form action="<?php echo URL::route('sign-up'); ?>" method="post" class="form-horizontal" role="form" id="sign_up_form" novalidate>
 	<!-- Användarnamn -->
 	<div class="form-group">
 		<label for="username" class="col-lg-2 control-label">Användarnamn <em>*</em></label>

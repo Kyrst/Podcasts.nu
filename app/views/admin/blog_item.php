@@ -48,6 +48,10 @@
 	</div>
 
 	<div class="form-group">
+		<label for=""></label>
+	</div>
+
+	<div class="form-group">
 		<div class="col-lg-offset-2 col-lg-10">
 			<button type="submit" name="save" class="btn btn-primary"><?= $edit_mode ? 'Spara' : 'Lägg till'; ?></button>
 		</div>
