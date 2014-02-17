@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<?php foreach ( $blog->items as $blog_item ): ?>
+<?php foreach ( $blog->items->orderBy('created_at', 'DESC')->get() as $blog_item ): ?>
 	<div class="panel panel-danger" style="margin-top:20px">
 		<div class="panel-heading">
 			<h3 class="panel-title"><a href="<?= $blog_item->getLink() ?>"><?= $blog_item->title ?></a></h3>
