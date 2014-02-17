@@ -23,7 +23,6 @@ class FacebookController extends BaseController
 		$user = json_decode(file_get_contents('https://graph.facebook.com/me?access_token=' . $params['access_token']));
 
 		// Add user if not exists
-
 		if ( !$this->user_with_facebook_id_exists($user->id) )
 		{
 			$new_user = new User();
@@ -52,7 +51,6 @@ class FacebookController extends BaseController
 
 	private function user_with_facebook_id_exists($facebook_id)
 	{
-		die(var_dump(User::where('facebook_id', $facebook_id)->count()));
-		return (User::where('facebook_id', $facebook_id)->count() === 1);
+		return (User::where('facebook_id', $facebook_id)->count() === '1');
 	}
 }
