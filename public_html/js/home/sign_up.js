@@ -1,5 +1,21 @@
 $(function()
 {
+	$('#birthdate').datepicker(
+	{
+		viewMode: 'years',
+		weekStart: 1,
+		format: 'yyyy-mm-dd'
+	})
+	.on('changeDate', function(e)
+	{
+		if ( e.viewMode === 'days' )
+		{
+			$(this).datepicker('hide');
+
+			$('#password').focus();
+		}
+	});
+
 	$('#sign_up_form').on('submit', function()
 	{
 		var username = $('#username').val(),

@@ -751,6 +751,8 @@ class HomeController extends BaseController
 
 		$this->assign('sign_up_error', Session::get('sign_up_error'));
 
+		$this->loadLib('datepicker');
+
 		$this->display('home.sign_up', 'Bli medlem');
 	}
 

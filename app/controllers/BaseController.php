@@ -59,6 +59,11 @@ class BaseController extends Controller
 		(
 			'css' => 'libs/jgrowl/jquery.jgrowl.css',
 			'js' => 'libs/jgrowl/jquery.jgrowl.min.js'
+		),
+		'datepicker' => array
+		(
+			'css' => 'libs/datepicker/css/datepicker.css',
+			'js' => 'libs/datepicker/js/bootstrap-datepicker.js'
 		)
 	);
 
