@@ -9,7 +9,7 @@
 		<a href="<?= URL::route('installningar') ?>" class="btn btn-primary btn-xs" style="margin-top:4px">Inställningar</a>
 	</div>
 
-	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+	<div class="my_page col-lg-10 col-md-10 col-sm-10 col-xs-12">
 		<!-- Historik -->
 		<h2>Historik</h2>
 
