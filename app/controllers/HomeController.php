@@ -20,7 +20,7 @@ class HomeController extends BaseController
 		};
 
 		$latest_episode_comments = Episode_Comment::orderBy('created_at', 'DESC')
-			->limit(2)
+			->limit(5)
 			->get();
 
 		foreach ( $latest_episode_comments as $comment )
@@ -70,7 +70,7 @@ class HomeController extends BaseController
 		$episode_listens_right_now = User_Listen::where('is_listening', 'yes')
 			->where('user_id', '!=', 'NULL')
 			->orderBy('created_at', 'DESC')
-			->limit(2)
+			->limit(5)
 			->groupBy('user_listens.user_id')
 			->get();
 
