@@ -3,7 +3,7 @@
         <h1>Välkommen tillbaka</h1>
         <p>Nya sidan innehåller en del förbättringar med spelaren</p>
         <p>Läs gärna vidare kring våra ny funktioner.</p>
-        <p><a href="/sign-up" class="btn btn-primary btn-lg" role="button">Läs mer</a></p>
+        <p><a href="/info" class="btn btn-primary btn-lg" role="button">Läs mer</a></p>
         <img class="front-logo" src="<?= asset('images/logga1_red.png') ?>">
 
     </div>
@@ -12,7 +12,7 @@
         <h1>Podcasts.Nu</h1>
         <p>Svenska podcasts. Lyssna direkt i din dator, surfplatta eller mobil.</p>
         <p>Häng med och upplev fördelarna som medlem, självklart är det gratis!</p>
-        <p><a class="btn btn-primary btn-sm" role="button">Bli medlem</a></p>
+        <p><a href="/sign-up" class="btn btn-primary btn-sm" role="button">Bli medlem</a></p>
         <img class="front-logo" src="<?= asset('images/logga1_red.png') ?>">
     </div>
 <?php endif ?>
