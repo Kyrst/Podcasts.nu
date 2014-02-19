@@ -1,4 +1,10 @@
 <?php
+// Gamla
+Route::get('/avsnitt/{podcast}/{episode}.htm', function($podcast, $episode)
+{
+	return Redirect::to('/avsnitt/' . $podcast . '/' . $episode, 301);
+})->where(array('podcast', '[a-z0-9_\-]+'), array('episode', '[a-z0-9_\-]+'));
+
 // Index
 Route::get('/', array
 (
