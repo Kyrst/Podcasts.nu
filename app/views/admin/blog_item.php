@@ -12,7 +12,7 @@
 
 <h1><?= $edit_mode ? 'Ändra' : 'Lägg till'; ?></h1>
 
-<form class="form-horizontal" method="post" enctype="multipart/form-data" role="form">
+<form method="post" enctype="multipart/form-data" role="form" class="form-horizontal">
 	<?php if ( $edit_mode ): ?>
 		<input type="hidden" name="blog_item_id" value="<?= $blog_item_to_edit->id; ?>">
 	<?php endif; ?>
@@ -48,7 +48,14 @@
 	</div>
 
 	<div class="form-group">
-		<label for=""></label>
+		<div class="col-sm-offset-2 col-lg-10">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="important" id="important" value="1"<?php if (!$edit_mode || $blog_item_to_edit->important === 'yes'): ?> checked<?php endif ?>>
+					Visa på förstasidan
+				</label>
+			</div>
+		</div>
 	</div>
 
 	<div class="form-group">

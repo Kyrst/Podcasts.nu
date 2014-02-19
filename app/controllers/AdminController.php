@@ -30,6 +30,7 @@ class AdminController extends BaseController
 					$blog_item_to_edit->title = trim($input['title']);
 					$blog_item_to_edit->slug = Str::slug(trim($input['slug']));
 					$blog_item_to_edit->body = trim($input['body']);
+					$blog_item_to_edit->important = isset($input['important']) ? 'yes' : 'no';
 					$blog_item_to_edit->save();
 
 					$this->showAlert('Blogginlägget sparad!');
@@ -45,6 +46,7 @@ class AdminController extends BaseController
 				$blog_item->title = trim($input['title']);
 				$blog_item->slug = Str::slug(trim($input['slug']));
 				$blog_item->body = trim($input['body']);
+				$blog_item->important = isset($input['important']) ? 'yes' : 'no';
 				$blog_item->save();
 
 				$this->showAlert('Blogginlägget tillagt!');
