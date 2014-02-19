@@ -141,6 +141,12 @@ class BaseController extends Controller
 				$this->assign('playing_cookie_object', json_decode($_COOKIE['playing'], TRUE), array('js', 'layout'));
 			}
 
+			// Player open?
+			if ( isset($_COOKIE['player_open']) )
+			{
+				$this->assign('player_open', $_COOKIE['player_open'] === '"yes"' ? true : false, array('js', 'layout'));
+			}
+
 			// Load jQuery
 			$this->assign('jquery_script', View::make('partials/layouts/jquery_script'), array('layout'));
 

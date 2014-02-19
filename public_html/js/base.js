@@ -33,6 +33,8 @@ window.onbeforeunload = function()
 {
 	var is_playing = false;
 
+	$.cookie('player_open', is_player_open() ? 'yes' : 'no', { path: '/', domain: document.domain });
+
 	if ( $player.data().jPlayer.status.src !== '' )
 	{
 		var player_data = $player.data();
@@ -154,7 +156,10 @@ function init_player()
 
 				$('#player_title').html('<a href="' + current_episode_link + '">' + current_title + '</a>');
 
-				show_player();
+				if ( !player_open || player_open === '1' )
+				{
+					show_player();
+				}
 
 				if ( playing_cookie_object.is_playing )
 				{

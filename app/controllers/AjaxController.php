@@ -35,6 +35,8 @@ class AjaxController extends BaseController
 			'error' => ''
 		);
 
+		error_log('saving pos...');
+
 		$input = Input::all();
 
 		$time = date('Y-m-d H:i:s');
