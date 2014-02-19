@@ -5,12 +5,12 @@ Route::get('/avsnitt/{podcast}/{episode}.htm', function($podcast, $episode)
 	return Redirect::to('/avsnitt/' . $podcast . '/' . $episode, 301);
 })->where(array('podcast', '[a-z0-9_\-]+'), array('episode', '[a-z0-9_\-]+'));
 
-Route::get('/poddar/co-hannah-och-amanda/', function()
+Route::get('/poddar/co-hannah-och-amanda', function()
 {
 	return Redirect::to('/poddar/fredagspodden-med-hannah-och-amanda', 301);
 });
 
-Route::get('/avsnitt/co-hannah-och-amanda/', function()
+Route::get('/avsnitt/co-hannah-och-amanda', function()
 {
 	return Redirect::to('/avsnitt/fredagspodden-med-hannah-och-amanda', 301);
 });
