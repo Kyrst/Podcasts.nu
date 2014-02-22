@@ -12,7 +12,7 @@
     <p class="info-short"><a>jens@podcasts.nu</a></p>
 </div>
 
-<div id="info">
+<div id="om">
     <h2>Om</h2>
 <p>Podcasts.nu! Vi finns till för att göra det enklare för dig att lyssna på dina nuvarande favorit-podcasts men också
     underlätta för dig att hitta nya intressanta podcasts. Vi samlar olika Svenska podcasts, både stora och de lite mindre
