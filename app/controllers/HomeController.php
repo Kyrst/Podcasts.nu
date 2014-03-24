@@ -142,7 +142,7 @@ class HomeController extends BaseController
 	public function view_podcasts()
 	{
 		$podcasts = Podcast::all()
-			->take(100);
+			->take(250);
 
 		/*header('Content-Type: image/jpeg');
 		$image = Image::make($artists[0]->getImage('standard', true))->resize(800, 200);
