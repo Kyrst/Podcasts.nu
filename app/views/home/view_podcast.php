@@ -8,14 +8,15 @@
     <div class="container">
         <!--IF Panorama-bild-->
     </div>
-    <div style="margin-bottom:10px">
-        <?= $podcast->get_subscription_link('Prenumerera', 'Prenumererar', $user, 'btn btn-default btn-sm') ?>
-    </div>
+
     <h1 class="podcast-head"><?= $podcast->name; ?></h1>
 
     <?php if ( $podcast->category ): ?>
     	<p class="podcast-category"><?= $podcast->category->title ?></p>
     <?php endif ?>
+    <div style="margin-bottom:10px">
+        <?= $podcast->get_subscription_link('Prenumerera', 'Prenumererar', $user, 'btn btn-default btn-sm') ?>
+    </div>
 
     <div class="row">
         <div class="container col-lg-3 col-md-3 col-sm-5 col-xs-12">
