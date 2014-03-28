@@ -67,7 +67,7 @@ class HomeController extends BaseController
 		// Lyssnas just nu
 		$listens_right_now = array();
 
-		$episode_listens_right_now = DB::select('SELECT users.first_name, e.id AS episode_id, e.episode_slug, e.title AS episode_title, p.podcast_slug FROM (SELECT * FROM user_listens ORDER BY updated_at DESC) as my_table_tmp INNER JOIN users ON my_table_tmp.user_id = users.id INNER JOIN episodes e ON my_table_tmp.episode_id = e.id INNER JOIN podcasts p ON e.podcast_id = p.id WHERE my_table_tmp.is_listening = "yes" GROUP BY my_table_tmp.user_id HAVING user_id IS NOT NULL ORDER BY my_table_tmp.updated_at DESC');
+		$episode_listens_right_now = DB::select('SELECT users.first_name, e.id AS episode_id, e.episode_slug, e.title AS episode_title, p.podcast_slug FROM (SELECT * FROM user_listens ORDER BY updated_at DESC) as my_table_tmp INNER JOIN users ON my_table_tmp.user_id = users.id INNER JOIN episodes e ON my_table_tmp.episode_id = e.id INNER JOIN podcasts p ON e.podcast_id = p.id WHERE my_table_tmp.is_listening = "yes" GROUP BY my_table_tmp.user_id HAVING user_id IS NOT NULL ORDER BY my_table_tmp.updated_at DESC LIMIT 5');
 
 		foreach ( $episode_listens_right_now as $listen )
 		{
