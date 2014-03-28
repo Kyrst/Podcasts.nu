@@ -87,7 +87,7 @@ class User extends VerifyUser
 			$user_listens = $user_listens->take($num);
 		}
 
-		foreach ( $user_listens->get() as $user_listen )
+		foreach ( $user_listens->orderBy('created_at', 'DESC')->get() as $user_listen )
 		{
 			$history[] = array
 			(
