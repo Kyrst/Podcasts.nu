@@ -71,7 +71,7 @@ class ScriptController extends Controller
 				$episode->description = preg_replace('/<(\s*)img[^<>]*>/i', '', $this->fix_imported_str($item->get_description()));
 				$episode->media_link = $media_link;
 				$episode->pub_date = $date->getTimestamp();
-                echo ('hej');
+                echo $podcast_id;
 				$episode->save();
 			}
 		}
