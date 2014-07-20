@@ -8,7 +8,7 @@ class ScriptController extends Controller
 		return html_entity_decode($str, ENT_COMPAT, 'UTF-8');
 	}
 
-	public function download_podcasts($podcast_id = 272)
+	public function download_podcasts($podcast_id = NULL)
 	{
 		$podcasts = array();
 
@@ -71,7 +71,7 @@ class ScriptController extends Controller
 				$episode->description = preg_replace('/<(\s*)img[^<>]*>/i', '', $this->fix_imported_str($item->get_description()));
 				$episode->media_link = $media_link;
 				$episode->pub_date = $date->getTimestamp();
-                echo $podcast_id;
+
 				$episode->save();
 			}
 		}
