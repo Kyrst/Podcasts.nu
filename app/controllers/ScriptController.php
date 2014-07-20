@@ -8,7 +8,7 @@ class ScriptController extends Controller
 		return html_entity_decode($str, ENT_COMPAT, 'UTF-8');
 	}
 
-	public function download_podcasts($podcast_id = NULL)
+	public function download_podcasts($podcast_id = 272)
 	{
 		$podcasts = array();
 
