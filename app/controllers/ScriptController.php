@@ -11,7 +11,7 @@ class ScriptController extends Controller
 	public function download_podcasts($podcast_id = NULL)
 	{
 		$podcasts = array();
-
+        ini_set('memory_limit','256M');
 		if ( $podcast_id !== NULL )
 		{
 			try
