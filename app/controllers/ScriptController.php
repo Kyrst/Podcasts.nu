@@ -8,33 +8,22 @@ class ScriptController extends Controller
 		return html_entity_decode($str, ENT_COMPAT, 'UTF-8');
 	}
 
-	public function download_podcasts($podcast_id = NULL)
+	// /scripts/download-podcasts/1/100
+	// /scripts/download-podcasts/101/200
+	public function download_podcasts($from, $to)
 	{
-		$podcasts = array();
-        ini_set('memory_limit','256M');
-		if ( $podcast_id !== NULL )
-		{
-			try
-			{
-				$podcast = Podcast::find($podcast_id)->firstOrFail();
+		ini_set('memory_limit','256M');
 
-				$podcasts[] = $podcast;
-			}
-			catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
-			{
-				die('Kunde inte hitta podcasten med ID "' . $podcast_id . '".');
-			}
-		}
-		else
-		{
-			$podcasts = Podcast::all();
-		}
+		$from = $from - 1;
+		$take = $to - $from;
+
+		$podcasts = Podcast::skip($from)->take($take);
 
 		$simple_pie = new SimplePie();
 		$simple_pie->set_cache_location(storage_path() . DIRECTORY_SEPARATOR . 'cache');
 		$simple_pie->set_cache_duration(100);
 
-		foreach ( $podcasts as $podcast )
+		foreach ( $podcasts->get() as $podcast )
 		{
 			//error_log('Laddar podcast "' . $podcast->name . '"...');
 
@@ -74,7 +63,8 @@ class ScriptController extends Controller
 
 				$episode->save();
 			}
-            echo $podcast_id;
+
+            //echo $podcast_id;
 		}
 	}
 }

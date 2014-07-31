@@ -467,11 +467,17 @@ Event::listen('illuminate.query', function($query)
 	}
 });
 
-Route::get('/scripts/download-podcasts/{podcast_id?}', array
+/*Route::get('/scripts/download-podcasts/{podcast_id?}', array
 (
 	'uses' => 'ScriptController@download_podcasts',
 	'as' => 'scripts/download-podcasts'
-))->where('podcast_id', '\d+');
+))->where('podcast_id', '\d+');*/
+
+Route::get('/scripts/download-podcasts/{from}/{to}', array
+(
+	'uses' => 'ScriptController@download_podcasts',
+	'as' => 'scripts/download-podcasts'
+))->where(array('from' => '\d+', 'to' => '\d+'));
 
 Route::get('/set-password', array
 (
