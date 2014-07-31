@@ -64,7 +64,7 @@ class ScriptController extends Controller
 				$episode->save();
 			}
 
-            //echo $podcast_id;
+            echo 'Klar!';
 		}
 	}
 }
