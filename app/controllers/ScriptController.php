@@ -63,8 +63,8 @@ class ScriptController extends Controller
 
 				$episode->save();
 			}
-
-            echo 'Klar!';
 		}
+
+		echo 'Klar!';
 	}
 }
