@@ -551,3 +551,30 @@ Route::get('/info', array
 	'uses' => 'HomeController@info',
 	'as' => 'info'
 ));
+
+/*if ( in_array($_SERVER['REMOTE_ADDR'], array('108.84.185.175', '80.216.232.74')) )
+{
+	Event::listen('illuminate.query', function ($query, $bindings, $time, $name)
+	{
+		$data = compact('bindings', 'time', 'name');
+
+		foreach ($bindings as $i => $binding)
+		{
+			if ($binding instanceof \DateTime)
+			{
+				$bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
+			} else if (is_string($binding))
+			{
+				$bindings[$i] = '\'' . $binding . '\'';
+			}
+		}
+
+		// Insert bindings into query
+		$query = str_replace(array('%', '?'), array('%%', '%s'), $query);
+		$query = vsprintf($query, $bindings);
+
+		$separator = '-------------------------------------------------------------------------------------------------------------------------------------------------';
+
+		echo(PHP_EOL . $separator . PHP_EOL . $query . PHP_EOL . 'Time: ' . $data['time'] . '<hr>');
+	});
+}*/

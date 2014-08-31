@@ -11,7 +11,7 @@
                 <div class="clear"></div>
 
                 <?php if ( $user !== NULL ): ?>
-                	<?php $episode_status = $user->get_episode_status($episode->id) ?>
+                	<?php $episode_status = $user->get_episode_status($episode->episode_id) ?>
 
                 	<?php if ( $episode_status === '' ): ?>
                 		<a href="<?= $episode->getLink() ?>" class="label label-danger">Lyssna nu</a>

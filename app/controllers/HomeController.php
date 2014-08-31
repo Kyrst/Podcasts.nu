@@ -87,7 +87,7 @@ class HomeController extends BaseController
 				->where('episodes.hide', 'no')
 				->orderBy('episodes.pub_date', 'DESC')
 				->take(10)
-				->select('episodes.*', 'podcasts.*', 'episodes.episode_slug', 'podcasts.podcast_slug')
+				->select('episodes.*', 'podcasts.*', 'episodes.episode_slug', 'podcasts.podcast_slug', 'episodes.id AS episode_id')
 				->get();
 
 			$latest_user_episodes_view = View::make('home/partials/get_episodes');
