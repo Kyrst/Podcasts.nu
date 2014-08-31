@@ -5,8 +5,8 @@
 	"require": {
 		"laravel/framework": "4.0.*",
 		"toddish/verify": "2.1.*",
-		"intervention/image": "dev-master",
-		"simplepie/simplepie": "dev-master"
+		"simplepie/simplepie": "dev-master",
+		"barryvdh/laravel-debugbar": "1.*"
 	},
 	"autoload": {
 		"classmap": [

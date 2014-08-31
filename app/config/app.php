@@ -114,7 +114,9 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
-		'Toddish\Verify\VerifyServiceProvider'
+		'Toddish\Verify\VerifyServiceProvider',
+
+		'Barryvdh\Debugbar\ServiceProvider'
 	),
 
 	/*
@@ -180,6 +182,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 
+		'Debugbar' => 'Barryvdh\Debugbar\Facade'
 	),
 
 );
