@@ -5,7 +5,6 @@
         <p>Läs gärna vidare kring våra ny funktioner.</p>
         <p><a href="/info" class="btn btn-primary btn-lg" role="button">Läs mer</a></p>
         <img class="front-logo" src="<?= asset('images/logga1_red.png') ?>">
-
     </div>
 <?php else: ?>
     <div class="jumbotron">
