@@ -49,7 +49,7 @@ class BaseController extends Controller
 		'jplayer' => array
 		(
 			'css' => 'css/player.css',
-			'js' => 'libs/jplayer/jquery.jplayer.min.js'
+			'js' => 'libs/jplayer/jquery.jplayer/jquery.jplayer.js'
 		),
 		'raty' => array
 		(

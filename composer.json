@@ -4,7 +4,7 @@
 	"keywords": ["framework", "laravel"],
 	"require": {
 		"laravel/framework": "4.0.*",
-		"toddish/verify": "2.1.*",
+		"toddish/verify": "2.*",
 		"simplepie/simplepie": "dev-master",
 		"barryvdh/laravel-debugbar": "1.*"
 	},
@@ -23,7 +23,7 @@
 			"php artisan optimize"
 		],
 		"pre-update-cmd": [
-			"php artisan clear-compiled"
+		  "php artisan clear-compiled"
 		],
 		"post-update-cmd": [
 			"php artisan optimize"

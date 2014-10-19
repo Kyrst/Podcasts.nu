@@ -116,7 +116,7 @@ return array(
 
 		'Toddish\Verify\VerifyServiceProvider',
 
-		'Barryvdh\Debugbar\ServiceProvider'
+		//'Barryvdh\Debugbar\ServiceProvider'
 	),
 
 	/*
@@ -182,7 +182,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 
-		'Debugbar' => 'Barryvdh\Debugbar\Facade'
+		//'Debugbar' => 'Barryvdh\Debugbar\Facade'
 	),
 
 );
