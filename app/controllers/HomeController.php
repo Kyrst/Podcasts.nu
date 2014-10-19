@@ -728,6 +728,8 @@ class HomeController extends BaseController
 				$user->verified = 1;
 				$user->save();
 
+				$user->roles()->sync(array(2));
+
 				Auth::attempt
 				(
 					array
