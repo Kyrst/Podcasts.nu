@@ -13,6 +13,7 @@
     <?php if ( $user !== NULL ): ?>
         <h1>HEJSAN</h1>
     <?php endif ?>
+
     <?php if ( $podcast->category ): ?>
     	<p class="podcast-category"><?= $podcast->category->title ?></p>
     <?php endif ?>
