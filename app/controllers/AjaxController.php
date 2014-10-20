@@ -493,4 +493,13 @@ class AjaxController extends BaseController
 
 		return Response::json($result);
 	}
+    public function save_banner_view(){
+
+            $banner_view = new Banner_view();
+            $banner_view->url = $input['url'];
+            $banner_view->date = $time;
+            $banner_view->save();
+
+
+    }
 }

@@ -379,6 +379,12 @@ Route::post('/admin/user/{id?}', array
 	'uses' => 'AdminController@user'
 ))->where('id', '[0-9]+');
 
+//AJAX: Save Banner View
+Route::post('/save_banner_view', array
+(
+    'uses' => 'AjaxController@save_banner_view'
+));
+
 // AJAX: Save episode listen
 Route::post('/save-listen', array
 (
