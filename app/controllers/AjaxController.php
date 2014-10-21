@@ -504,16 +504,23 @@ class AjaxController extends BaseController
 
         try
         {
+            $banner_view = Banner_View::where('date', '$time');
             $input = Input::all();
             $time = date('Y-m-d H:i:s');
             $banner_view = new Banner_View();
             $banner_view->url = $input['url'];
             $banner_view->date = $time;
             $banner_view->save();
-
         }
+
         catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
         {
+            $input = Input::all();
+            $time = date('Y-m-d H:i:s');
+            $banner_view = new Banner_View();
+            $banner_view->url = $input['url'];
+            $banner_view->date = $time;
+            $banner_view->save();
             die($e->getMessage());
         }
     }
