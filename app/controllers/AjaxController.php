@@ -495,6 +495,8 @@ class AjaxController extends BaseController
 	}
     public function save_banner_view(){
 
+            $input = Input::all();
+            $time = date('Y-m-d H:i:s');
             $banner_view = new Banner_view();
             $banner_view->url = $input['url'];
             $banner_view->date = $time;
