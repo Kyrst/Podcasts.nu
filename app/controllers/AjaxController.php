@@ -506,7 +506,7 @@ class AjaxController extends BaseController
         {
             $input = Input::all();
             $time = date('Y-m-d H:i:s');
-            $banner_view = new Banner_view();
+            $banner_view = new Banner_View();
             $banner_view->url = $input['url'];
             $banner_view->date = $time;
             $banner_view->save();
