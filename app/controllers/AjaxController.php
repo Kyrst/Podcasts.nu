@@ -501,6 +501,7 @@ class AjaxController extends BaseController
         );
 
         $input = Input::all();
+        $ip = ip2long($_SERVER['REMOTE_ADDR']);
 
         try
         {
@@ -509,7 +510,7 @@ class AjaxController extends BaseController
             $banner_view = new Banner_View();
             $banner_view->url = $input['url'];
             $banner_view->date = $time;
-            $banner_view->ip = $input['ip'];
+            $banner_view->ip = $ip;
             $banner_view->save();
 
         }
