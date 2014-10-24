@@ -7,9 +7,9 @@
 <p><?= $salary ?> kr</p>
 
 <h4>Antal klick: </h4>
-<?= $banner_clicks ?>
+<p></p><?= $banner_clicks ?></p>
 <h4>Antal visningar:</h4>
-<?= $banner_views ?>
+<p></p><?= $banner_views ?></p>
 
 
 <div class="clear"></div>
