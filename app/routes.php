@@ -384,6 +384,11 @@ Route::post('/save_banner_view', array
 (
     'uses' => 'AjaxController@save_banner_view'
 ));
+//SHOW banner stats
+Route::get('/stats', array
+(
+    'uses' => 'HomeController@stats'
+));
 
 // AJAX: Save episode listen
 Route::post('/save-listen', array

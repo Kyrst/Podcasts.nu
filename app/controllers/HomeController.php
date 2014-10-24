@@ -375,6 +375,14 @@ class HomeController extends BaseController
 		$this->display('home.my_page', 'Min Sida');
 	}
 
+    public function stats()
+    {
+        $count = DB::table('banner_views')->count();
+
+        $this->assign('banner_views', $count);
+        $this->display('home.stats', 'Statistik');
+    }
+
     public function view_blogs()
     {
  		// Bloggar
