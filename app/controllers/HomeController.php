@@ -378,7 +378,7 @@ class HomeController extends BaseController
     public function stats()
     {
         $count = DB::table('banner_views')->count();
-        $salary =  $count*0.5;
+        $salary =  $count*0.05;
 
         $this->assign('salary', $salary);
         $this->assign('banner_views', $count);
