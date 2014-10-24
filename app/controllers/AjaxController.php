@@ -517,7 +517,7 @@ class AjaxController extends BaseController
             die($e->getMessage());
         }
     }
-    public function save_banner_clicks()
+    public function save_banner_click()
     {
         $result = array
         (
