@@ -509,6 +509,7 @@ class AjaxController extends BaseController
             $banner_view = new Banner_View();
             $banner_view->url = $input['url'];
             $banner_view->date = $time;
+            $banner_view->ip = $input['ip'];
             $banner_view->save();
 
         }
@@ -530,10 +531,11 @@ class AjaxController extends BaseController
         {
             $input = Input::all();
             $time = date('Y-m-d H:i:s');
-            $banner_view = new Banner_Click();
-            $banner_view->url = $input['url'];
-            $banner_view->date = $time;
-            $banner_view->save();
+            $banner_click = new Banner_Click();
+            $banner_click->url = $input['url'];
+            $banner_click->date = $time;
+            $banner_click->ip = $input['ip'];
+            $banner_click->save();
 
         }
         catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
