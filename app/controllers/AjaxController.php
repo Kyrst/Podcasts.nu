@@ -517,4 +517,28 @@ class AjaxController extends BaseController
             die($e->getMessage());
         }
     }
+    public function save_banner_clicks()
+    {
+        $result = array
+        (
+            'error' => ''
+        );
+
+        $input = Input::all();
+
+        try
+        {
+            $input = Input::all();
+            $time = date('Y-m-d H:i:s');
+            $banner_view = new Banner_Click();
+            $banner_view->url = $input['url'];
+            $banner_view->date = $time;
+            $banner_view->save();
+
+        }
+        catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+        {
+            die($e->getMessage());
+        }
+    }
 }
