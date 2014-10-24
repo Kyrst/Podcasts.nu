@@ -385,7 +385,7 @@ Route::post('/save_banner_view', array
     'uses' => 'AjaxController@save_banner_view'
 ));
 //AJAX: Save banner clicks
-Route::post('/save_banner_view', array
+Route::post('/save_banner_clicks', array
 (
     'uses' => 'AjaxController@save_banner_clicks'
 ));
