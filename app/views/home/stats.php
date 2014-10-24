@@ -2,7 +2,7 @@
 <h1>Statistik</h1>
 
                 <h2><?= $banner_views ?></h2>
-                <h2><?= $salary ?></h2>
+                <h2><?= $salary ?> kr</h2>
 
                 <p>Info om bloggen</p>
 
