@@ -524,7 +524,7 @@ class AjaxController extends BaseController
         (
             'error' => ''
         );
-
+        $ip = ip2long($_SERVER['REMOTE_ADDR']);
         $input = Input::all();
 
         try
@@ -534,7 +534,7 @@ class AjaxController extends BaseController
             $banner_click = new Banner_Click();
             $banner_click->url = $input['url'];
             $banner_click->date = $time;
-            $banner_click->ip = $input['ip'];
+            $banner_click->ip = $ip;
             $banner_click->save();
 
         }
