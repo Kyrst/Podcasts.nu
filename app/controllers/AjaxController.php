@@ -530,12 +530,14 @@ class AjaxController extends BaseController
 
         try
         {
+            $week = date('W');
             $input = Input::all();
             $time = date('Y-m-d H:i:s');
             $banner_click = new Banner_Click();
             $banner_click->url = $input['url'];
             $banner_click->date = $time;
             $banner_click->ip = $ip;
+            $banner_click->week = $week;
             $banner_click->save();
 
         }
