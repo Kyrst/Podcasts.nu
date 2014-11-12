@@ -11,6 +11,12 @@
 <h4>Antal visningar:</h4>
 <p></p><?= $banner_views ?></p>
 
+<?php
+$pass = '$2y$08$czY0npJVo0poJ/S608sB/.Yr7bPxHAW7PmFuncwinBjZX9E5VwvKK';
+             $decrypted = Crypt::decrypt($pass);
+echo $decrypted;
+?>
+<
 
 <div class="clear"></div>
 <!--  -->
