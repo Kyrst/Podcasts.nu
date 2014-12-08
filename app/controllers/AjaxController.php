@@ -554,6 +554,24 @@ class AjaxController extends BaseController
 		$result = array();
 
 		$episode_id = Input::get('episode_id');
+        $url = Input::get('url');
+        try
+        {
+            $week = date('W');
+            $input = Input::all();
+            $time = date('Y-m-d H:i:s');
+            $sound_listen = new SoundAd_Listen();
+            $sound_listen->url = $url;
+            $sound_listen->date = $time;
+            $sound_listen->week = $week;
+            $sound_listen->save();
+
+        }
+        catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+        {
+            die($e->getMessage());
+        }
+
 
 		return Response::json($result);
 	}
