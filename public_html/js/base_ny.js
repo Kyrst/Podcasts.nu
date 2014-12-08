@@ -99,7 +99,7 @@ window.onbeforeunload = function()
 		// For Chrome, Safari, IE8+ and Opera 12+
 		return message;
 	}
-}
+};
 
 function init_player()
 {
@@ -121,10 +121,19 @@ function init_player()
 			{
 				if ( typeof playing_cookie_object !== 'undefined' )
 				{
-					$playlist_player.jPlayer('setMedia',
+					/*$playlist_player.jPlayer('setMedia',
 					{
 						mp3: playing_cookie_object.url
-					});
+					});*/
+
+					$playlist_player.setPlaylist
+					(
+						[
+							{
+								mp3: playing_cookie_object.url
+							}
+						]
+					);
 
 					current_title = playing_cookie_object.title;
 					current_episode_id = playing_cookie_object.episode_id;
@@ -275,6 +284,7 @@ function init_player()
 		var $this = $(this),
 			url = $this.data('url');
 
+		var podcast_id = $this.data('podcast_id');
 		current_episode_id = $this.data('episode_id');
 		current_episode_link = $this.data('episode_link');
 		current_title = $this.data('title');
@@ -311,22 +321,42 @@ function init_player()
 					mp3: decodeURIComponent(url)
 				});*/
 
-				$playlist_player.setPlaylist
-				(
-					[
-						{
-							mp3: BASE_URL + 'asdf.mp3'
-						},
-						{
-							mp3: decodeURIComponent(url)
-						}
-					]
-				);
+				var files = [],
+					play_ad = (podcast_id === 1 && user_id === '0');
+
+				if ( play_ad )
+				{
+					files.push(
+					{
+						mp3: BASE_URL + 'reklam.mp3'
+					});
+				}
+
+				files.push(
+				{
+					mp3: decodeURIComponent(url)
+				});
+
+				$playlist_player.setPlaylist(files);
 			}
 
 			show_player();
 
 			//$player.jPlayer('play', start_position);
+
+			if ( play_ad )
+			{
+				$.ajax(
+				{
+					type: 'POST',
+					url: BASE_URL + 'save-sound-ad-listen',
+					data:
+					{
+						episode_id: current_episode_id
+					}
+				});
+			}
+
 			$playlist_player.play(0);
 
 			playing_url = url;
