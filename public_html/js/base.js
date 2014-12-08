@@ -322,7 +322,7 @@ function init_player()
                  });*/
 
                 var files = [],
-                    play_ad = (podcast_id === 1 && user_id === '0');
+                    play_ad = (podcast_id === 1);
 
                 if ( play_ad )
                 {
