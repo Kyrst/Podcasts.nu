@@ -553,6 +553,8 @@ class AjaxController extends BaseController
 	{
 		$result = array();
 
+		$episode_id = Input::get('episode_id');
+
 		return Response::json($result);
 	}
 }
