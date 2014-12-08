@@ -288,6 +288,7 @@ function init_player()
         current_episode_id = $this.data('episode_id');
         current_episode_link = $this.data('episode_link');
         current_title = $this.data('title');
+        console.log(podcast_id);
 
         if ( $this.hasClass('sm2_playing') ) // Pause
         {
@@ -322,7 +323,7 @@ function init_player()
                  });*/
 
                 var files = [],
-                    play_ad = (podcast_id === 1);
+                    play_ad = (podcast_id === 1 && user_id === '0');
 
                 if ( play_ad )
                 {
