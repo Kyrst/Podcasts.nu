@@ -284,6 +284,7 @@ function init_player()
 	});
 
 	$('#player_controls').find('.jp-stop').on('click', function()
+
 	{
 		$.ajax(
 		{
