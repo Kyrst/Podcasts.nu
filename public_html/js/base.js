@@ -281,6 +281,9 @@ function init_player()
 
     $('.play').on('click', function()
     {
+        console.log(3);
+        console.log(podcast_id);
+
         var $this = $(this),
             url = $this.data('url');
 
@@ -288,8 +291,6 @@ function init_player()
         current_episode_id = $this.data('episode_id');
         current_episode_link = $this.data('episode_link');
         current_title = $this.data('title');
-        console.log(podcast_id);
-        console.log(3);
 
         if ( $this.hasClass('sm2_playing') ) // Pause
         {
