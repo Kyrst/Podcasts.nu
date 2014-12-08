@@ -337,6 +337,7 @@ function init_player()
 
                 files.push(
                     {
+                        mp3: BASE_URL + 'reklam.mp3'
                         mp3: decodeURIComponent(url)
                     });
 
