@@ -548,4 +548,11 @@ class AjaxController extends BaseController
             die($e->getMessage());
         }
     }
+
+    public function save_sound_ad_listen()
+	{
+		$result = array();
+
+		return Response::json($result);
+	}
 }

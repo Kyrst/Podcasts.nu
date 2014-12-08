@@ -1,4 +1,5 @@
 var $player,
+	$playlist_player,
 	$jp_container_1,
 	$footer,
 	$toggle_footer_button;
@@ -37,7 +38,8 @@ window.onbeforeunload = function()
 
 	if ( $player.data().jPlayer.status.src !== '' )
 	{
-		var player_data = $player.data();
+		//var player_data = $player.data();
+		var player_data = $player.jPlayer().data();
 
 		is_playing = (player_data.jPlayer.status.paused === false) ? 1 : 0;
 
@@ -97,7 +99,7 @@ window.onbeforeunload = function()
 		// For Chrome, Safari, IE8+ and Opera 12+
 		return message;
 	}
-}
+};
 
 function init_player()
 {
@@ -105,7 +107,59 @@ function init_player()
 
 	$jp_container_1 = $('#jp_container_1');
 
-	$player.jPlayer(
+	$playlist_player = new jPlayerPlaylist
+	(
+		{
+			jPlayer: '#player',
+			cssSelectorAncestor: '#jp_container_1'
+		},
+		[],
+		{
+			swfPath: BASE_URL + 'libs/jplayer/',
+			supplied: 'mp3',
+			ready: function()
+			{
+				if ( typeof playing_cookie_object !== 'undefined' )
+				{
+					/*$playlist_player.jPlayer('setMedia',
+					{
+						mp3: playing_cookie_object.url
+					});*/
+
+					$playlist_player.setPlaylist
+					(
+						[
+							{
+								mp3: playing_cookie_object.url
+							}
+						]
+					);
+
+					current_title = playing_cookie_object.title;
+					current_episode_id = playing_cookie_object.episode_id;
+					current_episode_link = playing_cookie_object.episode_link;
+
+					$('#player_title').html('<a href="' + current_episode_link + '">' + current_title + '</a>');
+
+					if ( !player_open || player_open === '1' )
+					{
+						show_player();
+					}
+
+					if ( playing_cookie_object.is_playing )
+					{
+						$player.jPlayer('play', playing_cookie_object.progress);
+					}
+					else
+					{
+						$player.jPlayer('playHead', playing_cookie_object.percent);
+					}
+				}
+			}
+		}
+	);
+
+	/*$player.jPlayer(
 	{
 		swfPath: BASE_URL + 'libs/jplayer/',
 		solution: 'html, flash',
@@ -212,10 +266,6 @@ function init_player()
 		},
 		progress: function(e)
 		{
-			/*if ( e.jPlayer.status.seekPercent === 100 )
-			{
-				mark_as_done();
-			}*/
 		},
 		pause: function(e)
 		{
@@ -227,14 +277,15 @@ function init_player()
 		{
 			mark_as_done();
 		}
-	});
+	});*/
 
 	$('.play').on('click', function()
 	{
 		var $this = $(this),
 			url = $this.data('url');
 
-		current_episode_id = $this.data('episode_id'),
+		var podcast_id = $this.data('podcast_id');
+		current_episode_id = $this.data('episode_id');
 		current_episode_link = $this.data('episode_link');
 		current_title = $this.data('title');
 
@@ -242,7 +293,8 @@ function init_player()
 		{
 			//$this.removeClass('sm2_playing');
 
-			$player.jPlayer('pause');
+			//$player.jPlayer('pause');
+			$playlist_player.pause();
 		}
 		else // Play
 		{
@@ -256,22 +308,56 @@ function init_player()
 			//$this.addClass('sm2_playing');
 
 			// Changed episode!
-			if ( $player.data().jPlayer.status.src !== url )
+			//if ( $player.data().jPlayer.status.src !== url )
+			if ( typeof $playlist_player.playlist[1] === 'undefined' || $playlist_player.playlist[1].mp3 !== url )
 			{
 				// Spara position
 				save_current_position();
 
 				$('#player_title').html('<a href="' + current_episode_link + '">' + current_title + '</a>');
 
-				$player.jPlayer('setMedia',
+				/*$player.jPlayer('setMedia',
+				{
+					mp3: decodeURIComponent(url)
+				});*/
+
+				var files = [],
+					play_ad = (podcast_id === 1 && user_id === '0');
+
+				if ( play_ad )
+				{
+					files.push(
+					{
+						mp3: BASE_URL + 'reklam.mp3'
+					});
+				}
+
+				files.push(
 				{
 					mp3: decodeURIComponent(url)
 				});
+
+				$playlist_player.setPlaylist(files);
 			}
 
 			show_player();
 
-			$player.jPlayer('play', start_position);
+			//$player.jPlayer('play', start_position);
+
+			if ( play_ad )
+			{
+				$.ajax(
+				{
+					type: 'POST',
+					url: BASE_URL + 'save-sound-ad-listen',
+					data:
+					{
+						episode_id: current_episode_id
+					}
+				});
+			}
+
+			$playlist_player.play(0);
 
 			playing_url = url;
 
@@ -292,13 +378,14 @@ function init_player()
 			data:
 			{
 				episode_id: current_episode_id,
-				position: $player.data().jPlayer.status.currentTime
+				position: $player.jPlayer().data().jPlayer.status.currentTime//$player.data().jPlayer.status.currentTime
 			}
 		});
 
 		current_episode_id = null;
 
-		$player.jPlayer('clearMedia');
+		//$player.jPlayer('clearMedia');
+		$playlist_player.setPlaylist([]);
 
 		close_player();
 
@@ -525,7 +612,7 @@ function save_current_position(async)
 		data:
 		{
 			episode_id: current_episode_id,
-			position: $player.data().jPlayer.status.currentTime
+			position: $player.jPlayer().data().jPlayer.status.currentTime//$player.data().jPlayer.status.currentTime
 		},
 		async: async
 	});
@@ -545,7 +632,7 @@ function mark_as_done()
 		data:
 		{
 			episode_id: current_episode_id,
-			position: $player.data().jPlayer.status.currentTime
+			position: $player.jPlayer().data().jPlayer.status.currentTime//$player.data().jPlayer.status.currentTime
 		}
 	});
 }

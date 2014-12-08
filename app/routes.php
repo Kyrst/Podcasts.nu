@@ -569,6 +569,12 @@ Route::get('/info', array
 	'as' => 'info'
 ));
 
+Route::post('/save-sound-ad-listen', array
+(
+	'uses' => 'AjaxController@save_sound_ad_listen',
+	'as' => 'save-sound-ad-listen'
+));
+
 /*if ( in_array($_SERVER['REMOTE_ADDR'], array('108.84.185.175', '80.216.232.74')) )
 {
 	Event::listen('illuminate.query', function ($query, $bindings, $time, $name)
