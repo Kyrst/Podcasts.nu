@@ -281,9 +281,6 @@ function init_player()
 
     $('.play').on('click', function()
     {
-        console.log(3);
-        console.log(podcast_id);
-
         var $this = $(this),
             url = $this.data('url');
 
