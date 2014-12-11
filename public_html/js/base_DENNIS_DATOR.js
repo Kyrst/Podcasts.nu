@@ -281,6 +281,9 @@ function init_player()
 
     $('.play').on('click', function()
     {
+        console.log(3);
+        console.log(podcast_id);
+
         var $this = $(this),
             url = $this.data('url');
 
@@ -328,14 +331,14 @@ function init_player()
                 {
                     files.push(
 					{
-						mp3: BASE_URL + 'sjo_sandstrom.mp3'
+						mp3: BASE_URL + 'reklam.mp3'
 					});
                 }
 
                 files.push(
-                {
-                    mp3: decodeURIComponent(url)
-                });
+                    {
+                        mp3: decodeURIComponent(url)
+                    });
 
                 $playlist_player.setPlaylist(files);
             }
