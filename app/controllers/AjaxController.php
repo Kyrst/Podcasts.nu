@@ -557,6 +557,7 @@ class AjaxController extends BaseController
         $url = Input::get('url');
         try
         {
+            $ip = ip2long($_SERVER['REMOTE_ADDR']);
             $week = date('W');
             $input = Input::all();
             $time = date('Y-m-d H:i:s');
@@ -564,6 +565,7 @@ class AjaxController extends BaseController
             $sound_listen->url = $url;
             $sound_listen->date = $time;
             $sound_listen->week = $week;
+            $sound_listen->ip = $ip;
             $sound_listen->save();
 
         }

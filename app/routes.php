@@ -389,6 +389,11 @@ Route::post('/save_banner_click', array
 (
     'uses' => 'AjaxController@save_banner_click'
 ));
+//AJAX: Save sound ad listen
+Route::post('/save_sound_ad_listen', array
+(
+    'uses' => 'AjaxController@save_sound_ad_listen'
+));
 
 //SHOW banner stats
 Route::get('/stats', array

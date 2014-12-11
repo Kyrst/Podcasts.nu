@@ -352,6 +352,7 @@ function init_player()
                         url: BASE_URL + 'save-sound-ad-listen',
                         data:
                         {
+                            url: current_title,
                             episode_id: current_episode_id
                         }
                     });
