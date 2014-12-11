@@ -387,7 +387,7 @@ class HomeController extends BaseController
         $this->assign('banner_clicks', $click_count);
         $this->assign('banner_views', $view_count);
         $this->assign('banner_salary', $banner_salary);
-        $this->assign('listen_sallary', $listen_salary);
+        $this->assign('listen_salary', $listen_salary);
         $this->assign('total_salary', $total_salary);
         $this->display('home.stats', 'Statistik');
     }
