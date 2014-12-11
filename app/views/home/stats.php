@@ -20,7 +20,7 @@
 
 
 <h2>Förbrukad summa totalt:</h2>
-<p><?= $total_salary ?></p>
+<p><?= $total_salary ?> kr</p>
 
 
 <div class="clear"></div>
