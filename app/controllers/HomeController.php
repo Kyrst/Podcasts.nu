@@ -379,12 +379,16 @@ class HomeController extends BaseController
     {
         $view_count = DB::table('banner_views')->count();
         $click_count = DB::table('banner_clicks')->count();
-        $salary =  $view_count*0.05;
+        $banner_salary =  $view_count*0.05;
         $listen_count = DB::table('sound_ad')->count();
+        $listen_salary = $listen_count*0.25;
+        $total_salary = $banner_salary+$listen_salary;
         $this->assign('sound_ad_listens', $listen_count);
         $this->assign('banner_clicks', $click_count);
-        $this->assign('salary', $salary);
         $this->assign('banner_views', $view_count);
+        $this->assign('banner_salary', $banner_salary);
+        $this->assign('listen_sallary', $listen_salary);
+        $this->assign('total_salary', $total_salary);
         $this->display('home.stats', 'Statistik');
     }
 
