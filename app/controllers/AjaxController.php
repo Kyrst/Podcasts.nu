@@ -561,7 +561,7 @@ class AjaxController extends BaseController
             $week = date('W');
             $input = Input::all();
             $time = date('Y-m-d H:i:s');
-            $sound_listen = new SoundAd_Listen();
+            $sound_listen = new Sound_Ad_Listen();
             $sound_listen->url = $url;
             $sound_listen->date = $time;
             $sound_listen->week = $week;
