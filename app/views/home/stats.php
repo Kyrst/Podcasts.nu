@@ -13,7 +13,7 @@
 <br>
 <h2>Använd summa av Ljuduppspelningar</h2>
 
-<p><?= $listen_salary ?></p>
+<p><?= $listen_salary ?> kr</p>
 
 <h4>Antal Ljuduppspelningar:</h4>
 <p><?= $sound_ad_listens ?></p>
