@@ -551,28 +551,43 @@ class AjaxController extends BaseController
 
     public function save_sound_ad_listen()
 	{
-		$result = array();
-
+	    $result = array();
+        $ip = ip2long($_SERVER['REMOTE_ADDR']);
 		$episode_id = Input::get('episode_id');
         $url = Input::get('url');
         try
         {
-            $ip = ip2long($_SERVER['REMOTE_ADDR']);
+            $listened = sound_ad::where('url', $url)->where('ip', $ip)->firstOrFail();
+
+            // Fanns redan, sa registrera inte
+        }
+        catch ( ModelNotFoundException $e )
+        {
+            // Fanns inte, registrera
             $week = date('W');
-            $input = Input::all();
             $time = date('Y-m-d H:i:s');
             $sound_listen = new Sound_Ad_Listen();
             $sound_listen->url = $url;
             $sound_listen->date = $time;
-            $sound_listen->week = $week;
             $sound_listen->ip = $ip;
             $sound_listen->save();
-
         }
-        catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
-        {
-            die($e->getMessage());
-        }
+        //try
+        //{
+            //$week = date('W');
+            //$input = Input::all();
+            //$time = date('Y-m-d H:i:s');
+            //$sound_listen = new Sound_Ad_Listen();
+            //$sound_listen->url = $url;
+            //$sound_listen->date = $time;
+            //$sound_listen->week = $week;
+            //$sound_listen->ip = $ip;
+            //$sound_listen->save();
+        //}
+        //catch ( Illuminate\Database\Eloquent\ModelNotFoundException $e )
+        //{
+            //die($e->getMessage());
+        //}
 
 
 		return Response::json($result);
