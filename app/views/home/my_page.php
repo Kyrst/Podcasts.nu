@@ -76,13 +76,13 @@
 					//$latest_listened_episode = $user->get_latest_listened_episode($podcast->id);
 					?>
 
-					<!--<tr>
-						<td><p class="table-p"><a href="<?//= $podcast->getLink('avsnitt') ?>"><?//= $podcast->name ?></a></p></td>
-						<td><p class="table-p"><?//= $latest_episode !== NULL ? $latest_episode->title : '/' ?></p></td>
+					<tr>
+						<td><p class="table-p"><a href="<?= $podcast->getLink('avsnitt') ?>"><?= $podcast->name ?></a></p></td>
+						<td><p class="table-p"><?= $latest_episode !== NULL ? $latest_episode->title : '/' ?></p></td>
 						<td><p class="table-p"><?//= '[kommer]' //$latest_listened_episode !== NULL ? $latest_listened_episode->title : '/' ?></p></td>
-						<td><p class="table-p"><?//= $podcast->episodes->count() > 0 ? $podcast->get_num_listens($user->id) . ' av ' . $podcast->episodes->count() : '-' ?></p></td>
-						<td><p class="table-p"><a href="javascript:" data-id="<?//= $podcast->id ?>" class="stop-subscribe btn btn-default btn-sm">Sluta prenumerera</a></p></td>
-					</tr>-->
+						<!--<td><p class="table-p"><?//= $podcast->episodes->count() > 0 ? $podcast->get_num_listens($user->id) . ' av ' . $podcast->episodes->count() : '-' ?></p></td>-->
+						<td><p class="table-p"><a href="javascript:" data-id="<?= $podcast->id ?>" class="stop-subscribe btn btn-default btn-sm">Sluta prenumerera</a></p></td>
+					</tr>
 				<?php endforeach ?>
 			</table>
 		<?php else: ?>
