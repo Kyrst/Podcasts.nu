@@ -17,8 +17,8 @@
 			<table class="table">
 				<?//php foreach ( $history as $history_item ): ?>
 					<tr>
-						<td style="width:150px"><p class="table-p"><?= date('Y-m-d H:i', $history_item['timestamp']) ?></p></td>
-						<td><p class="table-p"><?= $history_item['message'] ?></p></td>
+						<td style="width:150px"><p class="table-p"><?//= date('Y-m-d H:i', $history_item['timestamp']) ?></p></td>
+						<td><p class="table-p"><?//= $history_item['message'] ?></p></td>
 					</tr>
 				<?//php endforeach ?>
 			</table>
