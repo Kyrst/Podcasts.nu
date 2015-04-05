@@ -11,20 +11,20 @@
 
 	<div class="my_page col-lg-10 col-md-10 col-sm-10 col-xs-12">
 		<!-- Historik -->
-		<h2>Historik</h2>
+		<!--<h2>Historik</h2>
 
-		<?php if ( count($history) > 0 ): ?>
+		<?//php if ( count($history) > 0 ): ?>
 			<table class="table">
-				<?php foreach ( $history as $history_item ): ?>
+				<?//php foreach ( $history as $history_item ): ?>
 					<tr>
 						<td style="width:150px"><p class="table-p"><?= date('Y-m-d H:i', $history_item['timestamp']) ?></p></td>
 						<td><p class="table-p"><?= $history_item['message'] ?></p></td>
 					</tr>
-				<?php endforeach ?>
+				<?//php endforeach ?>
 			</table>
-		<?php else: ?>
+		<?//php else: ?>
 			<p class="table-p">Ingen historik.</p>
-		<?php endif ?>
+		<?//php endif ?>-->
 
 		<!-- Ej lyssnat klart -->
 		<?php if ( $num_user_listens > 0 ): ?>
