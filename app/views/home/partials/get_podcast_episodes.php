@@ -12,20 +12,21 @@
 
 						<?= $episode->print_rater() ?>
 
-						<?php if ( $user !== NULL ): ?>
-							<?php $episode_status = $user->get_episode_status($episode->id) ?>
+            <!--
+						<? //php if ( $user !== NULL ): ?>
+							<?//php $episode_status = $user->get_episode_status($episode->id) ?>
 
-							<?php if ( $episode_status === '' ): ?>
-								<a href="<?= $episode->getLink() ?>" class="label label-danger">Lyssna nu</a>
-							<?php else: ?>
-								<?php if ( $episode_status === 'Lyssnad' ): ?>
+							<?//php if ( $episode_status === '' ): ?>
+								<a/> href="<?//= $episode->getLink() ?>" class="label label-danger">Lyssna nu</a>
+							<?//php else: ?>
+								<?//php if ( $episode_status === 'Lyssnad' ): ?>
 									<span class="label label-success">Lyssnad</span>
-								<?php elseif ( $episode_status === 'Påbörjad' ): ?>
+								<?//php elseif ( $episode_status === 'Påbörjad' ): ?>
 									<span class="label label-warning">Påbörjad</span>
-								<?php endif ?>
-							<?php endif ?>
-						<?php endif ?>
-					</div>
+								<?//php endif ?>
+							<?//php endif ?>
+						<?//php endif ?>
+					</div> -->
 
 					<?php if ( $user !== NULL && $user->is_admin() ): ?>
 						<div class="btn-group">

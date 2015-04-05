@@ -400,7 +400,7 @@ class HomeController extends BaseController
     	$this->assign('blogs', $blogs);
 
     	// Senaste blogginläggen
-    	$latest_blog_items = Blog_Item::orderBy('created_at', 'DESC')->get();
+    	$latest_blog_items = Blog_Item::orderBy('created_at', 'DESC')->get()->take(3);
 
     	$this->assign('latest_blog_items', $latest_blog_items);
 
